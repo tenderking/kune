@@ -19,14 +19,11 @@
       <p id="category-picker-text">
         Find the best local businesses and services in your area
       </p>
-      <div class="category-container">
-
       <div class="category-box"></div>
       <div class="category-box"></div>
       <div class="category-box"></div>
       <div class="category-box"></div>
       <div class="category-box"></div>
-      </div>
     </section>
     <section class="motivation-section">
       <div class="motivation-card-1">
@@ -45,7 +42,7 @@
 </template>
 
 <script></script>
-<style lang="scss">
+<style>
 #main-home {
   margin: 0 auto;
   padding: 0 3rem;
@@ -66,56 +63,9 @@
   padding-top: 2rem;
 }
 .category-picker {
-  position:absolute; 
- 
-   background: $light;
-   left: 0 ;
-   right: 0; 
-   min-height: fit-content;
-   padding-bottom: 1rem;
-}
-.category-container{
-display: grid;
-grid-template-columns: 300px 300px 300px;
-grid-template-rows: 250px 250px;
-justify-content: center;
-padding: 3rem 0;
-max-width: 1400px;
-margin:auto;
-padding: 0 15rem;
-}
-.category-box{
- 
-    width: 250px;
-  height: 200px;
-  outline: solid $secondary;
+  background: white;
 }
 .kune {
-  color: $primary;
-}
-h1 {
-  font-size: 1em;
-  font-weight: bold;
-  line-height: 0em;
-  padding-top: 5em;
-  
-}
-h2 {
-  font-size: 3em;
-  font-weight: bold;
-  line-height: 0.95em;
-  padding: 0;
-  margin-top: 0.5em;
-  margin-bottom: 0;
-  
-}
-p {
-  line-height: 1.5em;
-}
-button {
-  background: $primary;
-}
-.motivation-section{
-  min-height: fit-content;
+  color: blue;
 }
 </style>

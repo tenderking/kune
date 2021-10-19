@@ -41,31 +41,5 @@
   </div>
 </template>
 
-<script></script>
-<style>
-#main-home {
-  margin: 0 auto;
-  padding: 0 3rem;
-}
-.home {
-  display: flex;
-  flex-direction: row-reverse;
-  margin: 0;
-
-  justify-content: start;
-}
-.home-left {
-  text-align: left;
-  flex-basis: 50%;
-}
-.home-right {
-  flex-basis: 50%;
-  padding-top: 2rem;
-}
-.category-picker {
-  background: white;
-}
-.kune {
-  color: blue;
-}
-</style>
+<script>
+</script>

@@ -1,0 +1,10 @@
+@use '../abstracts/variables' as *;
+.nav a{
+    float: left;
+      font-weight: bold;
+      color: $primary;
+      text-decoration: none;
+    }
+    .nav-right, .nav-right {
+     float: right;
+    }

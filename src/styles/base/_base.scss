@@ -1,10 +1,6 @@
 
-html,
-body {
 
-  background: $secondaryLight;
- 
-}
+
 
 
 #app {
@@ -13,4 +9,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   color: $dark;
+
+}
+body {
+  background: $secondaryLight; 
+  margin:0;
 }

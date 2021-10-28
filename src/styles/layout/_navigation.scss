@@ -1,10 +1,55 @@
 
-.nav a{
-    float: left;
-      font-weight: bold;
-      color: $primary;
-      text-decoration: none;
-    }
-    .nav-right, .nav-right {
-     float: right;
-    }
+
+header{
+  padding: 1em;
+  display: flex; 
+  justify-content: space-between;
+}
+
+nav{
+  
+ display: flex;
+ justify-content: space-evenly;
+ gap:2em;
+ li{
+   list-style: none;
+   a{
+     text-decoration: none;
+     font-style: inherit;
+     color: $dark;
+     font-weight: bold;
+   }
+ }
+ li:hover, li:active{
+   text-decoration: underline solid $primary 2px;
+ }
+ 
+}
+ 
+.nav-item{
+  text-decoration: none;
+  color: $dark;
+}
+.menu-container{
+  display: none;
+  background-color: $secondary;
+  width: 100%;
+  position: absolute;
+  
+  justify-content: center;
+  align-items: center;
+  margin:0 ;
+  padding: 4em;
+  height: 0em;
+  transition: all 1s ease-in-out;
+
+  .bar{
+    width: 32%;
+height: 0em;
+  }
+ &-active{
+  display: flex;
+  height: 20em;
+  transition: all 1s ease-in-out;
+ }
+}

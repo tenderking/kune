@@ -12,7 +12,7 @@
           in one place?. Kune makes it a pleasant journey. We provide an
           overwiew over the serviices and esseintial details about them
         </p>
-        <button class="sign-up-btn">Sign up</button>
+        <a href="#" class="colorful-button">Sign up</a>
       </div>
     </div>
     <section class="category-picker">
@@ -36,7 +36,7 @@
         </p>
       </div>
       <div class="motivation-card-2">
-        At kune a vast number of ZImbabwean websites, what type of services they
+        At kune a vast number of Zimbabwean websites, what type of services they
         offer and where they a located. You can easily bookmark the services you
         find interesting if you want to come back to them
       </div>

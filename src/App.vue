@@ -1,43 +1,58 @@
 <template>
   <header>
-    <router-link class="logo" to="/">Kune</router-link>
+    <router-link 
+      class="logo" 
+      @click="isActive = false" 
+      to="/"> Kune 
+    </router-link>
     <nav>
       <!-- Left-aligned links -->
-
-      <li><router-link to="/sign-in">sign in</router-link></li>
-      <li><a href="#"  @click="toggleClass()">menu</a></li>
+      <li>
+        <router-link @click="isActive = false" to="/sign-in"
+          >sign in</router-link
+        >
+      </li>
+      <li><a href="#" @click="toggleClass()">menu</a></li>
     </nav>
   </header>
-  <div
-    class="menu-container"
-    :class="{'menu-container-active': isActive}"
-   
-  >
-    <div class="bar">hello</div>
-    <div class="bar">i am</div>
-    <div class="bar">the menu</div>
+   <!-- Drop-down menu -->
+  <div class="menu-container" :class="{ 'menu-container-active': isActive }">
+    <div class="bar">
+      <router-link 
+        @click="isActive = false" 
+        to="/sites"
+        >Browse Services
+      </router-link>
+    </div>
+    <div class="bar">
+      <router-link @click="isActive = false" to="#">About</router-link>
+    </div>
+    <div class="bar">
+      <router-link @click="isActive = false" to="#">Contact us</router-link>
+    </div>
   </div>
   <router-view />
 </template>
 <script>
-/* import MenuToggleCross from './components/MenuToggleCross.vue'
+import { ref } from "vue";
 export default {
-  components: {
-    MenuToggleCross
+  setup() {
+    const isActive = ref(false);
+    const toggleClass = () => {
+      isActive.value = !isActive.value;
+    };
+    return { isActive, toggleClass };
   },
-  // ...
-} */
-export default {
-  data() {
-    return{
-isActive: true,
-    }
-  },
-  methods: {
-    toggleClass: function () {
-      this.isActive = !this.isActive;
-    },
-  },
+  //   data() {
+  //     return{
+  // isActive: true,
+  //     }
+  //   },
+  //   methods: {
+  //     toggleClass: function () {
+  //       this.isActive = !this.isActive;
+  //     },
+  //   },
 };
 </script>
 <style lang="scss">

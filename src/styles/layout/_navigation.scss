@@ -46,6 +46,10 @@ nav{
   .bar{
     width: 32%;
 height: 0em;
+    a{
+      text-decoration: none;
+      color: $dark;
+    }
   }
  &-active{
   display: flex;

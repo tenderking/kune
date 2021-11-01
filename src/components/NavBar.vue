@@ -1,7 +1,9 @@
 <template>
-  <header>
-    <router-link class="logo" @click="isActive = false" to="/">
-      Kune
+   <header>
+    <router-link 
+      class="logo" 
+      @click="isActive = false" 
+      to="/"> Kune 
     </router-link>
     <nav>
       <!-- Left-aligned links -->
@@ -10,29 +12,32 @@
           >sign in</router-link
         >
       </li>
-      <li>
-        <a href="#" @click="toggleClass()" v-if="isActive === false">menu</a>
-        <fa v-else icon="times" @click="toggleClass()" />
-      </li>
+      <li><a href="#"  @click="toggleClass()" v-if="isActive===false" >menu</a>  <fa  v-else icon="times" @click="toggleClass()"   /></li>
     </nav>
   </header>
-  <!-- Drop-down menu -->
+   <!-- Drop-down menu -->
   <div class="menu-container" :class="{ 'menu-container-active': isActive }">
+  
     <div class="bar">
-      <router-link @click="isActive = false" to="/sign-in">Sign in </router-link>
+      <router-link 
+        @click="isActive = false" 
+        to="/services"
+        >Browse Services
+      </router-link>
     </div>
     <div class="bar">
-      <router-link @click="isActive = false" to="/services">Browse Services</router-link>
+      <router-link @click="isActive = false" to="#">About</router-link>
     </div>
     <div class="bar">
       <router-link @click="isActive = false" to="#">Contact us</router-link>
     </div>
   </div>
-  <router-view />
 </template>
+
 <script>
 import { ref } from "vue";
 export default {
+    name: "NavBar",
   setup() {
     const isActive = ref(false);
     const toggleClass = () => {
@@ -40,18 +45,9 @@ export default {
     };
     return { isActive, toggleClass };
   },
-  //   data() {
-  //     return{
-  // isActive: true,
-  //     }
-  //   },
-  //   methods: {
-  //     toggleClass: function () {
-  //       this.isActive = !this.isActive;
-  //     },
-  //   },
-};
+  }
 </script>
-<style lang="scss">
-@import "./styles/main";
+
+<style>
+
 </style>

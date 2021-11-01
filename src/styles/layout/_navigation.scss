@@ -45,11 +45,23 @@ nav{
 
   .bar{
     width: 32%;
-height: 0em;
+    height: 0em;
+    a{
+      
+      color: $dark;
+    }
+    a:hover{
+      font-size: larger;
+    }
   }
  &-active{
   display: flex;
   height: 20em;
-  transition: all 1s ease-in-out;
+  transition: height 1s ease-in-out;
  }
+}
+.fa-times:hover::after{
+  position: relative;
+ color: $primary;
+ width: 1.2em;
 }

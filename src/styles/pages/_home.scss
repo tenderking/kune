@@ -1,0 +1,92 @@
+#main-home {
+
+    padding: 0 3rem;
+    margin: auto;
+  }
+  .home {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 0;
+  
+    justify-content: center;
+    align-items: center;
+  }
+  .home-left {
+    text-align: left;
+    flex-basis: 50%;
+  }
+  .home-right {
+    flex-basis: 50%;
+    padding-top: 2rem;
+  }
+  .category-picker {
+    
+     background: $primaryLight;
+     margin:0 -50%; 
+     padding-bottom: 1rem;
+   
+  }
+  .category-container{
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  grid-template-rows: 250px 250px;
+  justify-content: center;
+  padding: 3rem 0;
+  max-width: 1400px;
+  margin:auto;
+  
+  }
+  .category-box{
+   
+      width: 250px;
+    height: 200px;
+    outline: solid $secondary;
+  }
+  .kune {
+    color: $primary;
+  }
+  h1 {
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 0em;
+    padding-top: 5em;
+    
+  }
+  h2 {
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 0.95em;
+    padding: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+    
+  }
+  p {
+    line-height: 1.5em;
+  }
+  
+  .motivation-section{
+    
+    min-height: fit-content;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    
+  }
+
+.motivation-card{
+  &-1, &-2{    
+    width: 15em;
+    height: 15em;
+    background-color: $secondaryDark;    
+    text-align: center;
+   
+    padding:1em;
+    border-radius: 10%;
+  }
+  &-2{
+    background-color: $dark;
+    color:white;
+  }
+}

@@ -12,7 +12,7 @@
           in one place?. Kune makes it a pleasant journey. We provide an
           overwiew over the serviices and esseintial details about them
         </p>
-        <button class="sign-up-btn">Sign up</button>
+        <a href="#" class="colorful-button">Sign up</a>
       </div>
     </div>
     <section class="category-picker">
@@ -36,7 +36,7 @@
         </p>
       </div>
       <div class="motivation-card-2">
-        At kune a vast number of ZImbabwean websites, what type of services they
+        At kune a vast number of Zimbabwean websites, what type of services they
         offer and where they a located. You can easily bookmark the services you
         find interesting if you want to come back to them
       </div>
@@ -45,77 +45,4 @@
 </template>
 
 <script></script>
-<style lang="scss">
-#main-home {
-  margin: 0 auto;
-  padding: 0 3rem;
-}
-.home {
-  display: flex;
-  flex-direction: row-reverse;
-  margin: 0;
 
-  justify-content: start;
-}
-.home-left {
-  text-align: left;
-  flex-basis: 50%;
-}
-.home-right {
-  flex-basis: 50%;
-  padding-top: 2rem;
-}
-.category-picker {
-  position:absolute; 
- 
-   background: $light;
-   left: 0 ;
-   right: 0; 
-   min-height: fit-content;
-   padding-bottom: 1rem;
-}
-.category-container{
-display: grid;
-grid-template-columns: 300px 300px 300px;
-grid-template-rows: 250px 250px;
-justify-content: center;
-padding: 3rem 0;
-max-width: 1400px;
-margin:auto;
-padding: 0 15rem;
-}
-.category-box{
- 
-    width: 250px;
-  height: 200px;
-  outline: solid $secondary;
-}
-.kune {
-  color: $primary;
-}
-h1 {
-  font-size: 1em;
-  font-weight: bold;
-  line-height: 0em;
-  padding-top: 5em;
-  
-}
-h2 {
-  font-size: 3em;
-  font-weight: bold;
-  line-height: 0.95em;
-  padding: 0;
-  margin-top: 0.5em;
-  margin-bottom: 0;
-  
-}
-p {
-  line-height: 1.5em;
-}
-button {
-  background: $primary;
-}
-.motivation-section{
-  min-height: fit-content;
-}
-</style>

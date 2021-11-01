@@ -1,65 +1,60 @@
 <template>
-  <div id="nav">
-    <router-link class="logo" to="/"> Kune </router-link>
-    <div class="nav-left">
-      <div class="search-input">Search</div>
-      <router-link to="/about">
-        <button>Sign in</button>
+  <header>
+    <router-link 
+      class="logo" 
+      @click="isActive = false" 
+      to="/"> Kune 
+    </router-link>
+    <nav>
+      <!-- Left-aligned links -->
+      <li>
+        <router-link @click="isActive = false" to="/sign-in"
+          >sign in</router-link
+        >
+      </li>
+      <li><a href="#" @click="toggleClass()">menu</a></li>
+    </nav>
+  </header>
+   <!-- Drop-down menu -->
+  <div class="menu-container" :class="{ 'menu-container-active': isActive }">
+    <div class="bar">
+      <router-link 
+        @click="isActive = false" 
+        to="/sites"
+        >Browse Services
       </router-link>
-      <div class="menu-div">
-        <div class="menu-text">Menu</div>
-        <div class="menu-text" />
-      </div>
+    </div>
+    <div class="bar">
+      <router-link @click="isActive = false" to="#">About</router-link>
+    </div>
+    <div class="bar">
+      <router-link @click="isActive = false" to="#">Contact us</router-link>
     </div>
   </div>
   <router-view />
 </template>
-
+<script>
+import { ref } from "vue";
+export default {
+  setup() {
+    const isActive = ref(false);
+    const toggleClass = () => {
+      isActive.value = !isActive.value;
+    };
+    return { isActive, toggleClass };
+  },
+  //   data() {
+  //     return{
+  // isActive: true,
+  //     }
+  //   },
+  //   methods: {
+  //     toggleClass: function () {
+  //       this.isActive = !this.isActive;
+  //     },
+  //   },
+};
+</script>
 <style lang="scss">
-html,
-body {
-  margin: auto;
-  padding: 0.5rem 0;
-  background: $secondaryLight;
-  max-width: 1400px;
-}
-.logo{
-  font-size: 1.5em;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: $dark;
-}
-
-#nav {
-  min-height: 2.75rem;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1rem;
-}
-.nav-left {
-  display: flex;
-  gap: 1em;
-}
-
-#nav a {
-  font-weight: bold;
-  color: $primary;
-  text-decoration: none;
-}
-
-#nav a.router-link-exact-active {
-  color: $primary;
-}
-button {
-  background: $secondaryLight;
-  border: 2px solid $secondaryDark;
-  box-sizing: border-box;
-  border-radius: 5px;
-  color: $dark;
-  padding: 0.5em 2em;
-}
+@import "./styles/main";
 </style>

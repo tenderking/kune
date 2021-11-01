@@ -2,6 +2,10 @@
   <header>
     <router-link class="logo" @click="isActive = false" to="/">
       Kune
+    <router-link 
+      class="logo" 
+      @click="isActive = false" 
+      to="/"> Kune 
     </router-link>
     <nav>
       <!-- Left-aligned links -->
@@ -10,19 +14,20 @@
           >sign in</router-link
         >
       </li>
-      <li>
-        <a href="#" @click="toggleClass()" v-if="isActive === false">menu</a>
-        <fa v-else icon="times" @click="toggleClass()" />
-      </li>
+      <li><a href="#" @click="toggleClass()">menu</a></li>
     </nav>
   </header>
-  <!-- Drop-down menu -->
+   <!-- Drop-down menu -->
   <div class="menu-container" :class="{ 'menu-container-active': isActive }">
     <div class="bar">
-      <router-link @click="isActive = false" to="/sign-in">Sign in </router-link>
+      <router-link 
+        @click="isActive = false" 
+        to="/sites"
+        >Browse Services
+      </router-link>
     </div>
     <div class="bar">
-      <router-link @click="isActive = false" to="/services">Browse Services</router-link>
+      <router-link @click="isActive = false" to="#">About</router-link>
     </div>
     <div class="bar">
       <router-link @click="isActive = false" to="#">Contact us</router-link>

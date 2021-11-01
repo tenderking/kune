@@ -45,13 +45,10 @@ nav{
 
   .bar{
     width: 32%;
-    height: 0em;
+height: 0em;
     a{
-      
+      text-decoration: none;
       color: $dark;
-    }
-    a:hover{
-      font-size: larger;
     }
   }
  &-active{

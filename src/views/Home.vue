@@ -1,10 +1,10 @@
 <template>
-  <div id="main-home">
-    <div class="home">
-      <div class="home-right">
+  <div id="home-wrap">
+    <div class="home-landing">
+      <div class="home-landing-right">
         <img alt="Main page illustration" src="../assets/main.png" />
       </div>
-      <div class="home-left">
+      <div class="home-landing-left">
         <h1>Kunoku <span class="kune"> kune </span></h1>
         <h2>What you're looking for and more to discover</h2>
         <p>

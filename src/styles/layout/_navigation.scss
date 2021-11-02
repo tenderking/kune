@@ -54,6 +54,11 @@ height: 0em;
  &-active{
   display: flex;
   height: 20em;
-  transition: all 1s ease-in-out;
+  transition: height 1s ease-in-out;
  }
+}
+.fa-times:hover::after{
+  position: relative;
+ color: $primary;
+ width: 1.2em;
 }

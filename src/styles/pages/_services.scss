@@ -1,0 +1,37 @@
+.grid-wrap {
+  display: flex;
+  
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 16px;
+  gap: 5em;
+}
+
+#page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid $light;
+  border-bottom: 1px solid $light;
+  height: 3em;
+  padding-inline: 2em;
+}
+
+#sort-services {
+  border-left: 1px solid $secondary;
+  padding-left: 1em;
+  height: 1.6em;
+
+  &-heading {
+    font-size: 11px;
+    color: $secondaryDark;
+    margin: 0;
+    padding: 0;
+  }
+  
+  &-type {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+}

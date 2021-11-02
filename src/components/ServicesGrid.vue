@@ -20,14 +20,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-.grid-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content:center;
-    margin-top: 16px;
-    gap: 5em;
-  }
-
-</style>

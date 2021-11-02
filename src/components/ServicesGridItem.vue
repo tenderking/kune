@@ -1,10 +1,35 @@
 <template>
   <div class="service-item">
-    <h3 class="service-name">{{ service.name }}</h3>
-    <p class="service-link">{{ service.category}}</p>
-    <router-link v-bind:to="'/services/' + service.id">
+    <div class="service-item-topDiv">
+      <h3 class="service-item-title">{{ service.name }}</h3>
+    </div>
+    <div class="service-item-bottomDiv">
+
+    <div class="service-item-address service-item-text">
+      <fa icon="map" />
+      <p>{{ service.address }}</p>
+    </div>
+    <div class="service-item-phone service-item-text">
+      <fa icon="phone" />
+      <p>077 123 456 789</p>
+    </div>
+    <div class="service-item-website service-item-text">
+      <fa icon="link" />
+      <p>{{ service.websiteUrl }}</p>
+    </div>
+    <div class="service-item-facebook service-item-text">
+      <fa :icon="['fab','facebook']" />
+      <p>www.facebook.com</p>
+    </div>
+    <div class="service-item-whatsapp service-item-text">
+      <fa :icon="['fab','whatsapp']" />
+      <p>unvailable</p>
+    </div>
+    </div>
+
+    <!--   <router-link v-bind:to="'/services/' + service.id">
       <button>View Details</button>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
@@ -14,28 +39,3 @@ export default {
   props: ["service"],
 };
 </script>
-
-<style lang="scss" scoped>
-.service-item {
-  align-items: center;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px #888;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 2%;
-  padding: 20px;
-  position: relative;
-  width: 20%;
-   border:2px solid blueviolet;
-}
-.service-name {
-  margin-bottom: 0; 
-  button {
-    width: 100%;
-    background-color: $secondaryDark;
-  }
-}
-.service-link{
-    color:$primary
-}
-</style>

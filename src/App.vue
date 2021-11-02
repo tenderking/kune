@@ -1,7 +1,6 @@
 <template>
   <header>
-    <router-link class="logo" @click="isActive = false" to="/">
-      Kune
+    
     <router-link 
       class="logo" 
       @click="isActive = false" 
@@ -14,7 +13,8 @@
           >sign in</router-link
         >
       </li>
-      <li><a href="#" @click="toggleClass()">menu</a></li>
+      <li><a v-if="isActive===false" href="#" @click="toggleClass()">menu</a>
+    <fa v-else icon="times"  @click="toggleClass()" /></li>
     </nav>
   </header>
    <!-- Drop-down menu -->
@@ -22,7 +22,7 @@
     <div class="bar">
       <router-link 
         @click="isActive = false" 
-        to="/sites"
+        to="/services"
         >Browse Services
       </router-link>
     </div>
@@ -45,16 +45,7 @@ export default {
     };
     return { isActive, toggleClass };
   },
-  //   data() {
-  //     return{
-  // isActive: true,
-  //     }
-  //   },
-  //   methods: {
-  //     toggleClass: function () {
-  //       this.isActive = !this.isActive;
-  //     },
-  //   },
+
 };
 </script>
 <style lang="scss">

@@ -1,10 +1,16 @@
 .colorful-button{
     background-color: $primary ;
     color: $dark;
-    border: 2px solid $secondaryDark;
-
+    font-weight: bold;
+    border: 1px solid $secondaryDark;
+padding:0.3rem 1rem;
+border-radius: 4px;
     text-decoration: none;
-    
+    box-shadow: 0px 1px 3px #bbb;
+    &:hover{
+      background-color: $primaryLight ;
+      transition: background-color 0.5s;
+    }
 
 }
 

@@ -16,21 +16,30 @@
       </div>
     </div>
     <section class="category-picker">
-      <p id="category-picker-text">
+      <p class="category-picker-text">
         Find the best local businesses and services in your area
       </p>
       <div class="category-container">
 
-      <div class="category-box"></div>
-      <div class="category-box"></div>
-      <div class="category-box"></div>
-      <div class="category-box"></div>
-      <div class="category-box"></div>
+      <div class="category-box"
+       v-for="service in services"
+        :key="service.id"
+        :service="service"
+       
+      ><router-link @click="isActive = false" to="/services">
+      <p>
+        {{service.category}}
+        
+        </p>
+     <fa icon="chevron-right"/>
+      </router-link>
+        </div>
+      
       </div>
     </section>
     <section class="motivation-section">
       <div class="motivation-card-1">
-        <p>
+        <p >
           Are you a business owner and looking for the place to showcase your
           business and attract customers. At kune you can do exaclty just that.
         </p>
@@ -44,5 +53,17 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import { services } from "../fake-data";
+export default{
+  data(){
+    return{
+      services,
+    
+    }
+  },
+
+}
+
+</script>
 

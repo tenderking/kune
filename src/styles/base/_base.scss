@@ -1,6 +1,8 @@
 
 
-
+*,*::before,*::after{
+  box-sizing: border-box;
+}
 
 
 #app {
@@ -14,4 +16,36 @@
 body {
   background: $secondaryLight; 
   margin:0;
+  min-height: 100vh;
+ 
+  
+}
+.container{
+  margin-inline:auto;
+  width: min(90%,70.5rem);
+}
+#app {
+  height: 100vh;
+  
+  /* grid container settings */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 
+    'header'
+    'main'
+    'footer';
+}
+
+#app > header {
+  grid-area: header;
+}
+
+#app > main {
+  grid-area: main;
+  padding: 15px 5px 10px 5px;
+}
+
+#app > footer {
+  grid-area: footer;
 }

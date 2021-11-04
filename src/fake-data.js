@@ -20,7 +20,7 @@ export const services = [
     {
         id: "132",
         name: "Property.co.zw",
-        category: "Online market",
+        category: "Real estate",
         description: "This is online market for buying and selling property",
         websiteUrl: "https://www.property.co.zw/#",
         address:"Some address in Harare",
@@ -29,7 +29,7 @@ export const services = [
     {
         id: "321",
         name: "TopUp",
-        category: "Online market",
+        category: "Fintech",
         description:
             "This is website for topping up airtime, data, and other payments",
         websiteUrl: "https://www.topup.co.zw/",
@@ -39,7 +39,7 @@ export const services = [
     {
         id: "234",
         name: "Webdev",
-        category: "Online solution",
+        category: "Digitalizing",
         description: "This is an online solutions form websites and such and such",
         websiteUrl: "https://www.webdev.co.zw/",
         address:"Some address in Harare",

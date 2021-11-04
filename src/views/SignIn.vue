@@ -1,7 +1,12 @@
 <template>
-  <div class="sign-in-container">
+  <main class="grid-wrap">
+      <div class="sign-in-container">
+
+      <h2>Hello world</h2>
       <p>This is the sign-in page</p>
-  </div>
+      </div>
+
+  </main>
 </template>
 
 <script>

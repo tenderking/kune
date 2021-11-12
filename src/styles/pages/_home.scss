@@ -12,7 +12,7 @@
     // align-items: center;
     img{
       width: 80%;
-      padding-left: 2em;
+      padding: 3em 3em  0 3em;
     }
     &-left {
       text-align: left;
@@ -138,6 +138,8 @@
   
   .motivation-section {
     margin-block: 4em;
+ 
+    font-size: smaller;
     min-height: fit-content;    
     display: flex;
     flex-wrap: wrap;

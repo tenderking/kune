@@ -48,13 +48,15 @@
 .motivation-card {
   &-1,
   &-2 {
+    display: block;
     width: 15em;
     height: 15em;
     background-color: $secondaryDark;
     text-align: center;
-
-    padding: 1em;
+    font-weight: 600;
+    padding: 2em;
     border-radius: 10%;
+   
   }
   &-2 {
     background-color: $dark;

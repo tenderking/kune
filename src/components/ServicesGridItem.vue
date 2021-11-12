@@ -15,7 +15,9 @@
     </div>
     <div class="service-item-website service-item-text">
       <fa icon="link" />
+      <a :href="service.websiteUrl">        
       <p>{{ service.websiteUrl }}</p>
+      </a>
     </div>
     <div class="service-item-facebook service-item-text">
       <fa :icon="['fab','facebook']" />

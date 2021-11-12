@@ -50,7 +50,7 @@ export const services = [
         name: "Sprout Women",
         category: "NGO",
         description: "Womens rights and empowerment NGO",
-        websiteUrl: "www.sproutwomenempowermenttrust.co.zw/",
+        websiteUrl: "https://www.sproutwomenempowermenttrust.co.zw/",
         address:"Some address in Harare",
         tags: ["women", "NGO"],
     },

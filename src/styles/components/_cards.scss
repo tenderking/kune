@@ -12,8 +12,9 @@
   width: 250px;
   border: 2px solid $secondaryDark;
 
+
   &-topDiv {
-    background-color: $primaryLight;
+   
     width: 100%;
     border-bottom: 2px solid $secondaryDark;
     border-radius: 6px 6px 0 0;
@@ -25,6 +26,15 @@
     .service-item-name {
       margin-bottom: 0;
       font-size: 14px;
+    }
+    .service-item-image{
+      position: absolute;
+      width: 100%;
+      z-index: 99;
+      outline: solid greenyellow;
+      height: 100px;
+      top:0;
+     
     }
   }
   &-bottomDiv {

@@ -1,0 +1,53 @@
+header {
+  
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  
+  margin-inline: auto;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  background-color: $clr-secondaryLight;
+ 
+z-index: 2;
+
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 2em;
+  li {
+    list-style: none;
+    a {
+      text-decoration: none;
+      font-style: inherit;
+      color: $dark;
+    }
+    transition: all 0.5s;
+    
+  }
+  li:hover {
+    border-bottom: 2px solid $primary ;
+    transition: all 0.5s;
+  }
+}
+
+.nav-item {
+  text-decoration: none;
+  color: $dark;
+}
+
+.fa-times:hover::after {
+  position: relative;
+  color: $primary;
+  width: 1.2em;
+}
+.icon-chevron{
+  transform: scaleY(-1);
+  transition: transform 0.5s;
+}
+
+
+}

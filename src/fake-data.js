@@ -1,13 +1,5 @@
 export const services = [
-    {
-        id: "123",
-        name: "ZBC News",
-        category: "News",
-        description: "This is the zimbabwe broadtcasting corporation",
-        address:"Some address in Harare",
-        websiteUrl: "https://www.zbcnews.co.zw/",
-        tags: "news",
-    },
+  
     {
         id: "213",
         name: "Classifieds",
@@ -16,6 +8,7 @@ export const services = [
         websiteUrl: " https://www.classifieds.co.zw/",
         address:"Some address in Harare",
         tags: "market",
+        imgUrl:"../assets/images/classifieds.png"
     },
     {
         id: "132",
@@ -25,6 +18,7 @@ export const services = [
         websiteUrl: "https://www.property.co.zw/#",
         address:"Some address in Harare",
         tags: "real estate",
+        imgUrl:"../assets/images/property.png"
     },
     {
         id: "321",
@@ -35,6 +29,7 @@ export const services = [
         websiteUrl: "https://www.topup.co.zw/",
         address:"Some address in Harare",
         tags: "money",
+        imgUrl:"../assets/images/topup.png"
     },
     {
         id: "234",
@@ -44,6 +39,7 @@ export const services = [
         websiteUrl: "https://www.webdev.co.zw/",
         address:"Some address in Harare",
         tags: "web development",
+        imgUrl:"../assets/images/webdev.png"
     },
     {
         id: "243",
@@ -53,6 +49,47 @@ export const services = [
         websiteUrl: "https://www.sproutwomenempowermenttrust.co.zw/",
         address:"Some address in Harare",
         tags: ["women", "NGO"],
+        imgUrl:"../assets/images/swet.png"
+    },
+    {
+        id: "343",
+        name: "Enbee",
+        category: "Clothing Store",
+        description: "School uniform store ",
+        websiteUrl: "https://www.enbee.co.zw/",
+        address:"Some address in Harare",
+        tags: ["school", "uniform"],
+        imgUrl:"../assets/images/enbee.png"
+    },
+    {
+        id: "334",
+        name: "Startup Biz",
+        category: "Business",
+        description: "Womens rights and empowerment NGO",
+        websiteUrl: "https://www.startupbiz.co.zw/",
+        address:"Some address in Harare",
+        tags: ["business", "start-up"],
+        imgUrl:"src/assets/images/startupbiz.png"
+    },
+    {
+        id: "334",
+        name: "Tech Zim",
+        category: "Business",
+        description: "Womens rights and empowerment NGO",
+        websiteUrl: "https://www.techzim.co.zw/",
+        address:"Some address in Harare",
+        tags: ["business", "start-up","tech"],
+        imgUrl:"./assets/images/techzim.png"
+    },
+    {
+        id: "334",
+        name: "Fresh in a Box",
+        category: "Food",
+        description: "Womens rights and empowerment NGO",
+        websiteUrl: "https://www.freshinabox.co.zw/",
+        address:"Some address in Harare",
+        tags: ["food"],
+        imgUrl:"./assets/images/freshinabox.png"
     },
 ];
 

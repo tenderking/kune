@@ -1,4 +1,5 @@
 <template>
+
    <header>
     <router-link 
       class="logo" 
@@ -12,7 +13,7 @@
           >sign in</router-link
         >
       </li>
-      <li><a href="#"  @click="toggleClass()" v-if="isActive===false" >menu</a>  <fa  v-else icon="times" @click="toggleClass()"   /></li>
+      <li><a  @click="toggleClass()" v-if="isActive===false" >menu</a>  <fa  v-else icon="times" @click="toggleClass()"   /></li>
     </nav>
   </header>
    <!-- Drop-down menu -->
@@ -39,6 +40,7 @@ import { ref } from "vue";
 export default {
     name: "NavBar",
   setup() {
+    
     const isActive = ref(false);
     const toggleClass = () => {
       isActive.value = !isActive.value;

@@ -1,10 +1,12 @@
 footer{
-    position:relative;
+
+    
+  grid-area: footer;
+  height: fit-content; /* Height of the footer */
+  background: $clr-secondary;
+  position:relative;
   bottom:0;
     margin-top: auto;
-     width:100%;
-     height:fit-content;   /* Height of the footer */
-     background:$clr-secondary;
-    p{text-align: center;}
+  p{text-align: center;}
    
   }

@@ -21,6 +21,7 @@ module.exports = {
       // pass Less.js Options to less-loader
       
       
-    }
+    },
+   
   }
 }

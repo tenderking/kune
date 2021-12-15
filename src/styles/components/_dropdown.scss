@@ -25,24 +25,25 @@
     }
     &-active {
       display: flex;
-      background-color: $clr-secondaryDark;
+      background-color: $clr-secondaryLight;
       width: 100%;
       position: fixed;
       justify-content: center;
       align-items: center;
       margin-inline: auto;
       padding: 0em;
-      height:0;
-      top: -20em;
+     
+      top: 4em;
       right: 0;
       left:0;
       flex-direction: column;
       justify-content: flex-start;
       padding-top: 3em;
       gap:5em;
-      height: 20em;
-      top: 1em;
-      box-shadow: 0px 1px 3px #888;
+      height: 19em;
+     
+      box-shadow: 0px 3px 3px -3px #888;
       transition: all 1s ;
+      z-index: 9999;
     }
   }

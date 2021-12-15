@@ -5,6 +5,7 @@
   justify-content: center;
   margin-top: 16px;
   gap: 5em;
+  max-width: 1400px;
 }
 
 #page-nav {
@@ -29,12 +30,14 @@
     color: $secondaryDark;
     margin: 0;
     padding: 0;
+    cursor: default;
   }
   
   &-type {
     font-size: 14px;
     margin: 0;
     padding: 0;
+    cursor: pointer;
   }
 }
 #sort-services-type{

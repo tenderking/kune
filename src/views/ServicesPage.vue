@@ -2,20 +2,20 @@
   <main>
     <div id="page-nav">
       <div>
-        <select id="services-category-btn" v-model="services.category">
-          <option default value="">Category</option>
+        <select id="services-category-btn" v-model="uniqueCategories.category" name="Category">
+          <option value=""  v-on:click="userFilterKey = 'all'"  >Category</option>
           <option
-            v-for="choice in services"
+            v-for="choice in uniqueCategories"
             :key="choice.id"
-            @click="onCategoryClick(choice)"
+            @click="onCategoryClick"
             
-            value="choice"
+            :value="choice.category"
           >
             {{ choice.category }}
           </option>
         </select>
 
-        <!-- <fa icon="chevron-down" /> -->
+        
       </div>
 
       <div id="sort-services">
@@ -25,7 +25,7 @@
     </div>
 
     <div id="page-wrap"   >
-
+<p>{{uniqueCategories.category}}</p>
             <ServicesGrid :services="services" />
           
     </div>
@@ -45,5 +45,23 @@ export default {
       services,
     };
   },
+  methods: {
+    onCategoryClick(evt){
+      const clicked = evt.target
+      console.log('you have clicked on',clicked.value)
+
+    },
+    
+  },
+ computed: {
+    uniqueCategories() {
+      return this.services.reduce((seed, current) => {
+        return Object.assign(seed, {
+          [current.category]: current
+        });
+      }, {});
+    }
+  }
+
 };
 </script>

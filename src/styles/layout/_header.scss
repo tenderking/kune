@@ -1,22 +1,25 @@
 header {
-  
+  grid-area: header;
+  box-shadow: 0px 3px 3px -3px #888;
   position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  width: 100vw;
+  left: 10px;
+  right: 10px;
+  width: 100%;
   
-  margin-inline: auto;
+  // margin-inline: auto;
   padding: 1em;
   display: flex;
   justify-content: space-between;
   background-color: $clr-secondaryLight;
+  max-height: 4em;
  
-z-index: 2;
+z-index: 999;
 
-nav {
+nav, ul, li {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   gap: 2em;
   li {
     list-style: none;

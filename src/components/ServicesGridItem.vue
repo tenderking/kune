@@ -1,7 +1,14 @@
 <template>
+<div class="card-container">
+
+<div >
+  <h3 class="service-item-title"> {{ service.name }}</h3>
+</div>
   <div class="service-item">
     <div class="service-item-topDiv">
+      <img class="service-item-image" v-bind:src="service.imgUrl" />
       <h3 class="service-item-title">{{ service.name }}</h3>
+
     </div>
     <div class="service-item-bottomDiv">
 
@@ -33,6 +40,10 @@
       <button>View Details</button>
     </router-link> -->
   </div>
+  <div>
+    <p class="service-description">{{service.description}}</p>
+  </div>
+</div>
 </template>
 
 <script>

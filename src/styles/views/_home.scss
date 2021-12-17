@@ -1,15 +1,13 @@
-#home-wrap {
-  padding: 0rem;
-  margin: auto;
+
+  .kune {
+    color: $primary;
+  }
+
 
   .home-landing {
     margin-bottom: 2em;
-    // display: flex;
-    // flex-direction: row-reverse;
-    // margin: 0;
-
-    // justify-content: center;
-    // align-items: center;
+    padding-left: 0.85em;
+   
     img{
       width: 80%;
       padding: 3em 3em  0 3em;
@@ -21,11 +19,9 @@
       h1 {
         font-size: 1em;
         font-weight: bold;
-        line-height: 0em;
+        
         padding-top: 5em;
-        .kune {
-          color: $primary;
-        }
+       
       }
      
       h2 {
@@ -40,10 +36,7 @@
         line-height: 2.2em;
       }
     }
-    // &-right {
-    //   flex-basis: 50%;
-    //   padding-top: 2rem;
-    // }
+
   }
   @media (min-width: 40em) {
     .home-landing {
@@ -51,14 +44,18 @@
       flex-direction: row-reverse;     
       justify-content: center;
       align-items: center;
-
+      margin:auto;
+      
+padding-bottom: 2em;
       h2{
         font-size: 3em;
 
       }
        &-right {
-      flex-basis: 50%;
+      
+
       padding-top: 2rem;
+      padding-left: 4rem;
       img{
         width: auto;
         padding:0;
@@ -69,7 +66,8 @@
   }
   .category-picker {
     background: $primaryLight;
-    margin: 0 -50%;
+    margin: 0;
+    width: 100%;
     padding-block: 2rem;
    
     &-text {
@@ -83,15 +81,18 @@
   }
   .category-container {
     display: grid;
-    place-items: center;
+    place-items: left;
     grid-template-columns:  1fr 1fr;
     grid-template-rows: 1fr 1fr;
     justify-content: center;
     padding: 1rem 0;
+    
     margin-inline: auto;
     width: min(60%, 70.5rem);
   }
   .category-box {
+    margin-left: auto;
+    padding-inline:1em;
 
     
     a{      
@@ -101,13 +102,14 @@
       gap: 1em;
       color: $clr-secondaryDark;      
       font-size: 20px;
-      line-height: 1.2;
-      letter-spacing: 0.05em;
+     
+     
       text-decoration: none;
       margin: 0;
     
-      font-size: 1em;
+      font-size: 0.6em;
       transition: all 0.2s;
+    
       
       
     }
@@ -115,10 +117,14 @@
     &:hover {
       a{
         
-        line-height: 0.3em;
-        letter-spacing: 0.1em;
+       
+       
         color:$clr-primary;
-        gap: 1.3em;
+        .chevron-right{
+          transform:translateX(3px) ;
+          transition: all 0.5s ease-in-out;
+        }
+      
         transition: all 0.4s;
 
       }
@@ -148,4 +154,4 @@
     gap:4em//margin: 4em;
     
   }
-}
+

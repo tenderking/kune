@@ -10,7 +10,7 @@
 @media  (min-width: 40em) {
     .sign-in-container{
         width: 30em;
-        height: 40em;
+        height:fit-content;
         background-color: $secondary;
         border-radius: 10px;
         box-shadow: 0px 1px 3px #888;

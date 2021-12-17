@@ -1,0 +1,12 @@
+footer{
+
+    
+  grid-area: footer;
+  height: fit-content; /* Height of the footer */
+  background: $clr-secondary;
+  position:relative;
+  bottom:0;
+    margin-top: auto;
+  p{text-align: center;}
+   
+  }

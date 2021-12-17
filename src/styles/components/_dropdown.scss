@@ -1,3 +1,49 @@
-.dropdown-content{
+
+  .menu-container {
     display: none;
+   
+    transition: top 1s;
+    
+    .bar {
+      width: 32%;
+      height: 0em;
+      text-align: center;
+      
+      a {
+        text-decoration: none;
+        color: $dark;
+        font-size: 20px;
+        line-height: 1.2;
+        letter-spacing: 0.05em;
+        
+        &:hover {
+          color: $primaryLight;
+          letter-spacing: 0.2em;
+          transition: all 0.5s;
+        }
+      }
+    }
+    &-active {
+      display: flex;
+      background-color: $clr-secondaryLight;
+      width: 100%;
+      position: fixed;
+      justify-content: center;
+      align-items: center;
+      margin-inline: auto;
+      padding: 0em;
+     
+      top: 4em;
+      right: 0;
+      left:0;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 3em;
+      gap:5em;
+      height: 19em;
+     
+      box-shadow: 0px 3px 3px -3px #888;
+      transition: all 1s ;
+      z-index: 9999;
+    }
   }

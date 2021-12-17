@@ -13,20 +13,20 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
-    "core-js": "^3.19.0",
+    "core-js": "^3.19.3",
     "fiber": "^1.0.4",
-    "vue": "^3.2.20",
+    "vue": "^3.2.24",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.2.20",
+    "@vue/cli-plugin-babel": "^4.5.15",
+    "@vue/cli-plugin-router": "^4.5.15",
+    "@vue/cli-service": "^4.5.15",
+    "@vue/compiler-sfc": "^3.2.24",
     "babel-eslint": "^10.1.0",
     "fibers": "^5.0.0",
-    "prettier": "^2.2.1",
-    "sass": "^1.43.4",
+    "prettier": "^2.5.1",
+    "sass": "^1.44.0",
     "sass-loader": "^8.0.2"
   },
   "eslintConfig": {

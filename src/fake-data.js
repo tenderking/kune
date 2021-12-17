@@ -7,7 +7,8 @@ import pic6 from '../src/assets/images/enbee.png'
 import pic7 from '../src/assets/images/startupbiz.png'
 import pic8 from '../src/assets/images/techzim.png'
 import pic9 from '../src/assets/images/freshinabox.png'
-// import pic10 from '../src/assets/images'
+import pic10 from '../src/assets/images/glamour.png'
+import pic11 from '../src/assets/images/tradek.png'
 
 export const services = [
   
@@ -76,7 +77,7 @@ export const services = [
         id: "334",
         name: "Startup Biz",
         category: "Business",
-        description: "Womens rights and empowerment NGO",
+        description: "StartupBiz Zimbabwe is a business research firm based in Zimbabwe. We are passionate about entrepreneurship. We want to help Zimbabweans start and grow their businesses successfully.",
         websiteUrl: "https://www.startupbiz.co.zw/",
         address:"Some address in Harare",
         tags: ["business", "start-up"],
@@ -86,7 +87,7 @@ export const services = [
         id: "334",
         name: "Tech Zim",
         category: "Business",
-        description: "Womens rights and empowerment NGO",
+        description: "Techzim is an information technology and business publication that obsesses about the opportunity of tech particularly the internet for individuals and businesses in Zimbabwe and the greater African region.",
         websiteUrl: "https://www.techzim.co.zw/",
         address:"Some address in Harare",
         tags: ["business", "start-up","tech"],
@@ -96,11 +97,41 @@ export const services = [
         id: "334",
         name: "Fresh in a Box",
         category: "Food",
-        description: "Womens rights and empowerment NGO",
+        description: "Food delivery and  online shop",
         websiteUrl: "https://www.freshinabox.co.zw/",
         address:"Some address in Harare",
         tags: ["food"],
         imgUrl:pic9
+    },
+    {
+        id: "335",
+        name: "Glamour Gem",
+        category: "Shop",
+        description: "Procurement shop for office, supplies, IT and Uniforms",
+        websiteUrl: "https://www.glamourgem.net/",
+        address:"1 Letham Road, Avondale, Harare",
+        tags: ["Supplies"],
+        imgUrl:pic10
+    },
+    {
+        id: "336",
+        name: "Trade Kings",
+        category: "Manufacturer",
+        description: "Trade Kings Zimbabwe are the manufacturers of the Boom and Xtra range of detergent products. ",
+        websiteUrl: "http://www.tkzimbabwe.com/",
+        address:" 10 Douglas Road, Harare",
+        tags: ["Industry"],
+        imgUrl:pic11
+    },
+    {
+        id: "337",
+        name: "Shift Engage",
+        category: "Media",
+        description: "Shift Engage is a multi-award winning Creative Advertising Agency specialising in integrated online and offline media. ",
+        websiteUrl: "http://www.shiftengage.net/",
+        address:"8 Howard Cl, Harare",
+        tags: ["Advertising","Branding"],
+        imgUrl:pic11
     },
 ];
 

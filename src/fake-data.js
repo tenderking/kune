@@ -9,6 +9,7 @@ import pic8 from '../src/assets/images/techzim.png'
 import pic9 from '../src/assets/images/freshinabox.png'
 import pic10 from '../src/assets/images/glamour.png'
 import pic11 from '../src/assets/images/tradek.png'
+import pic12 from '../src/assets/images/shiftengage.png'
 
 export const services = [
   
@@ -131,7 +132,7 @@ export const services = [
         websiteUrl: "http://www.shiftengage.net/",
         address:"8 Howard Cl, Harare",
         tags: ["Advertising","Branding"],
-        imgUrl:pic11
+        imgUrl:pic12
     },
 ];
 

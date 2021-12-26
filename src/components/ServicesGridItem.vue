@@ -2,7 +2,7 @@
 <div class="card-container">
 
 <div >
-  <h3 class="service-item-title"> {{ service.name }}</h3>
+  <h3 class="service-item-title" style="color: #5C8487;"> {{ service.name }}</h3>
 </div>
   <div class="service-item">
     <div class="service-item-topDiv">

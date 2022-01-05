@@ -1,65 +1,76 @@
 .service-item {
-  border-radius: 6px;
-  //border: 2px solid $secondary;
-  box-shadow: 0px 1px 3px #888;
   display: flex;
   flex-direction: column;
+  //border: 2px solid $secondary;
   align-items: center;
-  height: 400px;
-  margin: 0;
-
   position: relative;
+  
+  height: 400px;
   width: 300px;
+  margin: 0;
+  
   //border: 2px solid $secondaryDark;
+  box-shadow: 0px 1px 3px #888;
+  border-radius: 6px;
 
   &-topDiv {
-    width: 100%;
-    //border  border-bottom: 2px solid $secondaryDark;
-    border-radius: 6px 6px 0 0;
-
     display: inline-block;
-    overflow: hidden;
+    //border  border-bottom: 2px solid $secondaryDark;
+    
     justify-items: center;
+    width: 100%;
     margin-top: 0;
+
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
 
     .service-item-title {
       position: absolute;
-      background: $clr-gradient;
-      padding-top: 100px;
       top: -24px;
-      color: $clr-light;
-      text-shadow: 3px 4px 5px #666;
-      font-size: 24px;
-      text-align: center;
-      border-radius: 4px 4px 0 0;
+      
+      background: $clr--gradient;
       width: 300px;
       height: 200px;
+      padding-top: 100px;
+     
+      font-size: 24px;
+      text-align: center;
+      text-shadow: 3px 4px 5px #666;
+      color: $clr--light;
+     
+      border-radius: 4px 4px 0 0;
     }
+
     .service-item-image {
-      overflow-x: hidden;
+      top: 0;
 
       width: 100%;
-
       height: 200px;
-      top: 0;
+      
+      overflow-x: hidden;
     }
   }
 
   &-bottomDiv {
-    width: 100%;
     display: flex;
     flex-direction: column;
+
     justify-content: center;
     align-items: left;
-    color: $clr-secondaryDark;
+    
+    width: 100%;
+    color: $clr--secondaryDark;
   }
   &-text {
     display: flex;
-    align-items: center;
     gap: 1em;
-    font-size: 12px;
+
+    align-items: center;
+    
     padding-inline: 1em;
     max-width: 80%;
+    
+    font-size: 12px;
     overflow: hidden;
   }
 }
@@ -73,6 +84,7 @@
   }
   .service-item-title {
     background: transparent;
+
     color: transparent;
     text-shadow: none;
    
@@ -81,23 +93,27 @@
 }
 .service-description {
   width: 300px;
-  color:$clr-secondaryDark;
+  color:$clr--secondaryDark;
 }
 
 .motivation-card {
   &-1,
   &-2 {
     display: block;
+    
     width: 15em;
     height: 15em;
-    background-color: $secondaryDark;
-    text-align: center;
-    font-weight: 600;
+    background-color: $clr--dark;
     padding: 2em;
+    font-size: 14px;
+    
+    font-weight: normal;
+    // text-align: center;
+    
     border-radius: 10%;
+    color: white;
   }
   &-2 {
-    background-color: $dark;
-    color: white;
+    background-color: $clr--dark;
   }
 }

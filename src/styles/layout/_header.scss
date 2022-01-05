@@ -1,56 +1,59 @@
 header {
   grid-area: header;
-  box-shadow: 0px 3px 3px -3px #888;
+  display: flex;
+  justify-content: space-between;
+
   position: sticky;
   top: 0;
   left: 10px;
   right: 10px;
-  width: 100%;
-  
+  z-index: 999;
+
   // margin-inline: auto;
+  width: 100%;
   padding: 1em;
-  display: flex;
-  justify-content: space-between;
-  background-color: $clr-secondaryLight;
+  background-color: $clr--secondaryLight;
   max-height: 4em;
- 
-z-index: 999;
 
-nav, ul, li {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 2em;
+  box-shadow: 0px 3px 3px -3px #888;
+
+  nav,
+  ul,
   li {
-    list-style: none;
-    a {
-      text-decoration: none;
-     font-size: 14px;
-      color: $dark;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 2em;
+
+    li {
+      list-style: none;
+      a {
+        text-decoration: none;
+        font-size: 14px;
+        color: $clr--dark;
+      }
+      transition: all 0.5s;
     }
-    transition: all 0.5s;
-    
+    li:hover {
+      border-bottom: 2px solid $clr--primary;
+      transition: all 0.5s;
+    }
   }
-  li:hover {
-    border-bottom: 2px solid $primary ;
-    transition: all 0.5s;
+
+  .nav-item {
+    text-decoration: none;
+    color: $clr--dark;
   }
-}
 
-.nav-item {
-  text-decoration: none;
-  color: $dark;
-}
+  .fa-times:hover::after {
+    position: relative;
 
-.fa-times:hover::after {
-  position: relative;
-  color: $primary;
-  width: 1.2em;
-}
-.icon-chevron{
-  transform: scaleY(-1);
-  transition: transform 0.5s;
-}
+    width: 1.2em;
 
-
+    color: $clr--primary;
+  }
+  .icon-chevron {
+    transform: scaleY(-1);
+    transition: transform 0.5s;
+  }
 }

@@ -7,17 +7,18 @@
     .bar {
       width: 32%;
       height: 0em;
+
       text-align: center;
       
       a {
         text-decoration: none;
-        color: $dark;
+        color: $clr--dark;
         font-size: 20px;
         line-height: 1.2;
         letter-spacing: 0.05em;
         
         &:hover {
-          color: $primaryLight;
+          color: $clr--primaryLight;
           letter-spacing: 0.2em;
           transition: all 0.5s;
         }
@@ -25,25 +26,31 @@
     }
     &-active {
       display: flex;
-      background-color: $clr-secondaryLight;
-      width: 100%;
-      position: fixed;
+      flex-direction: column;
+   
+      // FIXME:
+      justify-content: flex-start;
       justify-content: center;
+      gap:5em;
+
+      position: fixed;
       align-items: center;
-      margin-inline: auto;
-      padding: 0em;
-     
       top: 4em;
       right: 0;
       left:0;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding-top: 3em;
-      gap:5em;
+      z-index: 9999;
+      
+      background-color: $clr--secondaryLight;
       height: 19em;
+      width: 100%;
+      margin-inline: auto;
+
+       // FIXME:
+      padding: 0em;
+      padding-top: 3em;
+     
      
       box-shadow: 0px 3px 3px -3px #888;
       transition: all 1s ;
-      z-index: 9999;
     }
   }

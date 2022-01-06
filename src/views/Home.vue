@@ -7,13 +7,13 @@
         </div>
         <div class="home-landing-left">
           <h1>
-            At <span class="kune"> kune </span>, we provide an overwiew over
+            At <span class="kune"> Kune </span>, we provide an overwiew of Zimbabwean
             digital services, including essential details about them.
           </h1>
-          <h2>We have what you're looking for and more to discover</h2>
+          <h2>Digital discovery made easy</h2>
           <p>
-            Are you looking for place to easily find digital services that you
-            need in one place?. <span class="kune"> kune </span> makes it a
+            Are you looking for place to easily find businesses that you
+            need in one place? <span class="kune"> Kune </span> makes it a
             pleasant journey. You will find innovation and convience.
           </p>
           <a href="#" class="colorful-button">Sign up</a>
@@ -31,7 +31,7 @@
         </div>
         <div class="motivation-card">
           <h3> Discover </h3>
-          At <span class="kune"> kune </span>we showcase a vast number of Zimbabwean
+          At <span class="kune"> Kune </span>we showcase a vast number of Zimbabwean
           websites, what type of services they offer and where they a located.
           You can easily bookmark the services you find interesting if you want
           to come back to them
@@ -41,7 +41,7 @@
           <p>
             Are you a business owner and looking for the place to showcase your
             business and attract customers. At
-            <span class="kune"> kune </span> you can do exaclty just that.
+            <span class="kune"> Kune </span> you can do exaclty just that.
           </p>
         </div>
       </section>
@@ -50,7 +50,7 @@
       <section class="category-picker">
        
         <p class="category-picker-text">
-          Find the best local businesses and services in your area
+          Discover the best local businesses and services in your area
         </p>
         <div class="category-container">
           <div

@@ -7,12 +7,12 @@
       to="/"> Kune 
     </router-link>
     </div>
-    <div class="footer-links">
-      <ul>
-        <li>About</li>
-        <li>Contanct Us</li>
+    <nav >
+      <ul class="bar">
+        <li>   <router-link @click="isActive = false" to="/about">About</router-link></li>
+        <li>   <router-link @click="isActive = false" to=#> Contact Us</router-link></li>
       </ul>
-    </div>
+    </nav>
     <div class="footer-copyright">
       <p>copyright 2021</p>
     </div>

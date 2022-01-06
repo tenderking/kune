@@ -3,13 +3,25 @@ footer{
 
   position:relative;
   bottom:0;
-    
+    padding:1em 3em;
   height: fit-content; /* Height of the footer */
   background: $clr--secondary;
   margin-top: auto;
+
+  a {
+    text-decoration: none;
+    color: $clr--dark;
+   
+    font-size: smaller;
+  }
+  a:hover{
+    text-decoration: $clr--secondaryLight underline;
+    
+  }
   
   p{
     text-align: center;
+    font-size: small;
   }
    
   }

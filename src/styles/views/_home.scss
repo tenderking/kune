@@ -1,131 +1,179 @@
-
-  .kune {
-    color: $clr--primary;
-    font-weight: bolder;
-  }
-
-
-  .home-landing {   
-  
-    &-left {
-      text-align: left;
-      flex-basis: 50%;      
-    }
-
-  }
-  @media (min-width: 40em) {
-    .home-landing {
-      display: flex;
-      flex-direction: row-reverse;     
-      justify-content: center;
-      align-items: center;
-     
-      
-      margin:auto;      
-  
-
-     
-  }
-
+.kune {
+  font-family: 'Palanquin Dark';
+  color: $clr--primary;
+  font-weight: bolder;
 }
-  .category-picker {
-    
- 
-    margin: 0;
-    padding-block: 2rem;
-   
-    &-text {
-      display: block;
-      
-      margin: 0 20%;
 
-      text-align: center;
+.home-landing {
+  padding: 0 1rem;
+  &-right {
+    margin-right: auto;
+    img {
+      border: none;
+      transform: rotate(0deg);
     }
   }
-  .category-container {
-    display: grid;
-    grid-template-columns:  1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    
-    place-items: left;
+  &-left {
+    flex-basis: 50%;
+
+    margin-top: 1em;
+
+    text-align: left;
+  }
+  h1 {
+    font-size: 1.125em;
+    font-weight: 600;
+  }
+  h2 {
+    font-size: 2.5rem;
+    line-height: 0.9;
+    color: $clr--primary;
+  }
+  p {
+    max-width: 20em;
+    padding-block: 1em;
+
+    line-height: 1.5;
+    transform: rotate(0deg);
+  }
+}
+@media (min-width: 40em) {
+  .home-landing {
+    display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
-      
-    
-    padding: 1rem 0;
-    margin-inline: auto;
-    
-  }
-  .category-box {
-    margin-left: auto;
-    padding-inline:1em;
+    align-items: center;
 
-    
-    a{      
-      display: flex;
-      gap: 1em;
-      justify-content: left;
-      align-items: center;
-
-      margin: 0;
-      
-      color: $clr--secondaryDark;    
-     
-      
-      text-decoration: none;
-
-      transition: all 0.2s;
-
+    &-right {
+      margin: auto;
     }
-    
-    &:hover {
+    margin: auto;
+    max-width: 1024px;
+    padding: 1em;
+    h1 {
+      font-size: 1.125em;
+    }
+    h2 {
+      font-size: 4rem;
+      line-height: 0.9;
+      color: $clr--primary;
+    }
+    p {
+      max-width: 20em;
+      padding: 1em;
 
-      a{
-        color:$clr--primary;
-        .chevron-right{
-          transform:translateX(3px) ;
-          transition: all 0.5s ease-in-out;
-        }
-        
-        transition: all 0.4s;
-        
-      }
+      line-height: 1.5;
+      transform: rotate(-2deg);
+    }
+
+    img {
+      border: 2px solid $clr--secondaryDark;
+      transform: rotate(10deg);
     }
   }
-  
-.motivation-section{
+}
+.category-picker {
+  margin: 0;
+  padding-block: 2rem;
 
+  &-text {
+    display: block;
+
+    margin: 0 20%;
+
+    text-align: center;
+  }
+}
+.category-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+
+  place-items: left;
+  justify-content: center;
+
+  padding: 4em 0;
+  margin-inline: auto;
+}
+.category-box {
+
+  padding-inline: 1em;
+
+  a {
+    display: flex;
+    gap: 1em;
+    justify-content: right;
+    align-items: center;
+
+    background: $clr--primaryLight;
+    width:12em;
+    margin: 1em;
+    padding: 0 1em;
+
+    color: $clr--secondaryDark;
+    text-decoration: none;
+    font-size: small;
+    font-weight: 600;
+    line-height: 0.5;
+
+    border-radius: 10px;
+    box-shadow: 10px 5px 1px 0px rgb(206, 206, 206);
+
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    a {
+      color: $clr--primary;
+      .chevron-right {
+        transform: translateX(3px);
+        transition: all 0.5s ease-in-out;
+      }
+
+      transition: all 0.4s;
+    }
+  }
+}
+
+.motivation-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2em;
+
+  background-color: $clr--primaryLight;
   margin: 2em 0;
- 
+  padding: 4em 2em;
 
- 
-  
 
-  .motivation-card{
 
-    h3{
-      color:$clr--secondaryDark;
+  .motivation-card {
+    background: $clr--primaryLight;
+    padding-inline: 2em;
+    margin-inlne: 2em;
+
+border-left: 5px solid $clr--primary;
+   
+
+   
+    h3 {
+      color: $clr--secondaryDark;
       text-decoration: underline $clr--primary;
     }
-    p{
+    p {
       color: $clr--dark;
+      
     }
-    background: $clr--primaryLight;
-    padding: 2em;
-    margin-inline: 2em;
-    width: 15em;
   }
+ 
 }
 
-  @media (min-width:40em){
-    .category-container{
-      grid-template-columns: 1fr 1fr 1fr;
 
-    }
-
-  
+@media (min-width: 40em) {
+  .category-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 
-
+  .motivation-section {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

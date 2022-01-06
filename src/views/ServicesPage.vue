@@ -19,8 +19,8 @@
       </div>
 
       <div id="sort-services">
-        <h2 id="sort-services-heading">sort</h2>
-        <h3 id="sort-services-type" @click="sortClick">Ascending</h3>
+        <h4 id="sort-services-heading">sort</h4>
+        <h5 id="sort-services-type" @click="sortClick">Ascending</h5>
       </div>
     </div>
 

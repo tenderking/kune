@@ -27,12 +27,15 @@ header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    gap: 1em;
+    gap: 1.5em;
 
     li {
       a {
         text-decoration: none;
         color: $clr--dark;
+       
+        
+        font-size: 1rem;
       }
       transition: all 0.5s;
     }

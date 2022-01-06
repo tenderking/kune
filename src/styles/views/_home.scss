@@ -1,44 +1,15 @@
 
   .kune {
     color: $clr--primary;
+    font-weight: bolder;
   }
 
 
-  .home-landing {
-    margin-bottom: 2em;
-    padding-left: 0.85em;
-   
-    img{
-      width: 80%;
-      padding: 3em 3em  0 3em;
-    }
+  .home-landing {   
+  
     &-left {
       text-align: left;
-      flex-basis: 50%;
-
-      h1 {
-        padding-top: 1em;
-
-        font-size: 1em;
-        
-        
-       
-      }
-     
-      h2 {
-        padding: 0;
-        margin-top: 1em;
-        margin-bottom: 1em;
-
-        font-size: 2em;
-       
-        line-height: 0.95em;
-
-      }
-
-      p {
-        line-height: 2.2em;
-      }
+      flex-basis: 50%;      
     }
 
   }
@@ -48,32 +19,18 @@
       flex-direction: row-reverse;     
       justify-content: center;
       align-items: center;
+     
       
       margin:auto;      
-      padding-bottom: 2em;
+  
 
-      h2{
-        font-size: 4em;
-
-      }
-       &-right {
-        padding-top: 2rem;
-        padding-left: 2rem;
-
-      img{
-        width: auto;
-        padding:0;
-
-      }
-
-    }
-
+     
   }
 
 }
   .category-picker {
-    background: $clr--primaryLight;
-    width: 100%;
+    
+ 
     margin: 0;
     padding-block: 2rem;
    
@@ -92,8 +49,8 @@
     
     place-items: left;
     justify-content: center;
-   
-    width: min(60%, 70.5rem);
+      
+    
     padding: 1rem 0;
     margin-inline: auto;
     
@@ -113,7 +70,7 @@
       
       color: $clr--secondaryDark;    
      
-      font-size: 0.6em;
+      
       text-decoration: none;
 
       transition: all 0.2s;
@@ -135,33 +92,40 @@
     }
   }
   
+.motivation-section{
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  
+  margin: 2em 0;
+ 
+
+ 
+  
+
+  .motivation-card{
+
+    h3{
+      color:$clr--secondaryDark;
+      text-decoration: underline $clr--primary;
+    }
+    p{
+      color: $clr--dark;
+    }
+    background: $clr--primaryLight;
+    padding: 2em;
+    margin-inline: 2em;
+    width: 15em;
+  }
+}
+
   @media (min-width:40em){
     .category-container{
       grid-template-columns: 1fr 1fr 1fr;
 
     }
 
-    .category-box{
-
-      a{
-        font-size: 1.4em;
-      }
-    }
-  }
   
-  .motivation-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    gap:30em;
-    //margin: 4em;
-    align-items: center;
-    
-    margin-block: 4em;
-    min-height: fit-content;    
-
-    font-size: smaller;
- 
-
   }
+
 

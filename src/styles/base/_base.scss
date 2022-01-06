@@ -2,15 +2,60 @@
 *::before,
 *::after {
   box-sizing: border-box;
+ 
 }
+
+
+[hidden] {
+  display: none !important;
+}
+
+[disabled] {
+  cursor: not-allowed;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
 
 
 body {
   background: $clr--secondaryLight;
   margin: 0;
   min-height: 100vh;
+  line-height: 1;
+  
 
 }
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+
+
+
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:after,
+blockquote:before,
+q:after,
+q:before {
+  content: "";
+  content: none;
+}
+
 
 #app {
   /* grid container settings */
@@ -37,5 +82,7 @@ body {
 
  main {
   grid-area: main;
+ 
+ 
 }
 

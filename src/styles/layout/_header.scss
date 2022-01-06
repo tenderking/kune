@@ -2,6 +2,7 @@ header {
   grid-area: header;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   position: sticky;
   top: 0;
@@ -11,11 +12,14 @@ header {
 
   // margin-inline: auto;
   width: 100%;
-  padding: 1em;
+  max-width: 1440px;
+  padding-inline: 2rem;
   background-color: $clr--secondaryLight;
   max-height: 4em;
+  margin-left: auto;
+  margin-right: auto;
 
-  box-shadow: 0px 3px 3px -3px #888;
+  // box-shadow: 0px 3px 3px -3px #888;
 
   nav,
   ul,
@@ -23,19 +27,17 @@ header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    gap: 2em;
+    gap: 1em;
 
     li {
-      list-style: none;
       a {
         text-decoration: none;
-        font-size: 14px;
         color: $clr--dark;
       }
       transition: all 0.5s;
     }
     li:hover {
-      border-bottom: 2px solid $clr--primary;
+      text-decoration: underline 2px solid $clr--primary;
       transition: all 0.5s;
     }
   }
@@ -45,6 +47,10 @@ header {
     color: $clr--dark;
   }
 
+  .bars-menu {
+    display: none;
+  }
+ 
   .fa-times:hover::after {
     position: relative;
 
@@ -55,5 +61,22 @@ header {
   .icon-chevron {
     transform: scaleY(-1);
     transition: transform 0.5s;
+  }
+}
+@media (max-width: 40em) {
+  .nav-small-screen {
+    display: none;
+  }
+
+  header {
+    align-items: center;
+    margin-top: 0.5em;
+    .bars-menu {
+      display: inline-block;
+    }
+    .bars-menu:hover {
+      color: $clr--secondaryDark;
+      cursor: pointer;
+    }
   }
 }

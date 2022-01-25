@@ -1,51 +1,52 @@
 {
-  "name": "kune",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-brands-svg-icons": "^5.15.4",
-    "@fortawesome/free-regular-svg-icons": "^5.15.4",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@fortawesome/vue-fontawesome": "^3.0.0-5",
-    "core-js": "^3.20.1",
-    "fiber": "^1.0.4",
-    "vue": "^3.2.26",
-    "vue-router": "^4.0.12"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.15",
-    "@vue/cli-plugin-router": "^4.5.15",
-    "@vue/cli-service": "^4.5.15",
-    "@vue/compiler-sfc": "^3.2.26",
-    "babel-eslint": "^10.1.0",
-    "fibers": "^5.0.0",
-    "prettier": "^2.5.1",
-    "sass": "^1.45.1",
-    "sass-loader": "^8.0.2"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/prettier"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+	"name": "kune",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint"
+	},
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^1.2.36",
+		"@fortawesome/free-brands-svg-icons": "^5.15.4",
+		"@fortawesome/free-regular-svg-icons": "^5.15.4",
+		"@fortawesome/free-solid-svg-icons": "^5.15.4",
+		"@fortawesome/vue-fontawesome": "^3.0.0-5",
+		"core-js": "^3.20.1",
+		"fiber": "^1.0.4",
+		"vue": "^3.2.29",
+		"vue-router": "^4.0.12",
+		"follow-redirects": ">=1.14.7"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "^4.5.15",
+		"@vue/cli-plugin-router": "^4.5.15",
+		"@vue/cli-service": "^4.5.15",
+		"@vue/compiler-sfc": "^3.2.26",
+		"babel-eslint": "^10.1.0",
+		"fibers": "^5.0.0",
+		"prettier": "^2.5.1",
+		"sass": "^1.45.1",
+		"sass-loader": "^8.0.2"
+	},
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"node": true
+		},
+		"extends": [
+			"plugin:vue/essential",
+			"eslint:recommended",
+			"@vue/prettier"
+		],
+		"parserOptions": {
+			"parser": "babel-eslint"
+		}
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not dead"
+	]
 }

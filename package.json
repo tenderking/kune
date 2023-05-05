@@ -8,13 +8,16 @@
 		"postinstall": "nuxt prepare"
 	},
 	"devDependencies": {
-		"nuxt": "3.0.0"
+		"@types/node": "^20.1.0",
+		"nuxt": "3.4.3",
+		"typescript": "^5.0.4",
+		"vue": "^3.2.47"
 	},
 	"dependencies": {
-		"aws-sdk": "^2.1304.0",
-		"@aws-sdk/client-dynamodb": "^3.215.0",
-		"@aws-sdk/lib-dynamodb": "^3.215.0",
-		"@vueuse/components": "^9.12",
-		"@vueuse/core": "^9.12"
+		"@aws-sdk/client-dynamodb": "^3.328.0",
+		"@aws-sdk/lib-dynamodb": "^3.328.0",
+		"@vueuse/components": "^10.1",
+		"@vueuse/core": "^10.1",
+		"aws-sdk": "^2.1373.0"
 	}
 }

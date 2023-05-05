@@ -34,8 +34,6 @@
 
 <script lang="ts" setup>
 
-// import { services } from "@/data/fake-data";
-// const data = services
 </script>
 <style scoped>
 main {

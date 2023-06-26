@@ -1,5 +1,4 @@
 <template>
-
 	<nav>
 		<div class="select-container">
 			<label for="category-select">Choose a category:</label>
@@ -7,7 +6,7 @@
 				<option value="">
 					Select By Category
 				</option>
-				<option v-for="category in categories" :value="category">
+				<option v-for="category in  data.categories  " :value="category">
 					{{ category }}
 				</option>
 			</select>
@@ -17,10 +16,15 @@
 			<span class="sort-services-heading">sort</span>
 			<span class="sort-services-type" @click="sortBy()">{{ sortOrder }}</span>
 		</div>
+
 	</nav>
 </template>
 <script lang="ts" setup>
-const categories = ["Business", "I.T", "Fintech"]
+// const categories = ["Business", "I.T", "Fintech"]
+const { data } = await useFetch('/api/categories')
+
+console.log("API response:", data);
+
 
 const sortOrder = ref('Ascending')
 const sortBy = () => {

@@ -1,5 +1,4 @@
 <template>
-
   <div class="grid-wrap" v-if="services">
     <template v-for="service in services" :key="service.ServiceID">
       <div v-for="card in service" class="rands">
@@ -21,11 +20,12 @@
 // import type { Services } from "@/types/Services";
 const { data: services } = await useFetch('/api/services')
 
-if (services) {
-  console.log(services.value)
-} else {
-  console.log('services data is null')
-}
+
+// if (services) {
+//   console.log(services.value)
+// } else {
+//   console.log('services data is null')
+// }
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, ScanCommand } from '@aws-sdk/lib-dynamodb'
 
 const ddbClient = new DynamoDBClient({
-   region: "localhost",
+  region: "localhost",
   endpoint: "http://localhost:8000",
 })
 export const ddbDocClient = DynamoDBDocumentClient.from(ddbClient)
@@ -30,6 +30,8 @@ const listServices = async () => {
   }
 }
 
+
+
 export default defineEventHandler(async () => {
-  return await listServices()
+  return await listServices() 
 })

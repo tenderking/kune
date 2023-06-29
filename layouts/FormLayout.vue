@@ -1,10 +1,11 @@
+<script setup lang="ts"></script>
+
 <template>
   <main>
-    <slot></slot>
+    <slot />
   </main>
 </template>
 
-<script setup lang="ts"></script>
 <style scoped>
 main {
   display: grid;

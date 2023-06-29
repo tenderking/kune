@@ -1,16 +1,6 @@
 This is for setting up docker and running dynamodb
 
-## To create a table
 
-Run the createTable.mjs
-
-```
-node createTable.mjs
-```
-
-to view the schema of the table
-
-```
 aws dynamodb describe-table --table-name Name_of_table --query "Table" > table_schema.json --endpoint-url http://localhost:8000
 ```
 

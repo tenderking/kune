@@ -40,3 +40,27 @@ npm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+
+## Linting 
+create a file .vscode/setting.json with the following
+
+````
+{
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.organizeImports": false
+  }
+}
+```
+
+create a .eslintrc file with the following
+
+
+````
+{
+	"extends": "@antfu"
+}
+```

@@ -5,5 +5,7 @@ node_modules
 .cache
 .output
 .env
+.vscode
+.eslintrc
 dist
 package-lock.json

@@ -1,5 +1,8 @@
-<template>
+<script lang="ts" setup>
 
+</script>
+
+<template>
   <HomeHeader />
   <!-- second section -->
 
@@ -28,13 +31,8 @@
   </main>
 
   <HomeItemList />
-
-
 </template>
 
-<script lang="ts" setup>
-
-</script>
 <style scoped>
 main {
   margin-bottom: 2em;

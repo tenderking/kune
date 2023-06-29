@@ -1,28 +1,32 @@
 {
-	"private": true,
-	"scripts": {
-		"build": "nuxt build",
-		"dev": "nuxt dev",
-		"generate": "nuxt generate",
-		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare",
-		"test": "vitest",
-		"coverage": "vitest run --coverage"
-	},
-	"devDependencies": {
-		"@nuxt/devtools": "^0.6.3",
-		"@nuxt/test-utils": "^3.6.1",
-		"@types/node": "^20.1.0",
-		"nuxt": "3.6.0",
-		"typescript": "^5.0.4",
-		"vitest": "^0.32.2",
-		"vue": "^3.3.4"
-	},
-	"dependencies": {
-		"@aws-sdk/client-dynamodb": "^3.328.0",
-		"@aws-sdk/lib-dynamodb": "^3.328.0",
-		"@vueuse/components": "^10.1",
-		"@vueuse/core": "^10.1",
-		"aws-sdk": "^2.1373.0"
-	}
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.328.0",
+    "@aws-sdk/lib-dynamodb": "^3.328.0",
+    "@vueuse/components": "^10.1",
+    "@vueuse/core": "^10.1",
+    "aws-sdk": "^2.1373.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.5",
+    "@nuxt/devtools": "^0.6.3",
+    "@nuxt/test-utils": "^3.6.1",
+    "@types/node": "^20.1.0",
+    "eslint": "^8.43.0",
+    "nuxt": "3.6.0",
+    "typescript": "^5.0.4",
+    "vitest": "^0.32.2",
+    "vue": "^3.3.4"
+  }
 }

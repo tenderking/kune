@@ -1,23 +1,27 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
   <FormLayout>
     <div class="sign-in-container">
       <form action="">
         <div class="input-container">
           <label>Email:</label>
-          <input type="email" name="email" id="sign-in-email" placeholder="type your email" />
+          <input id="sign-in-email" type="email" name="email" placeholder="type your email">
         </div>
         <div class="input-container">
           <label>Password:</label>
-          <input type="password" name="password" id="sign-in-password" placeholder="password" />
+          <input id="sign-in-password" type="password" name="password" placeholder="password">
         </div>
-        <button type="submit">SignIn</button>
+        <button type="submit">
+          SignIn
+        </button>
       </form>
     </div>
   </FormLayout>
 </template>
-<script setup lang="ts">
 
-</script>
 <style>
 form {
   display: flex;

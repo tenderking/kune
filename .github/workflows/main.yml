@@ -32,4 +32,3 @@ jobs:
           globs = ['.output/**/*'];
           return ftp.src(globs, { base: '.output', buffer: false })
             .pipe(ftp.dest('/public_html/nuxt'));
-

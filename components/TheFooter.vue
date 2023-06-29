@@ -1,16 +1,24 @@
+<script setup lang="ts"></script>
+
 <template>
   <footer>
     <div class="container">
       <div class="footer-logo">
-        <router-link class="logo" to="/"> Kune </router-link>
+        <router-link class="logo" to="/">
+          Kune
+        </router-link>
       </div>
       <nav>
         <ul class="bar">
           <li>
-            <router-link to="/about">About</router-link>
+            <router-link to="/about">
+              About
+            </router-link>
           </li>
           <li>
-            <router-link to="/contact"> Contact Us</router-link>
+            <router-link to="/contact">
+              Contact Us
+            </router-link>
           </li>
         </ul>
       </nav>
@@ -20,8 +28,6 @@
     </div>
   </footer>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped>
 footer {

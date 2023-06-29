@@ -1,17 +1,18 @@
+<!-- eslint-disable vue/no-unused-refs -->
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
-import { useMediaQuery } from "@vueuse/core";
+import { useMediaQuery } from '@vueuse/core'
 
-import IconHamburger from './IconHamburger.vue';
-import IconClose from './IconClose.vue';
-
+import IconHamburger from './IconHamburger.vue'
+import IconClose from './IconClose.vue'
 
 const isHidden = ref(true)
-const isMobile = useMediaQuery("(max-width: 550px)")
+const isMobile = useMediaQuery('(max-width: 550px)')
 
+// eslint-disable-next-line max-statements-per-line
 function closeModal() { isHidden.value = true }
+// eslint-disable-next-line max-statements-per-line
 function openModal() { isHidden.value = false }
-
 </script>
 
 <template>
@@ -21,115 +22,106 @@ function openModal() { isHidden.value = false }
     </NuxtLink>
     <nav>
       <!-- Left-aligned links -->
-      <ul class="nav-small-screen" ref="target" :class="isHidden ? 'hidden' : 'show'" v-on-click-outside="closeModal">
+
+      <ul v-on-click-outside="closeModal" class="nav-small-screen" :class="isHidden ? 'hidden' : 'show'">
         <li>
-          <NuxtLink to="/services">Browse Services </NuxtLink>
+          <NuxtLink to="/services">
+            Browse Services
+          </NuxtLink>
         </li>
 
         <li>
-          <NuxtLink to="/about">About</NuxtLink>
+          <NuxtLink to="/about">
+            About
+          </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/contact">Contact us</NuxtLink>
+          <NuxtLink to="/contact">
+            Contact us
+          </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/signin">Sign in</NuxtLink>
+          <NuxtLink to="/signin">
+            Sign in
+          </NuxtLink>
         </li>
       </ul>
-      <i class="i-blue" v-if="isMobile">
-        <IconHamburger class="i-green" v-if="isHidden" @click="openModal" />
+      <i v-if="isMobile" class="i-blue">
+        <IconHamburger v-if="isHidden" class="i-green" @click="openModal" />
         <IconClose v-else @click="closeModal" />
       </i>
       <!-- <fa class="bars-menu" v-else icon="times" /> -->
     </nav>
   </header>
-  <!-- Drop-down menu -->
-  <!-- <transition name="fade">
-		<div class="menu-container">
-			<div class="bar">
-				<router-link to="/sign-in">Sign in</router-link>
-			</div>
-			<div class="bar">
-				<router-link to="/services">Browse Services </router-link>
-			</div>
-			<div class="bar">
-				<router-link to="/about">About</router-link>
-			</div>
-			<div class="bar">
-				<router-link to="#">Contact us</router-link>
-			</div>
-		</div>
-	</transition> -->
 </template>
 
 <style scoped>
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-  height: max-content;
-  position: relative;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1em;
+height: max-content;
+position: relative;
 }
 
 i {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
-
 .hidden {
-  display: none;
+display: none;
 }
 
 .show {
-  display: flex;
+display: flex;
 }
 
 ul {
-  position: absolute;
-  right: 1em;
-  left: 1em;
-  top: 100%;
+position: absolute;
+right: 1em;
+left: 1em;
+top: 100%;
 
-  margin-inline: 1em;
-  background-color: var(--color-background-mute);
+margin-inline: 1em;
+background-color: var(--color-background-mute);
 
-  display: none;
-  margin-inline: auto;
+display: none;
+margin-inline: auto;
 }
 
 button {
-  border: none;
-  background-color: inherit;
-  color: var(--color);
+border: none;
+background-color: inherit;
+color: var(--color);
 }
 
 .show {
-  display: flex;
-  padding: 2em;
-  border-radius: 1em;
-  flex-direction: column;
+display: flex;
+padding: 2em;
+border-radius: 1em;
+flex-direction: column;
 }
 
 nav ul {
-  gap: 1rem;
+gap: 1rem;
 }
 
 @media (min-width: 550px) {
-  ul {
-    position: static;
-    display: flex;
-    background-color: var(--background);
-  }
+ul {
+position: static;
+display: flex;
+background-color: var(--background);
+}
 
-  button {
-    display: none;
-  }
+button {
+display: none;
+}
 
-  .hidden {
-    display: flex;
-  }
+.hidden {
+display: flex;
+}
 }
 </style>

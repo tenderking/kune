@@ -1,22 +1,25 @@
 <template>
   <header>
-    <img class="illustration" alt="Main page illustration" src="/hills.png" />
+    <img class="illustration" alt="Main page illustration" src="/hills.png">
 
     <div class="home-text">
       <h1>
-        At <span class="kune"> Kune </span>, we provide an overwiew of
-        Zimbabwean digital services
+        At <span class="kune"> Kune </span>, we provide an overwiew of Zimbabwean digital
+        services
       </h1>
       <h2>Digital discovery made easy</h2>
       <p>
-        Are you looking for place to easily find businesses that you need in one
-        place? <span class="kune"> Kune </span> makes it a pleasant journey. You
-        will find innovation and convience.
+        Are you looking for place to easily find businesses that you need in one place?
+        <span class="kune"> Kune </span> makes it a pleasant journey. You will find
+        innovation and convience.
       </p>
-      <NuxtLink to="/sign-in" class="sign-up-link">Sign up</NuxtLink>
+      <NuxtLink to="/sign-in" class="sign-up-link">
+        Sign up
+      </NuxtLink>
     </div>
   </header>
 </template>
+
 <style scoped>
 header {
   display: flex;
@@ -27,7 +30,6 @@ header {
   padding: 1em;
   max-width: max-content;
   gap: 2em;
-
 }
 
 header p {
@@ -40,7 +42,6 @@ header h2 {
 }
 
 img.illustration {
-
   max-width: 350px;
 }
 

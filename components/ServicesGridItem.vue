@@ -1,18 +1,24 @@
+<script lang="ts" setup>
+import type { Services } from '@/types/Services'
+
+defineProps<{ service: Services }>()
+</script>
+
 <template>
   <div class="card">
     <div class="card__image">
-      <img class="service-item-image" :alt="`${service.ServiceName}-img`" src="@/assets/images/placeholder-image.png" />
+      <img class="service-item-image" :alt="`${service.ServiceName}-img`" src="@/assets/images/placeholder-image.png">
     </div>
     <div class="card__text">
       <h2 class="card__text-title">
         {{ service.ServiceName }}
       </h2>
-      <p class="card__text-description">{{ service.Description }}</p>
-
+      <p class="card__text-description">
+        {{ service.Description }}
+      </p>
     </div>
 
     <div class="card__icons">
-
       <a v-if="service.facebook_url" :href="service.facebook_url">
         <IconFacebook />
       </a>
@@ -26,11 +32,6 @@
       <a v-if="service.youtube_url" :href="service.youtube_url">
         <IconYoutube />
       </a>
-
-
-
-
-
     </div>
     <div class="flex">
       <IconWhatsApp width="16px" height="16px" />
@@ -41,11 +42,6 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import type { Services } from "@/types/Services";
-
-defineProps<{ service: Services }>();
-</script>
 <style>
 .card-container {
   max-width: max-content;

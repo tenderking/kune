@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import type { Services } from "@/types/Services";
-const { data: services } = await useFetch('/api/services')
+const { data: services } = await useFetch("/api/services");
 // const servicesData = services != null ? JSON.parse(services) : null
 
 // if (services) {
@@ -12,21 +12,21 @@ const { data: services } = await useFetch('/api/services')
 
 <template>
   <div v-if="services" class="grid-wrap">
-    <!-- <template v-for="service in services" :key="service.ServiceID">
-      <div v-for="card in servicesData" :key="card.ServiceID" class="rands">
-        <ServicesGridItem :service="card" />
-      </div>
-    </template> -->
-    <pre>
+    <template v-for="service in services.services" :key="service.ServiceID">
+      <NuxtLink :to="`/services/${service.ServiceID}&${service.ServiceName}`">
+        <div class="rands">
+          <ServicesGridItem :service="service" />
+        </div>
+      </NuxtLink>
+    </template>
+    <!-- <pre>
       {{ services }}
-    </pre>
+    </pre> -->
     <!-- <ul>
       <li v-for="service in services" :key="service.id">{{service.service_name}}</li>
     </ul> -->
   </div>
-  <div v-else>
-    No services
-  </div>
+  <div v-else>No services</div>
 </template>
 
 <style scoped>
@@ -37,7 +37,6 @@ const { data: services } = await useFetch('/api/services')
   row-gap: 2em;
   align-items: stretch;
   justify-content: center;
-
 }
 
 .rands {

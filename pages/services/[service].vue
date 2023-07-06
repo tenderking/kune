@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { useFetch } from "@vueuse/core";
-const route = useRoute();
+import { useFetch } from '@vueuse/core'
+
+const route = useRoute()
 const { data: service } = await useFetch(
-  `/api/services/${route.params.service}`
-);
+  `/api/services/${route.params.service}`,
+)
 </script>
 
 <template>
@@ -18,7 +19,9 @@ const { data: service } = await useFetch(
       {{ service }}
       </pre>
     </template>
-    <h2 v-else>No services here</h2>
+    <h2 v-else>
+      No services here
+    </h2>
 
     <!-- <pre>
       {{servicesList}}</pre> -->

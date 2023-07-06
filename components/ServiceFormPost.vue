@@ -1,37 +1,92 @@
-<script setup>
-import { useForm } from "vee-validate";
+<script lang="ts" setup>
+import { useFieldArray, useForm } from 'vee-validate'
+import * as yup from 'yup'
 
-// Creates a form context
-// This component now acts as a form
-// Usually you will destruct the form context to get what you need
-function handleSubmit() {
-  console.log("submitted");
+interface Service {
+  Category: string
+  Description: string
+  Address: string
+  ServiceName: string
+  Website: string
+  ImgUrl: string
+  Tags: string[]
+  ServiceID: number
 }
-const { values } = useForm();
+
+const schema = yup.object<Service>({
+  Category: yup.string().required(),
+  Description: yup.string().required(),
+  Address: yup.string().required(),
+  ServiceName: yup.string().required(),
+  Website: yup.string().required(),
+  ImgUrl: yup.string().required(),
+  Tags: yup.array(yup.string()),
+  ServiceID: yup.number().required(),
+})
+const { defineInputBinds, errors, handleSubmit } = useForm({
+  validationSchema: schema,
+})
+
+const Category = defineInputBinds('Category')
+const Description = defineInputBinds('Description')
+const Address = defineInputBinds('Address')
+const ServiceName = defineInputBinds('ServiceName')
+const Website = defineInputBinds('Website')
+const ImgUrl = defineInputBinds('ImgUrl')
+const { remove, push, fields } = useFieldArray('Tags')
+const ServiceID = defineInputBinds('ServiceID')
+
+const onSubmit = handleSubmit (async (values) => {
+  // alert(JSON.stringify(values, null, 2))
+  await useFetch('/api/services/create', {
+    method: 'POST',
+    body: JSON.stringify(values, null, 2),
+  })
+})
 </script>
 
 <template>
-  <!-- Create form for adding item to db -->
+  <form @submit="onSubmit">
+    <label for="Category">Category</label>
+    <input type="text" v-bind="Category" name="Category">
+    <span> {{ errors.Category }}</span>
+    <label for="Description">Description</label>
+    <input type="text" v-bind="Description" name="Description">
+    <span> {{ errors.Description }}</span>
+    <label for="Address">Address</label>
+    <input type="text" v-bind="Address" name="Address">
+    <span> {{ errors.Address }}</span>
+    <label for="ServiceName">ServiceName</label>
+    <input type="text" v-bind="ServiceName" name="ServiceName">
+    <span> {{ errors.ServiceName }}</span>
+    <label for="Website">Website</label>
+    <input type="text" v-bind="Website" name="Website">
+    <span> {{ errors.Website }}</span>
+    <label for="ImgUrl">ImgUrl</label>
+    <input type="text" v-bind="ImgUrl" name="ImgUrl">
+    <span> {{ errors.ImgUrl }}</span>
+    <div>
+      <label>Tag</label>
+      <div v-for="(field, idx) in fields" :key="field.key">
+        <input v-model="field.value" type="text">
 
-  <form @submit.prevent="handleSubmit">
-    <label for="service_name">Service Name</label>
-    <input
-      id="service_name"
-      name="service_name"
-      type="text"
-      v-model="values.service_name"
-    />
+        <button type="button" @click="remove(idx)">
+          Remove
+        </button>
+      </div>
 
-    <label for="service_description">Service Description</label>
-    <input
-      id="service_description"
-      name="service_description"
-      type="text"
-      v-model="values.service_description"
-    />
+      <button type="button" @click="push('')">
+        Add
+      </button>
 
-    <button type="submit">Submit</button>
+      <button>Submit</button>
+    </div>
+    <label for="ServiceID">ServiceID</label>
+    <input type="text" v-bind="ServiceID" name="ServiceID">
+    <span> {{ errors.ServiceID }}</span>
+
+    <button type="submit">
+      Submit
+    </button>
   </form>
-
-  <pre>{{ values }}</pre>
 </template>

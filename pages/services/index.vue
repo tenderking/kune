@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { data: services } = await useFetch("/api/services");
+const { data: services } = await useFetch('/api/services')
 </script>
 
 <template>
@@ -11,7 +11,9 @@ const { data: services } = await useFetch("/api/services");
     <template v-if="services">
       <ServicesGrid />
     </template>
-    <h2 v-else>No services</h2>
+    <h2 v-else>
+      No services
+    </h2>
 
     <!-- <pre>
       {{servicesList}}</pre> -->

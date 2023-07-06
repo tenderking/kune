@@ -10,16 +10,6 @@ const ddbClient = new DynamoDBClient({
 })
 export const ddbDocClient = DynamoDBDocumentClient.from(ddbClient)
 export const servicesTableName = process.env.SERVICES_TABLE_NAME
-interface Service {
-  Category: { S: string }
-  Description: { S: string }
-  Address: { S: string }
-  ServiceName: { S: string }
-  Website: { S: string }
-  ImgUrl: { S: string }
-  Tags: { L: { S: string }[] }
-  ServiceID: { N: string }
-}
 
 interface ServicePayload {
   Category: string
@@ -40,6 +30,7 @@ export async function createServiceItem(body: ServicePayload) {
     throw new Error('SERVICES_TABLE_NAME is not defined.')
   if (body.Tags === undefined || body.Tags === null)
     throw new Error('Tags are required for this operation.')
+
   const params: PutItemCommandInput = {
     TableName: servicesTableName,
     Item: {
@@ -54,27 +45,16 @@ export async function createServiceItem(body: ServicePayload) {
     },
     ReturnConsumedCapacity: 'TOTAL',
   }
+
   try {
     const command = new PutItemCommand(params)
-    const result = await ddbDocClient.send(command)
+    await ddbDocClient.send(command)
   }
   catch (err) {
     console.error('Error', err)
-    // throw new Error('Service Name is required for this operation.')
   }
-
-  // return {
-  //   Response: "Success",
-  // };
 }
 export default defineEventHandler(async (event) => {
-  // const service = event.body as Service
   const body: ServicePayload = await readBody(event)
-
-  // eslint-disable-next-line no-console
-  console.log(body)
-  // await createService(service)
-  // return {
-  //   service,
-  // }
+  await createServiceItem(body)
 })

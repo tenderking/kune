@@ -1,13 +1,5 @@
 <script setup lang="ts">
-// import type { Services } from "@/types/Services";
-const { data: services } = await useFetch("/api/services");
-// const servicesData = services != null ? JSON.parse(services) : null
-
-// if (services) {
-//   console.log(services.value)
-// } else {
-//   console.log('services data is null')
-// }
+const { data: services } = await useFetch('/api/services')
 </script>
 
 <template>
@@ -19,14 +11,10 @@ const { data: services } = await useFetch("/api/services");
         </div>
       </NuxtLink>
     </template>
-    <!-- <pre>
-      {{ services }}
-    </pre> -->
-    <!-- <ul>
-      <li v-for="service in services" :key="service.id">{{service.service_name}}</li>
-    </ul> -->
   </div>
-  <div v-else>No services</div>
+  <div v-else>
+    No services
+  </div>
 </template>
 
 <style scoped>

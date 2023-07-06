@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { Services } from "@/types/Services";
+import type { Services } from '@/types/Services'
 
-defineProps<{ service: Services }>();
+defineProps<{ service: Services }>()
 </script>
 
 <template>
@@ -11,7 +11,7 @@ defineProps<{ service: Services }>();
         class="service-item-image"
         :alt="`${service.ServiceName}-img`"
         src="@/assets/images/placeholder-image.png"
-      />
+      >
     </div>
     <div class="card__text">
       <h2 class="card__text-title">
@@ -21,22 +21,6 @@ defineProps<{ service: Services }>();
         {{ service.Description }}
       </p>
     </div>
-
-    <!-- <div class="card__icons">
-      <a v-if="service.facebook_url" :href="service.facebook_url">
-        <IconFacebook />
-      </a>
-      <a v-if="service.instagram_url" :href="service.instagram_url">
-        <IconInstagram />
-      </a>
-      <a v-if="service.twitter_url" :href="service.twitter_url">
-        <IconTwitter />
-      </a>
-
-      <a v-if="service.youtube_url" :href="service.youtube_url">
-        <IconYoutube />
-      </a>
-    </div> -->
     <div class="flex">
       <IconWhatsApp width="16px" height="16px" />
       <span> 077-233-222-999 </span>

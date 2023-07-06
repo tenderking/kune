@@ -1,35 +1,35 @@
 {
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "ServiceID",
-            "AttributeType": "N"
-        },
-        {
-            "AttributeName": "ServiceName",
-            "AttributeType": "S"
-        }
-    ],
-    "TableName": "Services",
-    "KeySchema": [
-        {
-            "AttributeName": "ServiceID",
-            "KeyType": "HASH"
-        },
-        {
-            "AttributeName": "ServiceName",
-            "KeyType": "RANGE"
-        }
-    ],
-    "TableStatus": "ACTIVE",
-    "CreationDateTime": "2023-01-30T00:36:28.421000+01:00",
-    "ProvisionedThroughput": {
-        "LastIncreaseDateTime": "1970-01-01T01:00:00+01:00",
-        "LastDecreaseDateTime": "1970-01-01T01:00:00+01:00",
-        "NumberOfDecreasesToday": 0,
-        "ReadCapacityUnits": 5,
-        "WriteCapacityUnits": 5
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "ServiceID",
+      "AttributeType": "N"
     },
-    "TableSizeBytes": 3201,
-    "ItemCount": 12,
-    "TableArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services"
+    {
+      "AttributeName": "ServiceName",
+      "AttributeType": "S"
+    }
+  ],
+  "TableName": "Services",
+  "KeySchema": [
+    {
+      "AttributeName": "ServiceID",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "ServiceName",
+      "KeyType": "RANGE"
+    }
+  ],
+  "TableStatus": "ACTIVE",
+  "CreationDateTime": "2023-01-30T00:36:28.421000+01:00",
+  "ProvisionedThroughput": {
+    "LastIncreaseDateTime": "1970-01-01T01:00:00+01:00",
+    "LastDecreaseDateTime": "1970-01-01T01:00:00+01:00",
+    "NumberOfDecreasesToday": 0,
+    "ReadCapacityUnits": 5,
+    "WriteCapacityUnits": 5
+  },
+  "TableSizeBytes": 3201,
+  "ItemCount": 12,
+  "TableArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services"
 }

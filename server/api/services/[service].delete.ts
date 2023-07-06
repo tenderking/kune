@@ -1,6 +1,6 @@
 import {
+  DeleteItemCommand,
   DynamoDBClient,
-  GetItemCommand,
 } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
@@ -10,7 +10,7 @@ const ddbClient = new DynamoDBClient({
 })
 export const ddbDocClient = DynamoDBDocumentClient.from(ddbClient)
 export const servicesTableName = process.env.SERVICES_TABLE_NAME
-export async function getService(id: string, serviceName: string) {
+export async function deleteServiceItem(id: string, serviceName: string) {
   if (!id)
     throw new Error('Service ID is required for this operation.')
 
@@ -25,13 +25,17 @@ export async function getService(id: string, serviceName: string) {
     },
   }
   try {
-    const command = new GetItemCommand(params)
-    const result = await ddbDocClient.send(command)
-    return result.Item
+    const command = new DeleteItemCommand(params)
+    await ddbDocClient.send(command)
   }
   catch (err) {
     console.error('Error', err)
+    // throw new Error('Service Name is required for this operation.')
   }
+
+  // return {
+  //   Response: "Success",
+  // };
 }
 
 export default defineEventHandler(async (event) => {
@@ -42,8 +46,16 @@ export default defineEventHandler(async (event) => {
 
   if (!service)
     throw new Error('Service Name is required for this operation.')
+
+  // console.log(service)
+  // id is before the & symbol in the url
+
   const id = service.split('&')[0]
   let serviceName = service.split('&')[1]
   serviceName = serviceName.replace(/%20/g, ' ')
-  return await getService(id, serviceName)
+
+  // console.log(id)
+  // console.log(serviceName)
+
+  return await deleteServiceItem(id, serviceName)
 })

@@ -2,6 +2,8 @@
 import { useFieldArray, useForm } from 'vee-validate'
 import * as yup from 'yup'
 
+const router = useRouter()
+
 interface Service {
   Category: string
   Description: string
@@ -42,6 +44,7 @@ const onSubmit = handleSubmit (async (values) => {
     method: 'POST',
     body: JSON.stringify(values, null, 2),
   })
+  router.push('/services')
 })
 </script>
 

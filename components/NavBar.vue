@@ -41,7 +41,7 @@ function openModal() { isHidden.value = false }
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/signin">
+          <NuxtLink to="/signin" class="cta__link">
             Sign in
           </NuxtLink>
         </li>
@@ -86,7 +86,7 @@ left: 1em;
 top: 100%;
 
 margin-inline: 1em;
-background-color: var(--color-background-mute);
+background-color: var(--color--bg);
 
 display: none;
 margin-inline: auto;
@@ -95,7 +95,7 @@ margin-inline: auto;
 button {
 border: none;
 background-color: inherit;
-color: var(--color);
+color: var(--color--text);
 }
 
 .show {
@@ -113,7 +113,7 @@ gap: 1rem;
 ul {
 position: static;
 display: flex;
-background-color: var(--background);
+background-color: var(--color--bg);
 }
 
 button {

@@ -13,7 +13,7 @@
 
 <style>
 .icon-color {
-fill: var(--color-primary);
-stroke: var(--color-primary);
+fill: var(--clr--primary);
+stroke: var(--clr--primary);
 }
 </style>

@@ -48,8 +48,8 @@ nav {
 
 select {
   outline: none;
-  background-color: var(--color-background-soft);
-  color: var(--color-text);
+  background-color: var(--color--bg);
+  color: var(--color--text);
   padding: 0.25em 1em;
 
   border-radius: 6px;

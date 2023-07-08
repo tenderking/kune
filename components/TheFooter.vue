@@ -32,7 +32,7 @@
 <style scoped>
 footer {
 
-  background-color: var(--color-background-mute);
+  background-color: var(--color--secondary);
   padding: 3em 1em;
 
   grid-row-start: 3;

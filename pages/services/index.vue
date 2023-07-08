@@ -20,9 +20,9 @@ const { data: services } = await useFetch('/api/services')
   </main>
 </template>
 
-<style>
+<style scoped>
 header.container {
-  border-bottom: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--clr--accent);
 }
 
 .container {

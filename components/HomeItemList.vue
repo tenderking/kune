@@ -1,22 +1,29 @@
 <script setup lang="ts">
 const { data: services } = await useFetch('/api/services')
-const servicesList = await services.value
 </script>
 
 <template>
   <div class="category-picker">
-    <p class="category-picker-text">
+    <h3 class="subtitle">
       Discover the best local businesses and services in your area
-    </p>
-    <div class="category-container">
-      <template v-for="service in servicesList" :key="service.id">
-        <ServicesGridItem :service="service" />
+    </h3>
+
+    <div v-if="services" class="category-container">
+      <template v-for="service in services.services.slice(0, 3)" :key="service.ServiceID">
+        <NuxtLink :to="`/services/${service.ServiceID}&${service.ServiceName}`">
+          <div class="rands">
+            <ServicesGridItem :service="service" />
+          </div>
+        </NuxtLink>
       </template>
+    </div>
+    <div v-else>
+      No services
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 .category-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, 275px);
@@ -26,4 +33,8 @@ const servicesList = await services.value
   justify-content: center;
 
 }
+.subtitle {
+  text-align: center;
+  margin-bottom: 1em;
+  }
 </style>

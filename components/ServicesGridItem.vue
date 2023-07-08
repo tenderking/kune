@@ -40,8 +40,8 @@ defineProps<{ service: Services }>()
   position: relative;
   width: 275px;
   height: 375px;
-  background-color: var(--color-background-mute);
-  outline: solid var(--color-border);
+  background-color: var(--color--secondary);
+  outline: solid var(--color--secondary);
   border-radius: 6px;
 }
 
@@ -63,7 +63,7 @@ defineProps<{ service: Services }>()
   width: 100%;
   padding: 1em;
   height: 60%;
-  background-color: var(--color-background-soft);
+  background-color:  var(--color--secondary);
 }
 
 .card__text-description {
@@ -80,7 +80,7 @@ defineProps<{ service: Services }>()
 }
 
 .card__icons {
-  background-color: var(--color-background-soft);
+  background-color: var(--color--bg);
 
   width: 100%;
   margin-top: auto;

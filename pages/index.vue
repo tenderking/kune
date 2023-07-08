@@ -37,8 +37,8 @@
 main {
   margin-bottom: 2em;
   padding: 1em;
-}
 
+}
 footer {
   padding: 1em;
   margin-bottom: 2em;
@@ -47,6 +47,11 @@ footer {
 div,
 section {
   margin-bottom: 1rem;
+}
+.motivation-card{
+  background-color: var(--color-card-bg);
+  padding: 2em;
+  border-radius: 0.5em;
 }
 
 @media (min-width: 550px) {

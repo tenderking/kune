@@ -4,7 +4,7 @@
     fill="#fc871f"
   >
     <title id="icon-hamburger">Open Menu</title>
-    <g fill="var(--text)" fill-rule="evenodd">
+    <g fill="var(--color--text)" fill-rule="evenodd">
       <path d="M0 0h24v1H0zM0 5h24v1H0zM0 10h24v1H0z" />
     </g>
   </svg>

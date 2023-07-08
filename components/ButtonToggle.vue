@@ -37,21 +37,18 @@ watch(isActive, () => {
   </button>
 </template>
 
-<style lang="scss" scoped>
-.main {
-
+<style  scoped>
 .active {
 
-fill: var(--text);
-
+fill: var(--color--text);
 -webkit-transition: all 0.2s ease-in-out;
 -moz-transition: all 0.2s ease-in-out;
 transition: all 0.2s ease-in-out;
 }
 
 .rect {
-fill: var(--bg);
-stroke: var(--text);
+fill: var(--color--bg);
+stroke: var(--color--text);
 stroke-width: 2px;
 }
 
@@ -60,6 +57,5 @@ rect {
 -webkit-transition: all 0.2s ease-in-out;
 -moz-transition: all 0.2s ease-in-out;
 transition: all 0.2s ease-in-out;
-}
 }
 </style>

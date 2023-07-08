@@ -22,7 +22,7 @@
   </FormLayout>
 </template>
 
-<style>
+<style scoped>
 form {
   display: flex;
   flex-direction: column;
@@ -32,19 +32,5 @@ form {
 .input-container {
   display: flex;
   flex-direction: column;
-}
-
-button {
-  padding: 1em 1em;
-  border-radius: 0.5em;
-  background-color: var(--color-background-mute);
-  text-transform: uppercase;
-}
-
-input {
-  padding: 0.5em 1em;
-  border-radius: 0.5em;
-  background-color: var(--color-background-mute);
-  text-transform: uppercase;
 }
 </style>

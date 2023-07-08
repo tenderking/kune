@@ -27,7 +27,7 @@ function sortBy() {
         {{ categoriesList }}
       </pre> -->
     </div>
-    <input id="search-bar" type="search" name="search" placeholder="search">
+    <!-- <input id="search-bar" type="search" name="search" placeholder="search"> -->
     <div class="sort-services">
       <span class="sort-services-heading">sort</span>
       <span class="sort-services-type" @click="sortBy()">{{ sortOrder }}</span>

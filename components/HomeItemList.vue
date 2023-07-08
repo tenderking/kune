@@ -24,17 +24,24 @@ const { data: services } = await useFetch('/api/services')
 </template>
 
 <style scoped>
-.category-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 275px);
+ .category-container {
+  display: flex;
+  flex-direction: column;
+ align-items: center;
+  gap: 4em;
+  margin-bottom: 2em;
+}
+@media (min-width: 768px) {
+  .category-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   gap: 1em;
-  row-gap: 2em;
-  align-items: stretch;
-  justify-content: center;
-
+  margin-bottom: 2em;
+}
 }
 .subtitle {
   text-align: center;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   }
 </style>

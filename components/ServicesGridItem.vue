@@ -14,9 +14,9 @@ defineProps<{ service: Services }>()
       >
     </div>
     <div class="card__text">
-      <h2 class="card__text-title">
+      <h3 class="card__text-title">
         {{ service.ServiceName }}
-      </h2>
+      </h3>
       <p class="card__text-description">
         {{ service.Description }}
       </p>
@@ -40,7 +40,7 @@ defineProps<{ service: Services }>()
   position: relative;
   width: 275px;
   height: 375px;
-  background-color: var(--color--secondary);
+    background-color: var(--color-card-bg);
   outline: solid var(--color--secondary);
   border-radius: 6px;
 }
@@ -59,29 +59,27 @@ defineProps<{ service: Services }>()
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: left;
   width: 100%;
   padding: 1em;
   height: 60%;
-  background-color:  var(--color--secondary);
+  background-color: var(--color-card-bg);
 }
 
 .card__text-description {
-  max-width: 30ch;
-  padding-block: 1em;
-  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
 }
 
-.card__text-title:hover {
-  background: transparent;
-  color: transparent;
-  text-shadow: none;
-  transition: all 1s;
+.card__text-title{
+  text-decoration: double var(--color--primary) 2px;
+  color: var(--color--primary);
 }
 
 .card__icons {
   background-color: var(--color--bg);
-
   width: 100%;
   margin-top: auto;
   display: flex;
@@ -90,13 +88,10 @@ defineProps<{ service: Services }>()
   padding: 0.25em 1em;
 }
 
-a:hover {
-  fill: var(--color--primary);
-}
-
 .flex {
   display: flex;
   gap: 0.5em;
   align-items: center;
+  background-color: var(---color-card-bg);
 }
 </style>

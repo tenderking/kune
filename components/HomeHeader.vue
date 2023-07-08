@@ -25,16 +25,13 @@
 
     <div class="home-text">
       <h1 class="subtitle">
-        At <span class="kune"> Kune </span>, we provide an overwiew of Zimbabwean digital
-        services
+        <span class="kune"> Kune </span>, Digital discovery<br> made easy
       </h1>
-      <h2 class="main__title">
-        Digital discovery made easy
-      </h2>
       <p>
         Are you looking for place to easily find businesses that you need in one place?
         <span class="kune"> Kune </span> makes it a pleasant journey. You will find
-        innovation and convience.
+        innovation and convience.  We provide an overwiew of Zimbabwean digital
+        services
       </p>
       <NuxtLink to="/sign-in" class="cta__link">
         Sign up
@@ -87,7 +84,6 @@ img.illustration {
   color: var(--clr--primary);
   font-weight: 900;
 }
-
 
 @media (min-width: 550px) {
   header {

@@ -2,7 +2,7 @@ This is for setting up docker and running dynamodb
 
 aws dynamodb describe-table --table-name Name_of_table --query "Table" > table_schema.json --endpoint-url http://localhost:8000
 
-aws dynamodb describe-table --table-name Services --query "Table" > table_schema.json --endpoint-url http://localhost:8000
+aws dynamodb describe-table --table-name Services-v0.0.2 --query "Table" > table_schema.json --endpoint-url http://localhost:8000
 
 ```
 

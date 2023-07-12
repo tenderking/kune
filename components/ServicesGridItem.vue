@@ -9,16 +9,16 @@ defineProps<{ service: Services }>()
     <div class="card__image">
       <img
         class="service-item-image"
-        :alt="`${service.ServiceName}-img`"
+        :alt="`${service.ServiceName.S}-img`"
         src="@/assets/images/placeholder-image.png"
       >
     </div>
     <div class="card__text">
       <h3 class="card__text-title">
-        {{ service.ServiceName }}
+        {{ service.ServiceName.S }}
       </h3>
       <p class="card__text-description">
-        {{ service.Description }}
+        {{ service.Description.S }}
       </p>
     </div>
     <div class="flex">

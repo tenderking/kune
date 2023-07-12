@@ -1,9 +1,5 @@
 <script lang="ts" setup>
-// const categories = ["Business", "I.T", "Fintech"]
 const { data: categories } = await useFetch('/api/categories')
-const categoriesList = categories.value != null
-  ? [...new Set(await categories.value.categories.map(category => category.Category))]
-  : ['Business', 'I.T', 'Fintech']
 const sortOrder = ref('Ascending')
 function sortBy() {
   sortOrder.value === 'Ascending' ? sortOrder.value = 'Descending' : sortOrder.value = 'Ascending'
@@ -14,18 +10,21 @@ function sortBy() {
   <nav>
     <div class="select-container">
       <label for="category-select">Choose a category:</label>
-      <select id="category-select" name="categories">
-        <option value="">
-          Select By Category
-        </option>
+      <template v-if="categories">
+        <select id="category-select" name="categories">
+          <option value="">
+            Select By Category
+          </option>
 
-        <option v-for="(category, index) in categoriesList " :key="index" :value="category">
-          {{ category }}
-        </option>
-      </select>
-      <!-- <pre>
+          <option v-for="(category, index) in categories.categories " :key="index" :value="category">
+            {{ category }}
+          </option>
+        </select>
+
+        <!-- <pre>
         {{ categoriesList }}
       </pre> -->
+      </template>
     </div>
     <!-- <input id="search-bar" type="search" name="search" placeholder="search"> -->
     <div class="sort-services">

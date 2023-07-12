@@ -1,42 +1,4 @@
-import {
-  DeleteItemCommand,
-  DynamoDBClient,
-} from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
-
-const ddbClient = new DynamoDBClient({
-  region: 'localhost',
-  endpoint: 'http://localhost:8000',
-})
-export const ddbDocClient = DynamoDBDocumentClient.from(ddbClient)
-export const servicesTableName = process.env.SERVICES_TABLE_NAME
-export async function deleteServiceItem(id: string, serviceName: string) {
-  if (!id)
-    throw new Error('Service ID is required for this operation.')
-
-  if (!servicesTableName)
-    throw new Error('SERVICES_TABLE_NAME is not defined.')
-
-  const params = {
-    TableName: servicesTableName,
-    Key: {
-      ServiceID: { N: id },
-      ServiceName: { S: serviceName },
-    },
-  }
-  try {
-    const command = new DeleteItemCommand(params)
-    await ddbDocClient.send(command)
-  }
-  catch (err) {
-    console.error('Error', err)
-    // throw new Error('Service Name is required for this operation.')
-  }
-
-  // return {
-  //   Response: "Success",
-  // };
-}
+import { deleteServiceItem } from '@/composables/dynamodb'
 
 export default defineEventHandler(async (event) => {
   if (!event.context || !event.context.params)

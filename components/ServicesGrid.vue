@@ -5,7 +5,7 @@ const { data: services } = await useFetch('/api/services')
 <template>
   <div v-if="services" class="grid-wrap">
     <template v-for="service in services.services" :key="service.ServiceID">
-      <NuxtLink :to="`/services/${service.ServiceID}&${service.ServiceName}`">
+      <NuxtLink :to="`/services/${service.ServiceID.S}&${service.ServiceName.S}`">
         <div class="rands">
           <ServicesGridItem :service="service" />
         </div>

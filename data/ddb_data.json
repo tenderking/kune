@@ -1,5 +1,5 @@
 {
-  "Services": [
+  "Services-v0.0.2": [
     {
       "PutRequest": {
         "Item": {
@@ -19,7 +19,11 @@
             "S": " https://www.classifieds.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -30,6 +34,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/classifieds.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -64,6 +71,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/property.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -87,7 +97,11 @@
             "S": "https://www.topup.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -98,6 +112,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/topup.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -121,7 +138,11 @@
             "S": "https://www.webdev.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -132,6 +153,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/webdev.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -155,7 +179,11 @@
             "S": "https://www.sproutwomenempowermenttrust.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -169,6 +197,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/swet.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -192,7 +223,11 @@
             "S": "https://www.enbee.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -206,6 +241,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/enbee.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -229,7 +267,11 @@
             "S": "https://www.startupbiz.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -243,6 +285,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/startupbiz.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -266,7 +311,11 @@
             "S": "https://www.techzim.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -283,6 +332,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/techzim.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -306,7 +358,11 @@
             "S": "https://www.freshinabox.co.zw/"
           },
           "Address": {
-            "S": "Some address in Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -317,6 +373,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/freshinabox.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -340,7 +399,14 @@
             "S": "https://www.glamourgem.net/"
           },
           "Address": {
-            "S": "1 Letham Road, Avondale, Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              },
+              "Street": {
+                "S": "1 Letham Road, Avondale"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -351,6 +417,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/glamour.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -374,7 +443,14 @@
             "S": "http://www.tkzimbabwe.com/"
           },
           "Address": {
-            "S": " 10 Douglas Road, Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              },
+              "Street": {
+                "S": "10 Douglas Road, Workington"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -385,6 +461,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/tradek.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }
@@ -408,7 +487,14 @@
             "S": "http://www.shiftengage.net/"
           },
           "Address": {
-            "S": "8 Howard Cl, Harare"
+            "M": {
+              "City": {
+                "S": "Harare"
+              },
+              "Street": {
+                "S": "8 Howard Close, Marlborough"
+              }
+            }
           },
           "Tags": {
             "L": [
@@ -422,6 +508,9 @@
           },
           "ImgUrl": {
             "S": "/@fs/src/assets/images/shiftengage.png"
+          },
+          "DateAdded": {
+            "S": "2023-07-10"
           }
         }
       }

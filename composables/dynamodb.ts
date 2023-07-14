@@ -1,6 +1,15 @@
 import type { PutItemCommandInput } from '@aws-sdk/client-dynamodb'
-import { DeleteItemCommand, DynamoDBClient, GetItemCommand, PutItemCommand, QueryCommand, ScanCommand } from '@aws-sdk/client-dynamodb'
+import {
+  DeleteItemCommand,
+  DynamoDBClient,
+  GetItemCommand,
+  PutItemCommand,
+  QueryCommand,
+  ScanCommand,
+} from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
+import mapJson from './mapped-json'
+import type { InputJson } from './mapped-json'
 
 const ddbClient = new DynamoDBClient({
   region: 'localhost',
@@ -47,10 +56,13 @@ interface Service {
 interface ServicePayload {
   Category: string
   Description: string
-  Address: string
+  Address?: {
+    City: string
+    Street?: string
+  }
   ServiceName: string
   Website: string
-  ImgUrl: string
+  ImgUrl?: string
   Tags: string[]
   ServiceID: number
 }
@@ -65,8 +77,12 @@ export async function listServices() {
   const response = await ddbDocClient.send(command)
   if (!response.Items)
     throw new Error('No items found.')
+  const mappedItems = response.Items.map(item =>
+    mapJson(item as unknown as InputJson),
+  ) // Map the response items using the mapping function
+
   return {
-    services: response.Items as unknown as Service[],
+    services: mappedItems as unknown as Service[], // Assuming Service is the interface representing your desired output structure
   }
 }
 /* Get all services by category */
@@ -86,8 +102,27 @@ export async function getItemsByCategories(category: string) {
     services: response.Items,
   }
 }
+
+/* Get all categories */
+export async function getCategories() {
+  if (!servicesTableName)
+    throw new Error('SERVICES_TABLE_NAME is not defined.')
+  const params = {
+    TableName: servicesTableName,
+    ProjectionExpression: 'Category',
+  }
+
+  const command = new ScanCommand(params)
+  const response = await ddbDocClient.send(command)
+  return {
+    response: response.Items?.map(item => item.Category.S),
+  }
+}
+
 /* Add a new service */
 export async function createServiceItem(body: ServicePayload) {
+  if (body === undefined || body === null)
+    throw new Error('Body is required for this operation.')
   if (!body.ServiceName)
     throw new Error('Service Name is required for this operation.')
   if (!body.ServiceID)
@@ -97,12 +132,15 @@ export async function createServiceItem(body: ServicePayload) {
   if (body.Tags === undefined || body.Tags === null)
     throw new Error('Tags are required for this operation.')
 
+  if (body.Address === undefined || body.Address === null)
+    throw new Error('Address is required for this operation.')
+
   const params: PutItemCommandInput = {
     TableName: servicesTableName,
     Item: {
       ServiceID: { N: String(body.ServiceID) },
       ServiceName: { S: body.ServiceName },
-      Address: { S: body.Address },
+      Address: { M: { city: { S: body.Address.City } } },
       Category: { S: body.Category },
       Description: { S: body.Description },
       ImgUrl: { S: body.ImgUrl },
@@ -172,3 +210,5 @@ export async function deleteServiceItem(id: string, serviceName: string) {
   //   Response: "Success",
   // };
 }
+/* Get all services by tag */
+/* Get all tags */

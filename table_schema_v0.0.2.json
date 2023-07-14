@@ -1,117 +1,117 @@
 {
-    "AttributeDefinitions": [
-        {
-            "AttributeName": "Category",
-            "AttributeType": "S"
-        },
-        {
-            "AttributeName": "ServiceID",
-            "AttributeType": "S"
-        },
-        {
-            "AttributeName": "DateAdded",
-            "AttributeType": "S"
-        },
-        {
-            "AttributeName": "ServiceName",
-            "AttributeType": "S"
-        }
-    ],
-    "TableName": "Services-v0.0.2",
-    "KeySchema": [
-        {
-            "AttributeName": "ServiceID",
-            "KeyType": "HASH"
-        },
-        {
-            "AttributeName": "ServiceName",
-            "KeyType": "RANGE"
-        }
-    ],
-    "TableStatus": "ACTIVE",
-    "CreationDateTime": "2023-07-10T14:35:47.373000+02:00",
-    "ProvisionedThroughput": {
-        "LastIncreaseDateTime": "1970-01-01T01:00:00+01:00",
-        "LastDecreaseDateTime": "1970-01-01T01:00:00+01:00",
-        "NumberOfDecreasesToday": 0,
-        "ReadCapacityUnits": 5,
-        "WriteCapacityUnits": 5
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "Category",
+      "AttributeType": "S"
     },
-    "TableSizeBytes": 3431,
-    "ItemCount": 12,
-    "TableArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2",
-    "GlobalSecondaryIndexes": [
+    {
+      "AttributeName": "ServiceID",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "DateAdded",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "ServiceName",
+      "AttributeType": "S"
+    }
+  ],
+  "TableName": "Services-v0.0.2",
+  "KeySchema": [
+    {
+      "AttributeName": "ServiceID",
+      "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "ServiceName",
+      "KeyType": "RANGE"
+    }
+  ],
+  "TableStatus": "ACTIVE",
+  "CreationDateTime": "2023-07-10T14:35:47.373000+02:00",
+  "ProvisionedThroughput": {
+    "LastIncreaseDateTime": "1970-01-01T01:00:00+01:00",
+    "LastDecreaseDateTime": "1970-01-01T01:00:00+01:00",
+    "NumberOfDecreasesToday": 0,
+    "ReadCapacityUnits": 5,
+    "WriteCapacityUnits": 5
+  },
+  "TableSizeBytes": 3431,
+  "ItemCount": 12,
+  "TableArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2",
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "ServiceName-index",
+      "KeySchema": [
         {
-            "IndexName": "ServiceName-index",
-            "KeySchema": [
-                {
-                    "AttributeName": "ServiceName",
-                    "KeyType": "HASH"
-                },
-                {
-                    "AttributeName": "ServiceID",
-                    "KeyType": "RANGE"
-                }
-            ],
-            "Projection": {
-                "ProjectionType": "ALL"
-            },
-            "IndexStatus": "ACTIVE",
-            "ProvisionedThroughput": {
-                "ReadCapacityUnits": 1,
-                "WriteCapacityUnits": 1
-            },
-            "IndexSizeBytes": 3431,
-            "ItemCount": 12,
-            "IndexArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2/index/ServiceName-index"
+          "AttributeName": "ServiceName",
+          "KeyType": "HASH"
         },
         {
-            "IndexName": "Category-index",
-            "KeySchema": [
-                {
-                    "AttributeName": "Category",
-                    "KeyType": "HASH"
-                },
-                {
-                    "AttributeName": "ServiceID",
-                    "KeyType": "RANGE"
-                }
-            ],
-            "Projection": {
-                "ProjectionType": "ALL"
-            },
-            "IndexStatus": "ACTIVE",
-            "ProvisionedThroughput": {
-                "ReadCapacityUnits": 1,
-                "WriteCapacityUnits": 1
-            },
-            "IndexSizeBytes": 3431,
-            "ItemCount": 12,
-            "IndexArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2/index/Category-index"
-        },
-        {
-            "IndexName": "DateAdded-index",
-            "KeySchema": [
-                {
-                    "AttributeName": "DateAdded",
-                    "KeyType": "HASH"
-                },
-                {
-                    "AttributeName": "ServiceID",
-                    "KeyType": "RANGE"
-                }
-            ],
-            "Projection": {
-                "ProjectionType": "ALL"
-            },
-            "IndexStatus": "ACTIVE",
-            "ProvisionedThroughput": {
-                "ReadCapacityUnits": 1,
-                "WriteCapacityUnits": 1
-            },
-            "IndexSizeBytes": 3431,
-            "ItemCount": 12,
-            "IndexArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2/index/DateAdded-index"
+          "AttributeName": "ServiceID",
+          "KeyType": "RANGE"
         }
-    ]
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "IndexStatus": "ACTIVE",
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      },
+      "IndexSizeBytes": 3431,
+      "ItemCount": 12,
+      "IndexArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2/index/ServiceName-index"
+    },
+    {
+      "IndexName": "Category-index",
+      "KeySchema": [
+        {
+          "AttributeName": "Category",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "ServiceID",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "IndexStatus": "ACTIVE",
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      },
+      "IndexSizeBytes": 3431,
+      "ItemCount": 12,
+      "IndexArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2/index/Category-index"
+    },
+    {
+      "IndexName": "DateAdded-index",
+      "KeySchema": [
+        {
+          "AttributeName": "DateAdded",
+          "KeyType": "HASH"
+        },
+        {
+          "AttributeName": "ServiceID",
+          "KeyType": "RANGE"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "IndexStatus": "ACTIVE",
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      },
+      "IndexSizeBytes": 3431,
+      "ItemCount": 12,
+      "IndexArn": "arn:aws:dynamodb:ddblocal:000000000000:table/Services-v0.0.2/index/DateAdded-index"
+    }
+  ]
 }

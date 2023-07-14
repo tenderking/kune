@@ -2,17 +2,19 @@
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
 import { useMediaQuery } from '@vueuse/core'
-
-import IconHamburger from './IconHamburger.vue'
-import IconClose from './IconClose.vue'
+import IconHamburger from '@/components/icons/IconHamburger.vue'
+import IconClose from '@/components/icons/IconClose.vue'
 
 const isHidden = ref(true)
 const isMobile = useMediaQuery('(max-width: 550px)')
 
-// eslint-disable-next-line max-statements-per-line
-function closeModal() { isHidden.value = true }
-// eslint-disable-next-line max-statements-per-line
-function openModal() { isHidden.value = false }
+function closeModal() {
+  isHidden.value = true
+}
+
+function openModal() {
+  isHidden.value = false
+}
 </script>
 
 <template>
@@ -23,25 +25,29 @@ function openModal() { isHidden.value = false }
     <nav>
       <!-- Left-aligned links -->
 
-      <ul v-on-click-outside="closeModal" class="nav-small-screen" :class="isHidden ? 'hidden' : 'show'">
+      <ul
+        v-on-click-outside="closeModal"
+        class="nav-small-screen"
+        :class="isHidden ? 'hidden' : 'show'"
+      >
         <li>
-          <NuxtLink to="/services">
+          <NuxtLink to="/services" @click="closeModal">
             Browse Services
           </NuxtLink>
         </li>
 
         <li>
-          <NuxtLink to="/about">
+          <NuxtLink to="/about" @click="closeModal">
             About
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/contact">
+          <NuxtLink to="/contact" @click="closeModal">
             Contact us
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/signin" class="cta__link">
+          <NuxtLink to="/signin" class="cta__link" @click="closeModal">
             Sign in
           </NuxtLink>
         </li>
@@ -57,71 +63,71 @@ function openModal() { isHidden.value = false }
 
 <style scoped>
 header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 1em;
-height: max-content;
-position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  height: max-content;
+  position: relative;
 }
 
 i {
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .hidden {
-display: none;
+  display: none;
 }
 
 .show {
-display: flex;
+  display: flex;
 }
 
 ul {
-position: absolute;
-right: 1em;
-left: 1em;
-top: 100%;
+  position: absolute;
+  right: 1em;
+  left: 1em;
+  top: 100%;
 
-margin-inline: 1em;
-background-color: var(--color--bg);
+  margin-inline: 1em;
+  background-color: var(--color--bg);
 
-display: none;
-margin-inline: auto;
+  display: none;
+  margin-inline: auto;
 }
 
 button {
-border: none;
-background-color: inherit;
-color: var(--color--text);
+  border: none;
+  background-color: inherit;
+  color: var(--color--text);
 }
 
 .show {
-display: flex;
-padding: 2em;
-border-radius: 1em;
-flex-direction: column;
+  display: flex;
+  padding: 2em;
+  border-radius: 1em;
+  flex-direction: column;
 }
 
 nav ul {
-gap: 1rem;
+  gap: 1rem;
 }
 
 @media (min-width: 550px) {
-ul {
-position: static;
-display: flex;
-background-color: var(--color--bg);
-}
+  ul {
+    position: static;
+    display: flex;
+    background-color: var(--color--bg);
+  }
 
-button {
-display: none;
-}
+  button {
+    display: none;
+  }
 
-.hidden {
-display: flex;
-}
+  .hidden {
+    display: flex;
+  }
 }
 </style>

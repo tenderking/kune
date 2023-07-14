@@ -2,7 +2,9 @@
 const { data: categories } = await useFetch('/api/categories')
 const sortOrder = ref('Ascending')
 function sortBy() {
-  sortOrder.value === 'Ascending' ? sortOrder.value = 'Descending' : sortOrder.value = 'Ascending'
+  sortOrder.value === 'Ascending'
+    ? (sortOrder.value = 'Descending')
+    : (sortOrder.value = 'Ascending')
 }
 </script>
 
@@ -16,8 +18,12 @@ function sortBy() {
             Select By Category
           </option>
 
-          <option v-for="(category, index) in categories.categories " :key="index" :value="category">
-            {{ category }}
+          <option
+            v-for="(category, index) in categories.categories"
+            :key="index"
+            :value="category"
+          >
+            {{ category.S }}
           </option>
         </select>
 

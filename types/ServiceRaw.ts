@@ -1,4 +1,4 @@
-export interface Services {
+export interface ServiceRaw {
   Category: {
     S: string
   }
@@ -10,6 +10,10 @@ export interface Services {
       City: {
         S: string
       }
+      Street?: {
+        S: string
+      }
+
     }
   }
   ServiceName: {

@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import type { ServiceJson } from '@/types/ServiceJson'
+
 const { data: services } = await useFetch('/api/services')
+const data: ServiceJson = services.value?.services as ServiceJson[]
 </script>
 
 <template>
@@ -8,9 +11,9 @@ const { data: services } = await useFetch('/api/services')
       Discover the best local businesses and services in your area
     </h3>
 
-    <div v-if="services" class="category-container">
-      <template v-for="service in services.services.slice(0, 3)" :key="service.ServiceID">
-        <NuxtLink :to="`/services/${service.ServiceID}&${service.ServiceName}`">
+    <div v-if="data" class="category-container">
+      <template v-for="service in data.slice(0, 3)" :key="service.ServiceID">
+        <NuxtLink :to="`/services/${service.serviceID}&${service.serviceName}`">
           <div class="rands">
             <ServicesGridItem :service="service" />
           </div>

@@ -1,12 +1,15 @@
 <script setup lang="ts">
+import type { ServiceJson } from 'types/ServiceJson'
+
 const { data: services } = await useFetch('/api/services')
+const data: ServiceJson = services.value?.services as ServiceJson[]
 </script>
 
 <template>
-  <div v-if="services" class="grid-wrap">
-    <template v-for="service in services.services" :key="service.ServiceID">
+  <div v-if="data" class="grid-wrap">
+    <template v-for="service in data" :key="service.ServiceID">
       <NuxtLink
-        :to="`/services/${service.ServiceID.N}&${service.ServiceName.S}`"
+        :to="`/services/${service.serviceID}&${service.serviceName}`"
       >
         <div class="rands">
           <ServicesGridItem :service="service" />

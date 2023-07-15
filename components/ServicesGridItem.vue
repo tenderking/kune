@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { Services } from '@/types/Services'
+import type { ServiceJson } from '@/types/ServiceJson'
 
-defineProps<{ service: Services }>()
+defineProps<{ service: ServiceJson }>()
 </script>
 
 <template>
@@ -9,16 +9,16 @@ defineProps<{ service: Services }>()
     <div class="card__image">
       <img
         class="service-item-image"
-        :alt="`${service.ServiceName.S}-img`"
+        :alt="`${service.serviceName}-img`"
         src="@/assets/images/placeholder-image.png"
       >
     </div>
     <div class="card__text">
       <h3 class="card__text-title">
-        {{ service.ServiceName.S }}
+        {{ service.serviceName }}
       </h3>
       <p class="card__text-description">
-        {{ service.Description.S }}
+        {{ service.description }}
       </p>
     </div>
     <div class="flex">

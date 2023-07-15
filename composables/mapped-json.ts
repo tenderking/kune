@@ -1,27 +1,8 @@
-export interface InputJson {
-  Category: { S: string }
-  Description: { S: string }
-  Address: { M: { City: { S: string }; Street?: { S: string } } }
-  ServiceName: { S: string }
-  Website: { S: string }
-  ImgUrl: { S: string }
-  Tags: { L: { S: string }[] }
-  ServiceID: { S: string }
-}
+import type { ServiceRaw } from 'types/ServiceRaw'
+import type { ServiceJson } from 'types/ServiceJson'
 
-interface OutputJson {
-  category: string
-  description: string
-  address?: { city: string; street?: string }
-  serviceName?: string
-  website?: string
-  imgUrl?: string
-  tags?: string[]
-  serviceID?: string
-}
-
-function mapJson(jsonData: InputJson): OutputJson {
-  const mappedJson: OutputJson = {
+function mapJson(jsonData: ServiceRaw): ServiceJson {
+  const mappedJson: ServiceJson = {
     category: jsonData.Category.S.toLowerCase(),
     description: jsonData.Description.S,
   }

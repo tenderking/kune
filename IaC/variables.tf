@@ -65,3 +65,9 @@ variable "additional_attributes" {
   default = []
 }
 
+variable "user_pool_name" {
+  description = "The name of the user pool"
+  type        = string
+  default     = "kune"
+  
+}

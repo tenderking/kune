@@ -19,11 +19,11 @@ const ddbClient = new DynamoDBClient({
 export const ddbDocClient = DynamoDBDocumentClient.from(ddbClient)
 export const servicesTableName = process.env.SERVICES_TABLE_NAME
 
-/* ************************************ */
+/* ********************************** */
 
-/* ************************************ */
-/*         Get all services             */
-/* ************************************ */
+/* ************************************
+ *         Get all services           *
+ **************************************/
 export async function listServices() {
   const command = new ScanCommand({
     TableName: servicesTableName,

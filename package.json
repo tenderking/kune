@@ -14,10 +14,13 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.328.0",
     "@aws-sdk/lib-dynamodb": "^3.328.0",
+    "@pinia/nuxt": "^0.4.11",
     "@vee-validate/yup": "^4.10.5",
     "@vueuse/components": "^10.1",
     "@vueuse/core": "^10.1",
+    "aws-amplify": "^5.3.4",
     "aws-sdk": "^2.1373.0",
+    "pinia": "^2.1.4",
     "vee-validate": "^4.10.5"
   },
   "devDependencies": {

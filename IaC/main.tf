@@ -42,5 +42,48 @@ resource "aws_dynamodb_table" "services-table-v2" {
     }
   }
 
-  tags = var.tags
+
+}
+
+resource "aws_cognito_user_pool" "kune" {
+  name = var.user_pool_name
+
+  # Set the policies for user passwords
+  password_policy {
+    minimum_length    = 8
+    require_lowercase = true
+    require_uppercase = true
+    require_numbers   = true
+    require_symbols   = false
+  }
+
+  # Configure the email as the username attribute
+  username_attributes = ["email"]
+
+
+  # Optional: Add additional attributes for the user pool (e.g., given_name, family_name, etc.)
+  schema {
+    name = "given_name"
+    attribute_data_type = "String"
+    mutable = true
+    required = false
+  }
+
+  schema {
+    name = "family_name"
+    attribute_data_type = "String"
+    mutable = true
+    required = false
+  }
+
+  # Optional: Define the email verification settings
+  verification_message_template {
+    default_email_option = "CONFIRM_WITH_LINK"
+    email_message = "Your verification code is {####}."
+    email_subject = "Verify your email for our app"
+  }
+}
+
+output "user_pool_id" {
+  value = aws_cognito_user_pool.kune.id
 }

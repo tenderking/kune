@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { data: categories } = await useFetch('/api/categories')
+const { data: categories } = await useFetch('/api/services/categories')
 const data: Set<string[]> = new Set(categories.value?.response as string[])
 const sortOrder = ref('Ascending')
 function sortBy() {

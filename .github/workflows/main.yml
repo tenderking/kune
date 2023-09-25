@@ -1,34 +1,34 @@
 # This is a workflow to deploy a Nuxt.js application to a DirectAdmin or cPanel server
 # using the FTP-KR extension and GitHub Actions.
 
-name: Deploy to server
+# name: Deploy to server
 
-# The workflow will run on push events and pull request events
-on: [push, pull_request]
+# # The workflow will run on push events and pull request events
+# on: [push, pull_request]
 
-jobs:
-  deploy:
-    # The job will run on an Ubuntu machine
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install vinyl-ftp
-        run: npm install vinyl-ftp # Install the VINYL-FTP extension
-      - name: Deploy to server
-        # Set environment variables for the FTP host, username, and password
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        # Run the FTP-KR script to deploy the code to the server
-        run: |
-          VinylFtp = require('vinyl-ftp');
-          ftp = new VinylFtp({
-            host: process.env.FTP_HOST,
-            user: process.env.FTP_USERNAME,
-            password: process.env.FTP_PASSWORD,
-            parallel: 10,
-            log: console.log
-          });
-          globs = ['.output/**/*'];
-          return ftp.src(globs, { base: '.output', buffer: false })
-            .pipe(ftp.dest('/public_html/nuxt'));
+# jobs:
+#   deploy:
+#     # The job will run on an Ubuntu machine
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Install vinyl-ftp
+#         run: npm install vinyl-ftp # Install the VINYL-FTP extension
+#       - name: Deploy to server
+#         # Set environment variables for the FTP host, username, and password
+#         env:
+#           FTP_HOST: ${{ secrets.FTP_HOST }}
+#           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+#           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+#         # Run the FTP-KR script to deploy the code to the server
+#         run: |
+#           VinylFtp = require('vinyl-ftp');
+#           ftp = new VinylFtp({
+#             host: process.env.FTP_HOST,
+#             user: process.env.FTP_USERNAME,
+#             password: process.env.FTP_PASSWORD,
+#             parallel: 10,
+#             log: console.log
+#           });
+#           globs = ['.output/**/*'];
+#           return ftp.src(globs, { base: '.output', buffer: false })
+#             .pipe(ftp.dest('/public_html/nuxt'));

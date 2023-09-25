@@ -1,5 +1,6 @@
 This is for setting up docker and running dynamodb
 
+```bash
 aws dynamodb describe-table --table-name Name_of_table --query "Table" > table_schema.json --endpoint-url http://localhost:8000
 
 aws dynamodb describe-table --table-name Services-v0.0.2 --query "Table" > table_schema_v0.0.2.json --endpoint-url http://localhost:8000
@@ -8,8 +9,8 @@ aws dynamodb describe-table --table-name Services-v0.0.2 --query "Table" > table
 
 to view all items in a table
 
-```
 
+```bash
 aws dynamodb scan --table-name Name_of_table --query 'Items[*]' --endpoint-url http://localhost:8000
 
 aws dynamodb list-tables --endpoint-url http://localhost:8000
@@ -20,4 +21,3 @@ aws dynamodb batch-write-item --table-name Services-v0.0.2 --request-items file:
 
 ```
 
-```

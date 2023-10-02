@@ -9,8 +9,9 @@ const schema = yup.object({
 })
 
 function handleSubmit(values: yup.Asserts<typeof schema> | any) {
+  // eslint-disable-next-line no-alert
   alert(JSON.stringify(values, null, 2))
-  signUp({ username: values.email, password: values.password })
+  // signUp({ username: values.email, password: values.password })
 }
 </script>
 

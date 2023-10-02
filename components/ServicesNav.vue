@@ -1,34 +1,38 @@
 <script lang="ts" setup>
-const { data: categories } = await useFetch('/api/services/categories')
-const data: Set<string[]> = new Set(categories.value?.response as string[])
+const store = useApiStore()
 const sortOrder = ref('Ascending')
 function sortBy() {
   sortOrder.value === 'Ascending'
     ? (sortOrder.value = 'Descending')
     : (sortOrder.value = 'Ascending')
 }
+onMounted(() => {
+  store.fetchCategories()
+})
 </script>
 
 <template>
   <nav>
     <div class="select-container">
       <label for="category-select">Choose a category:</label>
-      <template v-if="data">
+      <template v-if="store.categoryList">
         <select id="category-select" name="categories">
-          <option value="">
+          <option value="" @click="store.$patch({ category: '' })">
             Select By Category
           </option>
 
           <option
-            v-for="(category, index) in data"
+            v-for="(category, index) in store.categoryList"
             :key="index"
             :value="category"
+            @click="store.$patch({ category })"
           >
             {{ category }}
           </option>
         </select>
       </template>
     </div>
+    <pre>{{ store.category }}</pre>
     <!-- <input id="search-bar" type="search" name="search" placeholder="search"> -->
     <div class="sort-services">
       <span class="sort-services-heading">sort</span>

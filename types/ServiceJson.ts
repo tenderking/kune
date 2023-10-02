@@ -1,5 +1,5 @@
 export interface ServiceJson {
-[x: string]: any;
+  [x: string]: any
   category: string
   description: string
   address?: { city: string; street?: string }

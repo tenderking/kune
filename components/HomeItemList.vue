@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import type { ServiceJson } from '@/types/ServiceJson'
-
-const { data: services } = await useFetch('/api/services')
-const data: ServiceJson = services.value?.services as ServiceJson[]
+const store = useApiStore()
+// trigger the fetch services
+onMounted(() => {
+  store.category = ''
+  store.fetchServices()
+})
+watch(() => store.myservices, (newValue) => {
+  if (!newValue || newValue.length === 0)
+    store.fetchServices()
+})
 </script>
 
 <template>
@@ -11,8 +17,8 @@ const data: ServiceJson = services.value?.services as ServiceJson[]
       Discover the best local businesses and services in your area
     </h3>
 
-    <div v-if="data" class="category-container">
-      <template v-for="service in data.slice(0, 3)" :key="service.ServiceID">
+    <div v-if="store.myservices" class="category-container">
+      <template v-for="service in store.myservices.slice(0, 3)" :key="service.ServiceID">
         <NuxtLink :to="`/services/${service.serviceID}&${service.serviceName}`">
           <div class="rands">
             <ServicesGridItem :service="service" />

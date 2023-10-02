@@ -57,8 +57,14 @@ export async function getItemsByCategories(category: string) {
 
   const command = new QueryCommand(params)
   const response = await ddbDocClient.send(command)
+  if (!response.Items)
+    throw new Error('No items found.')
+  const mappedItems = response.Items.map(item =>
+    mapJson(item as unknown as ServiceRaw),
+  ) // Map the response items using the mapping function
+
   return {
-    services: response.Items,
+    services: mappedItems as unknown as ServiceJson[], // Assuming Service is the interface representing your desired output structure
   }
 }
 
@@ -109,7 +115,7 @@ export async function createServiceItem(body: ServiceJson) {
       Category: { S: body.category },
       Description: { S: body.description },
       ImgUrl: { S: body.imgUrl },
-      Tags: { L: body.tags.map(tag => ({ S: tag })) },
+      Tags: { L: body.tags.map((tag: string) => ({ S: tag })) },
       Website: { S: body.website },
     },
     ReturnConsumedCapacity: 'TOTAL',

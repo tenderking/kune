@@ -1,12 +1,8 @@
 <script setup lang="ts">
-// import type { ServiceJson } from 'types/ServiceJson'
-
-// const { data: services } = await useFetch('/api/services')
-// const data: ServiceJson = services.value?.services as ServiceJson[]
 const store = useApiStore()
 // trigger the fetch services action when store.category changes
 watch(() => store.category, () => store.fetchServices())
-watch(() => store.myservices, (newValue) => {
+watch(store.myservices, (newValue) => {
   if (!newValue || newValue.length === 0)
     store.fetchServices()
 })

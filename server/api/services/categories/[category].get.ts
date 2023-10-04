@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   if (!event.context || !event.context.params)
     throw new Error('Params is required for this operation.')
 
-  const category = event.context.params.category
+  const category = event.context.params.category.replace(/%20/g, ' ')
 
   if (!category)
     throw new Error('Category is required for this operation.')

@@ -2,12 +2,10 @@
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
 import { useMediaQuery } from '@vueuse/core'
-import IconHamburger from '@/components/icons/IconHamburger.vue'
-import IconClose from '@/components/icons/IconClose.vue'
 
 const isHidden = ref(true)
 const isMobile = useMediaQuery('(max-width: 550px)')
-
+const favCount = computed(() => useFavoritesStore().favoritesCount)
 function closeModal() {
   isHidden.value = true
 }
@@ -53,10 +51,10 @@ function openModal() {
         </li>
       </ul>
       <i v-if="isMobile" class="i-blue">
-        <IconHamburger v-if="isHidden" class="i-green" @click="openModal" />
-        <IconClose v-else @click="closeModal" />
+        <Icon v-if="isHidden" name="material-symbols:menu" class="i-green" @click="openModal" />
+        <Icon v-else name="material-symbols:close" @click="closeModal" />
       </i>
-      <!-- <fa class="bars-menu" v-else icon="times" /> -->
+      <p>{{ favCount }}</p>
     </nav>
   </header>
 </template>

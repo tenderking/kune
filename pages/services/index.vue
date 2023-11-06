@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { data: services } = await useFetch('/api/services')
+const services = useApiStore().myservices
 </script>
 
 <template>

@@ -12,26 +12,29 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.328.0",
-    "@aws-sdk/lib-dynamodb": "^3.328.0",
+    "@aws-amplify/ui-vue": "^3.1.29",
+    "@aws-sdk/client-dynamodb": "^3.430.0",
+    "@aws-sdk/lib-dynamodb": "^3.430.0",
+    "@formkit/nuxt": "^1.2.2",
     "@pinia/nuxt": "^0.4.11",
     "@vee-validate/yup": "^4.10.5",
     "@vueuse/components": "^10.1",
     "@vueuse/core": "^10.1",
-    "aws-amplify": "^5.3.4",
-    "aws-sdk": "^2.1373.0",
+    "aws-amplify": "^5.3.11",
+    "aws-sdk": "^2.1475.0",
     "pinia": "^2.1.4",
     "vee-validate": "^4.10.5"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.39.5",
-    "@nuxt/devtools": "^1.0.0-beta.0",
+    "@nuxt/devtools": "^1.0.0",
     "@nuxt/test-utils": "^3.6.1",
     "@types/node": "^20.1.0",
     "eslint": "^8.50.0",
-    "nuxt": "^3.7.4",
+    "nuxt": "^3.8.0",
+    "nuxt-icon": "^0.6.1",
     "typescript": "^5.0.4",
     "vitest": "^0.32.2",
-    "vue": "^3.3.4"
+    "vue": "^3.3.7"
   }
 }

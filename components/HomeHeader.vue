@@ -33,7 +33,7 @@
         innovation and convience.  We provide an overwiew of Zimbabwean digital
         services
       </p>
-      <NuxtLink to="/sign-in" class="cta__link">
+      <NuxtLink to="/signup" class="cta__link">
         Sign up
       </NuxtLink>
     </div>

@@ -1,7 +1,40 @@
 <script lang="ts" setup>
 import type { ServiceJson } from '@/types/ServiceJson'
 
-defineProps<{ service: ServiceJson }>()
+const props = defineProps<{ service: ServiceJson }>()
+const store = useFavoritesStore()
+// check if service is in favorites
+// if it is, show filled heart
+// if it isn't, show empty heart
+
+function addToFavorites() {
+  if (props.service.serviceID)
+    store.addFavorite(props.service.serviceID)
+}
+
+function removeFromFavorites() {
+  if (props.service.serviceID)
+    store.removeFavorite(props.service.serviceID)
+}
+
+function isFavorite() {
+  if (props.service.serviceID)
+    return store.favorites.includes(props.service.serviceID)
+  return false
+}
+
+function toggleFavorite() {
+  if (isFavorite()) {
+    removeFromFavorites()
+    // eslint-disable-next-line no-console
+    console.log('removed')
+  }
+  else {
+    addToFavorites()
+    // eslint-disable-next-line no-console
+    console.log('added')
+  }
+}
 </script>
 
 <template>
@@ -22,13 +55,16 @@ defineProps<{ service: ServiceJson }>()
       </p>
     </div>
     <div class="flex">
-      <IconWhatsApp width="16px" height="16px" />
+      <Icon name="ic:baseline-whatsapp" width="16px" height="16px" />
       <span> 077-233-222-999 </span>
+      <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" @click.stop.prevent="toggleFavorite()" />
+
+      <Icon v-else name="material-symbols:favorite" @click.stop.prevent="toggleFavorite()" />
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 .card-container {
   max-width: max-content;
 }
@@ -78,14 +114,10 @@ defineProps<{ service: ServiceJson }>()
   color: var(--color--primary);
 }
 
-.card__icons {
-  background-color: var(--color--bg);
-  width: 100%;
-  margin-top: auto;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0.25em 1em;
+
+.card__icons:hover {
+  background-color: floralwhite;
+  cursor: pointer;
 }
 
 .flex {

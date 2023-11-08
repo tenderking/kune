@@ -57,4 +57,7 @@ export default defineNuxtConfig({
       'window.global': {},
     },
   },
+  nitro: {
+    inlineDynamicImports: true,
+  },
 })

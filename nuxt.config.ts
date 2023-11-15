@@ -43,11 +43,6 @@ export default defineNuxtConfig({
       ['definePiniaStore', 'acceptHMRUpdate'], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
-  alias: {
-    // 'aws-amplify': 'aws-amplify/lib/',
-    '@aws-amplify/core': '@aws-amplify/core/lib',
-    '@aws-amplify/auth': '@aws-amplify/auth/lib',
-  },
 
   vite: {
     resolve: {

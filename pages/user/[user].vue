@@ -1,30 +1,63 @@
 <script setup lang="ts">
-// const user = useUserStore()
 
-// // Define a custom object to hold your store instances
-// interface CustomStores {
-//   user: typeof user
-// }
 
-// // Attach the custom object to the Window object
-// declare global {
-//   interface Window {
-//     stores: CustomStores
-//   }
-// }
-
-// // Assign your store instances to the 'stores' property
-// if (typeof window !== 'undefined') {
-//   window.stores = {
-//     user,
-//   }
-// }
+const services: string[] = []
+const user = "user"
 </script>
 
 <template>
-  <main class="user">
-    <h1>This is the user page for </h1>
+  
+    <h1>{{ user}} dashboard </h1>
+    <div class="wrapper"> 
+    <h2>my favorites</h2>
+    <template v-if="services.length === 0">
+      <p>no favorited </p>
+    </template>
+    <template v-else>
+      <ul v-for="service in services" :key="service">
+        <li> {{ service }} </li>
+      </ul>
+    </template>
+    </div>
+<div class="wrapper">
+      <h2> my services </h2>
+      <template v-if="services.length === 0">
+      <p>no services</p>
+      <NuxtLink class="cta__link" >add service</NuxtLink>
+    </template>
+    <template v-else>
+      <ul v-for="service in services" :key="service">
+        <li> {{ service }} </li>
+      </ul>
+    </template>  
 
-    <ServiceFormPost />
-  </main>
+    </div>
+    <h1>{{ user}} dashboard </h1>
+    <div class="wrapper"> 
+    <h2>my favorites</h2>
+    <template v-if="services.length === 0">
+      <p>no favorited </p>
+    </template>
+    <template v-else>
+      <ul v-for="service in services" :key="service">
+        <li> {{ service }} </li>
+      </ul>
+    </template>
+    </div>
+<UContainer class="wrapper">
+      <h2> my services </h2>
+      <template v-if="services.length === 0">
+      <p>no services</p>
+      <NuxtLink class="cta__link" >add service</NuxtLink>
+    </template>
+    <template v-else>
+      <ul v-for="service in services" :key="service">
+        <li> {{ service }} </li>
+      </ul>
+    </template>  
+
+    </UContainer>
+
+    <!-- <ServiceFormPost /> -->
+ 
 </template>

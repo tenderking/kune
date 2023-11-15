@@ -7,9 +7,9 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
     },
     auth: {
-      name: 'nuxt-session',
+      name: "nuxt-session",
       // eslint-disable-next-line n/prefer-global/process
-      password: process.env.NUXT_AUTH_PASSWORD || '',
+      password: process.env.NUXT_AUTH_PASSWORD || "",
     },
   },
   // plugins: [
@@ -21,7 +21,7 @@ export default defineNuxtConfig({
 
   css: [
     // CSS file in the project
-    '@/assets/css/main.css',
+    "@/assets/css/main.css",
 
     // SCSS file in the project
   ],
@@ -34,22 +34,22 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@pinia/nuxt', 'nuxt-icon'],
+  modules: ["@pinia/nuxt", "nuxt-icon", "@nuxt/ui"],
 
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
-      'defineStore', // import { defineStore } from 'pinia'
-      ['definePiniaStore', 'acceptHMRUpdate'], // import { defineStore as definePiniaStore } from 'pinia'
+      "defineStore", // import { defineStore } from 'pinia'
+      ["definePiniaStore", "acceptHMRUpdate"], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
 
   vite: {
     resolve: {
-      alias: { './runtimeConfig': './runtimeConfig.browser' },
+      alias: { "./runtimeConfig": "./runtimeConfig.browser" },
     },
     define: {
-      'window.global': {},
+      "window.global": {},
     },
   },
   nitro: {

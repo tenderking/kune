@@ -2,7 +2,7 @@
 
 <template>
   <footer>
-    <div class="container">
+    <u-container class="container">
       <div class="footer-logo">
         <router-link class="logo" to="/">
           Kune
@@ -25,7 +25,7 @@
       <div class="footer-copyright">
         <p>© copyright 2022</p>
       </div>
-    </div>
+    </u-container>
   </footer>
 </template>
 
@@ -38,6 +38,7 @@ footer {
   grid-row-start: 3;
   grid-row-end: 4;
   width: 100%;
+  margin-top: 4em;
 }
 
 footer .container {

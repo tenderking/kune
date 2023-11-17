@@ -24,10 +24,13 @@ function mapJson(jsonData: ServiceRaw): ServiceJson {
     mappedJson.imgUrl = jsonData.ImgUrl.S
 
   if (jsonData.Tags && jsonData.Tags.L)
-    mappedJson.tags = jsonData.Tags.L.map(tag => tag.S)
+    mappedJson.tags = jsonData.Tags.L.map((tag: ServiceRaw) => tag.S)
 
-  if (jsonData.ServiceID && jsonData.ServiceID.S)
-    mappedJson.serviceID = jsonData.ServiceID.S
+  if (jsonData.PK && jsonData.PK.S)
+    mappedJson.PK = jsonData.PK.S
+
+  if (jsonData.SK && jsonData.SK.S)
+    mappedJson.SK = jsonData.SK.S
 
   return mappedJson
 }

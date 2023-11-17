@@ -10,9 +10,9 @@ watch(store.myservices, (newValue) => {
 
 <template>
   <div v-if="store.myservices" class="grid-wrap">
-    <template v-for="service in store.getServices" :key="service.ServiceID">
+    <template v-for="service in store.myservices" :key="service.PK">
       <NuxtLink
-        :to="`/services/${service.serviceID}&${service.serviceName}`"
+        :to="`/services/${service.PK}`"
       >
         <div class="rands">
           <ServicesGridItem :service="service" />

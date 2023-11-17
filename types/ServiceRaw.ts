@@ -33,7 +33,10 @@ export interface ServiceRaw {
       S: string
     }[]
   }
-  ServiceID: {
+  PK: {
+    S: string
+  }
+  SK: {
     S: string
   }
 }

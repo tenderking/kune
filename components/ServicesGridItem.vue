@@ -8,18 +8,18 @@ const store = useFavoritesStore()
 // if it isn't, show empty heart
 
 function addToFavorites() {
-  if (props.service.serviceID)
-    store.addFavorite(props.service.serviceID)
+  if (props.service.PK)
+    store.addFavorite(props.service.PK)
 }
 
 function removeFromFavorites() {
-  if (props.service.serviceID)
-    store.removeFavorite(props.service.serviceID)
+  if (props.service.PK)
+    store.removeFavorite(props.service.PK)
 }
 
 function isFavorite() {
-  if (props.service.serviceID)
-    return store.favorites.includes(props.service.serviceID)
+  if (props.service.PK)
+    return store.favorites.includes(props.service.PK)
   return false
 }
 

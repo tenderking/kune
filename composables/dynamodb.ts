@@ -93,8 +93,6 @@ export async function createServiceItem(body: ServiceJson) {
     throw new Error('Body is required for this operation.')
   if (!body.serviceName)
     throw new Error('Service Name is required for this operation.')
-  if (!body.serviceID)
-    throw new Error('Service ID is required for this operation.')
   if (!servicesTableName)
     throw new Error('SERVICES_TABLE_NAME is not defined.')
   if (body.tags === undefined || body.tags === null)
@@ -109,7 +107,7 @@ export async function createServiceItem(body: ServiceJson) {
   const params: PutItemCommandInput = {
     TableName: servicesTableName,
     Item: {
-      ServiceID: { N: String(body.serviceID) },
+      PK: { N: String(body.PK) },
       ServiceName: { S: body.serviceName },
       Address: { M: { city: { S: body.address.city } } },
       Category: { S: body.category },
@@ -134,8 +132,8 @@ export async function createServiceItem(body: ServiceJson) {
 /* Get a service by ID and Service Name */
 /* ************************************ */
 
-export async function getService(id: string, serviceName: string) {
-  if (!id)
+export async function getService(PK: string) {
+  if (!PK)
     throw new Error('Service ID is required for this operation.')
 
   if (!servicesTableName)
@@ -144,8 +142,8 @@ export async function getService(id: string, serviceName: string) {
   const params = {
     TableName: servicesTableName,
     Key: {
-      ServiceID: { S: id },
-      ServiceName: { S: serviceName },
+      PK: { S: PK },
+      SK: { S: "Service" },
     },
   }
   try {

@@ -1,4 +1,10 @@
 export interface ServiceRaw {
+  PK: {
+    S: string
+  }
+  SK: {
+    S: string
+  }
   Category: {
     S: string
   }
@@ -13,7 +19,6 @@ export interface ServiceRaw {
       Street?: {
         S: string
       }
-
     }
   }
   ServiceName: {
@@ -32,11 +37,5 @@ export interface ServiceRaw {
     L: {
       S: string
     }[]
-  }
-  PK: {
-    S: string
-  }
-  SK: {
-    S: string
   }
 }

@@ -1,4 +1,4 @@
-import { createServiceItem } from '@/composables/dynamodb'
+// import { createServiceItem } from '@/composables/dynamodb'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)

@@ -30,7 +30,32 @@ const serviceDetails: ServiceJson = service.value as ServiceJson
 
   <main class="container">
     <h2>Details</h2>
+    <UContainer 
+      :ui="{
+        base: 'flex',
+        padding: 'p-8',
+      }"
+      >
     <ServicesGridItem :service="serviceDetails" />
+    <UContainer 
+    :ui="{
+        padding: 'p-8 gap-4',
+        constrained: 'max-w-7xl',
+         }"
+      class="Ucontainer"
+     >
+    <UBadge size="lg">{{ serviceDetails.category }}</UBadge>
+    <UBadge v-for="tag in serviceDetails.tags">{{ tag }}</UBadge>
+    </UContainer>
+    </UContainer>
   
   </main>
 </template>
+<style scoped>
+.Ucontainer {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+</style>
+

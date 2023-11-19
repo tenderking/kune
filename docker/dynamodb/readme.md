@@ -106,4 +106,37 @@ aws dynamodb query \
     --key-condition-expression "Category = :Category" \
     --expression-attribute-values  '{":Category":{"S":"Business"}}' \
     --endpoint-url http://localhost:8000
+
+aws dynamodb get-item \
+  --table-name kune-v.0.0.1 \
+  --key '{"PK": {"S": "Service#Enbee"}, "SK": {"S": "Service"}}' \
+  --endpoint-url http://localhost:8000 
+
+aws dynamodb put-item \
+  --table-name "kune-v.0.0.1" \
+  --region localhost \
+  --endpoint-url http://localhost:8000 \
+  --item '{
+    "PK": {"S": "USER#fake_user"},
+    "SK": {"S": "SERVICE#ServiceName"}, 
+    "ServiceName": {"S": "Service Name"},
+    "Category": {"S": "Category"},
+    "Description": {"S": "Service Description"},
+    "Website": {"S": "https://www.example.com"},
+    "Address": {"M": {"City": {"S": "City"}}},
+    "Tags": {"L": [{"S": "tag1"}, {"S": "tag2"}]}
+  }'
+
+aws dynamodb put-item \
+  --table-name "kune-v.0.0.1" \
+  --region localhost \
+  --endpoint-url http://localhost:8000 \
+  --item '{
+    "PK": {"S": "USER#fake_user"},
+    "SK": {"S": "FAVORITE#ServiceName"}, 
+    "ServiceName": {"S": "Service Name"},
+    "User": {"S": "fake_user"}
+  }'
+
+
 ```

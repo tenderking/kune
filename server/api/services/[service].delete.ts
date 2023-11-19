@@ -1,4 +1,3 @@
-import { deleteServiceItem } from '@/composables/dynamodb'
 
 export default defineEventHandler(async (event) => {
   if (!event.context || !event.context.params)

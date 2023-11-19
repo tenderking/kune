@@ -38,7 +38,6 @@ export default defineNuxtConfig({
 
   pinia: {
     autoImports: [
-      // automatically imports `defineStore`
       "defineStore", // import { defineStore } from 'pinia'
       ["definePiniaStore", "acceptHMRUpdate"], // import { defineStore as definePiniaStore } from 'pinia'
     ],
@@ -54,5 +53,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     inlineDynamicImports: true,
+  },
+
+  import: {
+    dirs: ["types", "store"],
   },
 })

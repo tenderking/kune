@@ -5,7 +5,7 @@ import { useMediaQuery } from '@vueuse/core'
 
 const isHidden = ref(true)
 const isMobile = useMediaQuery('(max-width: 550px)')
-const favCount = computed(() => useFavoritesStore().favoritesCount)
+// const favCount = computed(() => useFavoritesStore().favoritesCount)
 function closeModal() {
   isHidden.value = true
 }
@@ -54,7 +54,7 @@ function openModal() {
         <Icon v-if="isHidden" name="material-symbols:menu" class="i-green" @click="openModal" />
         <Icon v-else name="material-symbols:close" @click="closeModal" />
       </i>
-      <p>{{ favCount }}</p>
+      
     </nav>
   </header>
 </template>

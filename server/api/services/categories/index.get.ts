@@ -9,7 +9,7 @@ export async function getCategories() {
 
   const command = new ScanCommand(params)
   const response = await ddbDocClient.send(command)
-  const categoryList = transformData(response.Items).map((item) => item.category)
+  const categoryList = transformData(response.Items).map((item) => item.Category)
   // const categorySet = new Set({categoryList})
     return {
     response:  categoryList,

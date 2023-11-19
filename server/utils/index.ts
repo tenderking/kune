@@ -46,52 +46,52 @@ export function mapJson(jsonData: ServiceRaw): ServiceJson {
   return mappedJson
 }
 
-// export function transformData(services) {
-//   return Object.keys(services).map((key) => {
-//     const service = services[key]
-//     let newService = {}
-//     for (let field in service) {
-//       if (service[field].hasOwnProperty("S")) {
-//         newService[field] = service[field].S
-//       } else if (service[field].hasOwnProperty("M")) {
-//         newService[field] = service[field].M
-//         for (let subField in service[field].M) {
-//           if (service[field].M[subField].hasOwnProperty("S")) {
-//             newService[field][subField] = service[field].M[subField].S
-//           }
-//         }
-//       } else if (service[field].hasOwnProperty("L")) {
-//         newService[field] = service[field].L.map((field) => field.S)
-//       }
-//     }
-//     return newService
-//   })
-// }
-
 export function transformData(services) {
   return Object.keys(services).map((key) => {
     const service = services[key]
     let newService = {}
     for (let field in service) {
-      let lowerCaseField = field.toLowerCase()
       if (service[field].hasOwnProperty("S")) {
-        newService[lowerCaseField] = service[field].S
+        newService[field] = service[field].S
       } else if (service[field].hasOwnProperty("M")) {
-        // Handle the Address field
-        if (field === "Address") {
-          newService[lowerCaseField] =
-            service[field].M.Street.S + ", " + service[field].M.City.S
-        } else {
-          newService[lowerCaseField] = service[field].M
+        newService[field] = service[field].M
+        for (let subField in service[field].M) {
+          if (service[field].M[subField].hasOwnProperty("S")) {
+            newService[field][subField] = service[field].M[subField].S
+          }
         }
       } else if (service[field].hasOwnProperty("L")) {
-        newService[lowerCaseField] = service[field].L.map((tag) => tag.S)
+        newService[field] = service[field].L.map((field) => field.S)
       }
     }
-    newService.id = key
-    newService.imgUrl = "" // Set imgUrl as an empty string
     return newService
   })
 }
+
+// export function transformData(services) {
+//   return Object.keys(services).map((key) => {
+//     const service = services[key]
+//     let newService = {}
+//     for (let field in service) {
+//       let lowerCaseField = field.toLowerCase()
+//       if (service[field].hasOwnProperty("S")) {
+//         newService[lowerCaseField] = service[field].S
+//       } else if (service[field].hasOwnProperty("M")) {
+//         // Handle the Address field
+//         if (field === "Address") {
+//           newService[lowerCaseField] =
+//             service[field].M.Street.S + ", " + service[field].M.City.S
+//         } else {
+//           newService[lowerCaseField] = service[field].M
+//         }
+//       } else if (service[field].hasOwnProperty("L")) {
+//         newService[lowerCaseField] = service[field].L.map((tag) => tag.S)
+//       }
+//     }
+//     newService.id = key
+//     newService.imgUrl = "" // Set imgUrl as an empty string
+//     return newService
+//   })
+// }
 
 

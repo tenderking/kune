@@ -42,16 +42,16 @@ function toggleFavorite() {
     <div class="card__image">
       <img
         class="service-item-image"
-        :alt="`${service.serviceName}-img`"
+        :alt="`${service.ServiceName}-img`"
         src="@/assets/images/placeholder-image.png"
       >
     </div>
     <div class="card__text">
       <h3 class="card__text-title">
-        {{ service.serviceName }}
+        {{ service.ServiceName }}
       </h3>
       <p class="card__text-description">
-        {{ service.description }}
+        {{ service.Description }}
       </p>
     </div>
     <div class="flex">

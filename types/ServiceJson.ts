@@ -1,11 +1,11 @@
 export interface ServiceJson {
-  category?: string
-  description?: string
-  address?: { city: string; street?: string }
-  serviceName?: string
-  website?: string
-  imgUrl?: string
-  tags?: string[]
+  Category?: string
+  Description?: string
+  Address?: { city: string; street?: string }
+  ServiceName?: string
+  Website?: string
+  ImgUrl?: string
+  Tags?: string[]
   PK?: string
   SK?: string
 }

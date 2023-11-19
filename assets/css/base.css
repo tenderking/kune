@@ -11,6 +11,8 @@
 --clr--text-dark: #e3f3fc;
 --clr--bg-dark: #181818;
 --clr--secondary-dark: #17262b;
+--radius-sm: 0.5em;
+
 /* Font Sizes */
   --step--2: clamp(0.78rem, calc(0.77rem + 0.03vw), 0.80rem);
   --step--1: clamp(0.94rem, calc(0.92rem + 0.11vw), 1.00rem);

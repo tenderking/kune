@@ -1,6 +1,5 @@
 [
   {
-    "id": "213",
     "name": "Classifieds",
     "category": "Online market",
     "description": "This is online market for buying and selling. Mainly cars",
@@ -10,7 +9,6 @@
     "imgUrl": "/@fs/src/assets/images/classifieds.png"
   },
   {
-    "id": "132",
     "name": "Property.co.zw",
     "category": "Real estate",
     "description": "This is online market for buying and selling property",
@@ -20,7 +18,6 @@
     "imgUrl": "/@fs/src/assets/images/property.png"
   },
   {
-    "id": "321",
     "name": "TopUp",
     "category": "Fintech",
     "description": "This is website for topping up airtime, data, and other payments",
@@ -30,7 +27,6 @@
     "imgUrl": "/@fs/src/assets/images/topup.png"
   },
   {
-    "id": "234",
     "name": "Webdev",
     "category": "Digitalizing",
     "description": "This is an online solutions form websites and such and such",
@@ -40,7 +36,6 @@
     "imgUrl": "/@fs/src/assets/images/webdev.png"
   },
   {
-    "id": "243",
     "name": "Sprout Women",
     "category": "NGO",
     "description": "Womens rights and empowerment NGO",
@@ -50,7 +45,6 @@
     "imgUrl": "/@fs/src/assets/images/swet.png"
   },
   {
-    "id": "343",
     "name": "Enbee",
     "category": "Clothing Store",
     "description": "School uniform store ",
@@ -60,7 +54,6 @@
     "imgUrl": "/@fs/src/assets/images/enbee.png"
   },
   {
-    "id": "334",
     "name": "Startup Biz",
     "category": "Business",
     "description": "StartupBiz Zimbabwe is a business research firm based in Zimbabwe. We are passionate about entrepreneurship. We want to help Zimbabweans start and grow their businesses successfully.",
@@ -70,7 +63,6 @@
     "imgUrl": "/@fs/src/assets/images/startupbiz.png"
   },
   {
-    "id": "334",
     "name": "Tech Zim",
     "category": "Business",
     "description": "Techzim is an information technology and business publication that obsesses about the opportunity of tech particularly the internet for individuals and businesses in Zimbabwe and the greater African region.",
@@ -80,7 +72,6 @@
     "imgUrl": "/@fs/src/assets/images/techzim.png"
   },
   {
-    "id": "334",
     "name": "Fresh in a Box",
     "category": "Food",
     "description": "Food delivery and  online shop",
@@ -90,7 +81,6 @@
     "imgUrl": "/@fs/src/assets/images/freshinabox.png"
   },
   {
-    "id": "335",
     "name": "Glamour Gem",
     "category": "Shop",
     "description": "Procurement shop for office, supplies, IT and Uniforms",
@@ -100,7 +90,6 @@
     "imgUrl": "/@fs/src/assets/images/glamour.png"
   },
   {
-    "id": "336",
     "name": "Trade Kings",
     "category": "Manufacturer",
     "description": "Trade Kings Zimbabwe are the manufacturers of the Boom and Xtra range of detergent products. ",
@@ -110,7 +99,6 @@
     "imgUrl": "/@fs/src/assets/images/tradek.png"
   },
   {
-    "id": "337",
     "name": "Shift Engage",
     "category": "Media",
     "description": "Shift Engage is a multi-award winning Creative Advertising Agency specialising in integrated online and offline media. ",

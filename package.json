@@ -12,8 +12,6 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@aws-amplify/core": "^5.8.6",
-    "@aws-amplify/ui-vue": "^3.1.29",
     "@aws-sdk/client-dynamodb": "^3.445.0",
     "@aws-sdk/lib-dynamodb": "^3.445.0",
     "@formkit/nuxt": "^1.2.2",
@@ -22,7 +20,6 @@
     "@vee-validate/yup": "^4.10.5",
     "@vueuse/components": "^10.1",
     "@vueuse/core": "^10.1",
-    "aws-amplify": "^5.3.12",
     "pinia": "^2.1.4",
     "vee-validate": "^4.10.5"
   },

@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
   runtimeConfig: {
     public: {
       // eslint-disable-next-line n/prefer-global/process
@@ -12,12 +11,7 @@ export default defineNuxtConfig({
       password: process.env.NUXT_AUTH_PASSWORD || "",
     },
   },
-  // plugins: [
-  //   {
-  //     src: '~/plugins/amplify.ts',
-  //     mode: 'client',
-  //   },
-  // ],
+
 
   css: [
     // CSS file in the project

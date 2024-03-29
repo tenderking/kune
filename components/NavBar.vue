@@ -1,13 +1,34 @@
 <!-- eslint-disable vue/no-unused-refs -->
 <script setup lang="ts">
-import { vOnClickOutside } from '@vueuse/components'
-import { useMediaQuery } from '@vueuse/core'
+import { vOnClickOutside } from "@vueuse/components"
+import { useMediaQuery } from "@vueuse/core"
+const props = defineProps({
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
+})
+const colorMode = useColorMode()
+const { signIn, signOut, session, status } = useAuth()
 
+const isDark = computed({
+  get() {
+    return colorMode.value === "dark"
+  },
+  set() {
+    colorMode.preference = colorMode.value === "dark" ? "light" : "dark"
+  },
+})
 const isHidden = ref(true)
-const isMobile = useMediaQuery('(max-width: 550px)')
+const isMobile = useMediaQuery("(max-width: 550px)")
 // const favCount = computed(() => useFavoritesStore().favoritesCount)
 function closeModal() {
   isHidden.value = true
+}
+function isFixed() {
+  return props.fixed
+    ? "sticky  top-0 left-0 z-40 transition-transform -translate-x-full sm:translate-x-0"
+    : ""
 }
 
 function openModal() {
@@ -16,7 +37,7 @@ function openModal() {
 </script>
 
 <template>
-  <header>
+  <header class="flex justify-between p-4 h-max relative bgDark" :class="isFixed()">
     <NuxtLink class="logo" to="/">
       <span> Kune </span>
     </NuxtLink>
@@ -29,44 +50,60 @@ function openModal() {
         :class="isHidden ? 'hidden' : 'show'"
       >
         <li>
-          <NuxtLink to="/services" @click="closeModal">
-            Browse Services
-          </NuxtLink>
+          <NuxtLink to="/services" @click="closeModal"> Browse Services </NuxtLink>
         </li>
 
         <li>
-          <NuxtLink to="/about" @click="closeModal">
-            About
-          </NuxtLink>
+          <NuxtLink to="/about" @click="closeModal"> About </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/contact" @click="closeModal">
-            Contact us
-          </NuxtLink>
+          <NuxtLink to="/contact" @click="closeModal"> Contact us </NuxtLink>
         </li>
+
         <li>
-          <NuxtLink to="/signin" class="cta__link" @click="closeModal">
+          <!-- <ClientOnly>
+            <UButton
+              :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
+              color="red"
+              aria-label="Theme"
+              @click="isDark = !isDark"
+              >color mode</UButton
+            >
+            <template #fallback>
+              <div>
+                <p>poo</p>
+              </div>
+            </template>
+          </ClientOnly> -->
+          <NuxtLink to="/api/auth/signin" class="cta__link" @click="closeModal">
             Sign in
           </NuxtLink>
         </li>
       </ul>
       <i v-if="isMobile" class="i-blue">
-        <Icon v-if="isHidden" name="material-symbols:menu" class="i-green" @click="openModal" />
+        <Icon
+          v-if="isHidden"
+          name="material-symbols:menu"
+          class="i-green"
+          @click="openModal"
+        />
         <Icon v-else name="material-symbols:close" @click="closeModal" />
       </i>
-      
     </nav>
   </header>
 </template>
 
 <style scoped>
-header {
+/* header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1em;
   height: max-content;
   position: relative;
+} */
+.bgDark {
+  background-color: var(--color--bg);
 }
 
 i {

@@ -1,40 +1,23 @@
+import { resolve } from "node:path";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  runtimeConfig: {
-    public: {
-      // eslint-disable-next-line n/prefer-global/process
-      apiEndpoint: process.env.API_ENDPOINT,
-    },
-    auth: {
-      name: "nuxt-session",
-      // eslint-disable-next-line n/prefer-global/process
-      password: process.env.NUXT_AUTH_PASSWORD || "",
-    },
-  },
-  // plugins: [
-  //   {
-  //     src: '~/plugins/amplify.ts',
-  //     mode: 'client',
-  //   },
-  // ],
-
-  css: [
-    // CSS file in the project
-    "@/assets/css/main.css",
-
-    // SCSS file in the project
-  ],
+  css: ["@/assets/css/main.css"],
 
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
   },
 
-  modules: ["@pinia/nuxt", "nuxt-icon", "@nuxt/ui"],
+  modules: ["@pinia/nuxt", "nuxt-icon", "@nuxt/ui", "@hebilicious/authjs-nuxt"],
+
+  formkit: {
+    autoImport: true,
+    configFile: "./formkit.config.ts",
+  },
 
   pinia: {
     autoImports: [
@@ -43,19 +26,42 @@ export default defineNuxtConfig({
     ],
   },
 
-  vite: {
-    resolve: {
-      alias: { "./runtimeConfig": "./runtimeConfig.browser" },
-    },
-    define: {
-      "window.global": {},
-    },
-  },
   nitro: {
     inlineDynamicImports: true,
   },
 
-  import: {
+  imports: {
     dirs: ["types", "store"],
+  },
+
+  colorMode: {
+    preference: "light",
+  },
+
+  runtimeConfig: {
+    authJs: {
+      secret: process.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
+    },
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    },
+    email: {
+      smtpHost: process.env.SMTP_HOST,
+      smtpPort: Number(process.env.SMTP_PORT),
+      smtpUser: process.env.SMTP_USER,
+      smtpPassword: process.env.SMTP_PASSWORD,
+      emailFrom: process.env.EMAIL_FROM,
+    },
+    public: {
+      authJs: {
+        baseUrl: process.env.NUXT_NEXTAUTH_URL, // The URL of your deployed app (used for origin Check in production)
+        verifyClientOnEveryRequest: true, // whether to hit the /auth/session endpoint on every client request
+      },
+    },
+  },
+
+  alias: {
+    cookie: resolve(__dirname, "node_modules/cookie"),
   },
 })

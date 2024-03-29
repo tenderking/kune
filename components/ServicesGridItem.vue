@@ -1,40 +1,37 @@
 <script lang="ts" setup>
-import type { ServiceJson } from '@/types/ServiceJson'
-
-const props = defineProps<{ service: ServiceJson }>()
-const store = useFavoritesStore()
+defineProps<{ service: any }>()
 // check if service is in favorites
 // if it is, show filled heart
 // if it isn't, show empty heart
 
-function addToFavorites() {
-  if (props.service.PK)
-    store.addFavorite(props.service.PK)
-}
+// function addToFavorites() {
+//   if (props.service.PK)
+//     store.addFavorite(props.service.PK)
+// }
 
-function removeFromFavorites() {
-  if (props.service.PK)
-    store.removeFavorite(props.service.PK)
-}
+// function removeFromFavorites() {
+//   if (props.service.PK)
+//     store.removeFavorite(props.service.PK)
+// }
 
-function isFavorite() {
-  if (props.service.PK)
-    return store.favorites.includes(props.service.PK)
-  return false
-}
+// function isFavorite() {
+//   if (props.service.PK)
+//     return store.favorites.includes(props.service.PK)
+//   return false
+// }
 
-function toggleFavorite() {
-  if (isFavorite()) {
-    removeFromFavorites()
-    // eslint-disable-next-line no-console
-    console.log('removed')
-  }
-  else {
-    addToFavorites()
-    // eslint-disable-next-line no-console
-    console.log('added')
-  }
-}
+// function toggleFavorite() {
+//   if (isFavorite()) {
+//     removeFromFavorites()
+//     // eslint-disable-next-line no-console
+//     console.log('removed')
+//   }
+//   else {
+//     addToFavorites()
+//     // eslint-disable-next-line no-console
+//     console.log('added')
+//   }
+// }
 </script>
 
 <template>
@@ -42,24 +39,24 @@ function toggleFavorite() {
     <div class="card__image">
       <img
         class="service-item-image"
-        :alt="`${service.ServiceName}-img`"
+        :alt="`${service.name}-img`"
         src="@/assets/images/placeholder-image.png"
-      >
+      />
     </div>
     <div class="card__text">
       <h3 class="card__text-title">
-        {{ service.ServiceName }}
+        {{ service.name }}
       </h3>
       <p class="card__text-description">
-        {{ service.Description }}
+        {{ service.description }}
       </p>
     </div>
     <div class="flex">
       <Icon name="ic:baseline-whatsapp" width="16px" height="16px" />
       <span> 077-233-222-999 </span>
-      <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" @click.stop.prevent="toggleFavorite()" />
+      <!-- <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" @click.stop.prevent="toggleFavorite()" /> -->
 
-      <Icon v-else name="material-symbols:favorite" @click.stop.prevent="toggleFavorite()" />
+      <!-- <Icon v-else name="material-symbols:favorite" @click.stop.prevent="toggleFavorite()" /> -->
     </div>
   </div>
 </template>
@@ -76,7 +73,7 @@ function toggleFavorite() {
   position: relative;
   width: 275px;
   height: 375px;
-    background-color: var(--color-card-bg);
+  background-color: var(--color-card-bg);
   outline: solid var(--color--secondary);
   border-radius: 6px;
 }
@@ -109,11 +106,10 @@ function toggleFavorite() {
   -webkit-line-clamp: 4;
 }
 
-.card__text-title{
+.card__text-title {
   text-decoration: double var(--color--primary) 2px;
   color: var(--color--primary);
 }
-
 
 .card__icons:hover {
   background-color: floralwhite;

@@ -1,39 +1,42 @@
 <script lang="ts" setup>
-const store = useApiStore()
-const sortOrder = ref('Ascending')
+const sortOrder = ref("Ascending")
 function sortBy() {
-  sortOrder.value === 'Ascending'
-    ? (sortOrder.value = 'Descending')
-    : (sortOrder.value = 'Ascending')
+  sortOrder.value === "Ascending"
+    ? (sortOrder.value = "Descending")
+    : (sortOrder.value = "Ascending")
 }
-onMounted(() => {
-  store.fetchCategories()
-})
+
+const categorySlug = ref("")
+const { data: categories } = await useFetch("/api/services/categories")
+const emit = defineEmits<{
+  (event: "categorySlug", value: string): void
+}>()
+
+// Function to emit category slug when an option is selected
+function emitCategorySlug(slug: string) {
+  categorySlug.value = slug
+  emit("categorySlug", slug)
+}
 </script>
 
 <template>
   <nav>
     <div class="select-container">
       <label for="category-select">Choose a category:</label>
-      <template v-if="store.categoryList">
-        <select id="category-select" name="categories">
-          <option value="" @click="store.$patch({ category: '' })">
-            Select By Category
-          </option>
+      <template v-if="categories">
+        <select
+          id="category-select"
+          name="categories"
+          @change="(event) => emitCategorySlug((event.target as HTMLSelectElement)?.value)"
+        >
+          <option value="">Select By Category</option>
 
-          <option
-            v-for="(category, index) in store.categoryList"
-            :key="index"
-            :value="category"
-            @click="store.$patch({ category })"
-          >
+          <option v-for="(category, index) in categories" :key="index" :value="category">
             {{ category }}
           </option>
         </select>
       </template>
     </div>
-    <pre>{{ store.category }}</pre>
-    <!-- <input id="search-bar" type="search" name="search" placeholder="search"> -->
     <div class="sort-services">
       <span class="sort-services-heading">sort</span>
       <span class="sort-services-type" @click="sortBy()">{{ sortOrder }}</span>

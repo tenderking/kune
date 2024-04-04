@@ -3,7 +3,7 @@ import { z } from "zod"
 import type { FormSubmitEvent } from "#ui/types"
 
 definePageMeta({
-  layout: "full-width",
+  layout: "dashboard",
 })
 
 const isOpen = ref(false)
@@ -14,30 +14,38 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>
 
+const services = await $fetch("/api/users/services")
+
 const state = reactive({
   email: undefined,
   password: undefined,
 })
 const columns = [
   {
-    key: "service",
+    key: "name",
     label: "Service",
   },
   {
+    key: "category",
+    label: "Category",
+  },
+
+  {
     key: "actions",
+    label: "Actions",
   },
 ]
-const services = [
-  {
-    service: "service 1",
-  },
-  {
-    service: "service 2",
-  },
-  {
-    service: "service 3",
-  },
-]
+// const services = [
+//   {
+//     service: "service 1",
+//   },
+//   {
+//     service: "service 2",
+//   },
+//   {
+//     service: "service 3",
+//   },
+// ]
 const items = (row: Object) => [
   [
     {
@@ -68,47 +76,41 @@ const items = (row: Object) => [
 ]
 const column = "my services"
 
-async function onSubmit(event: FormSubmitEvent<Schema>) {
-  // Do something with data
-  console.log(event.data)
-}
+// async function onSubmit(event: FormSubmitEvent<Schema>) {
+//   // Do something with data
+//   console.log(event.data)
+// }
 </script>
 <template>
-  <UContainer class="p-8 rounded-md flex flex-col gap-4">
+  <UContainer class="rounded-mdflex flex-col gap-4">
     <h2>Services</h2>
     <template v-if="services.length === 0">
       <p>no Services</p>
     </template>
     <template v-else>
-      <UTable
-        :columns="columns"
-        :rows="services"
-        :ui="{ tbody: 'divide-green-500' }"
-        class="bg-gray-800 rounded-md w-1/2"
-      >
+      <UTable :columns="columns" :rows="services" class="card rounded-md w-1/2">
         <template #actions-data="{ row }">
           <UButton color="gray" variant="ghost" icon="i-heroicons-trash-20-solid" />
+          <UButton
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-pencil-square-20-solid"
+          />
         </template>
       </UTable>
     </template>
-    <div>
-      <UButton label="Add service" @click="isOpen = true" />
 
-      <UModal v-model="isOpen">
-        <div class="p-4 flex-1">
-          <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-            <UFormGroup label="Email" name="email">
-              <UInput v-model="state.email" />
-            </UFormGroup>
+    <UButton label="Add service" @click.prevent="isOpen = true" class="mt-4" />
 
-            <UFormGroup label="Password" name="password">
-              <UInput v-model="state.password" type="password" />
-            </UFormGroup>
-
-            <UButton type="submit"> Submit </UButton>
-          </UForm>
-        </div>
-      </UModal>
-    </div>
+    <UModal v-model="isOpen">
+      <div class="p-4 flex-1">
+        <ServiceFormPost />
+      </div>
+    </UModal>
   </UContainer>
 </template>
+<style scoped>
+.card {
+  background-color: var(--color--bg);
+}
+</style>

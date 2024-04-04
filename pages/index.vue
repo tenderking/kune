@@ -3,8 +3,22 @@ const { data: services } = await useFetch("/api/services")
 </script>
 
 <template>
-  <HomeHeader />
-  <!-- second section -->
+  <header>
+    <HomeIllustration />
+
+    <div class="home-text">
+      <h1 class="subtitle">
+        <span class="kune"> Kune </span>, Digital discovery<br />
+        made easy
+      </h1>
+      <p>
+        Are you looking for place to easily find businesses that you need in one place?
+        <span class="kune"> Kune </span> makes it a pleasant journey. You will find
+        innovation and convience. We provide an overwiew of Zimbabwean digital services
+      </p>
+      <NuxtLink to="/auth/signup" external class="cta__link"> Sign up </NuxtLink>
+    </div>
+  </header>
 
   <main class="motivation-section">
     <div class="motivation-card">
@@ -33,6 +47,58 @@ const { data: services } = await useFetch("/api/services")
 </template>
 
 <style scoped>
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 2em;
+  padding: 1em;
+  max-width: max-content;
+  gap: 2em;
+}
+.mondrian {
+  max-width: 100%;
+}
+header p {
+  margin-bottom: 2em;
+}
+
+header h2 {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+img.illustration {
+  max-width: 350px;
+}
+
+.home-text {
+  max-width: 50ch;
+}
+
+.main__title {
+  background: linear-gradient(315deg, var(--clr--primary) 25%, var(--clr--accent));
+  background-clip: border-box;
+  background-clip: text;
+  -webkit-background-clip: text;
+  /* -webkit-text-fill-color: transparent; */
+  font-weight: 900;
+}
+
+.kune {
+  color: var(--clr--primary);
+  font-weight: 900;
+}
+
+@media (min-width: 550px) {
+  header {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
 main {
   margin-bottom: 2em;
   padding: 1em;

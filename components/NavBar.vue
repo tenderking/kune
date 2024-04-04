@@ -61,7 +61,7 @@ function openModal() {
         </li>
 
         <li>
-          <!-- <ClientOnly>
+          <ClientOnly>
             <UButton
               :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
               color="red"
@@ -74,10 +74,10 @@ function openModal() {
                 <p>poo</p>
               </div>
             </template>
-          </ClientOnly> -->
-          <NuxtLink to="/api/auth/signin" class="cta__link" @click="closeModal">
-            Sign in
-          </NuxtLink>
+          </ClientOnly>
+        </li>
+        <li>
+          <NuxtLink to="/api/auth/signin" external class="cta__link"> Sign in </NuxtLink>
         </li>
       </ul>
       <i v-if="isMobile" class="i-blue">

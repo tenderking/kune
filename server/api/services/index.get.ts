@@ -34,15 +34,15 @@ async function getAllServices() {
         },
       },
     })
-    .then((services) =>
-      services.map((service) => ({
+    .then(services =>
+      services.map(service => ({
         name: service.name,
         description: service.description,
         category: service.category.name,
         tags: service.service_tags.map(
-          (tagOnService) => tagOnService.tags.name
+          tagOnService => tagOnService.tags.name,
         ),
-      }))
+      })),
     )
     .catch((error) => {
       console.error(error)

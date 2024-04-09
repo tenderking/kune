@@ -21,7 +21,9 @@ defineProps<{
       </NuxtLink>
     </template>
   </div>
-  <div v-else>No services</div>
+  <div v-else>
+    No services
+  </div>
   <!-- <pre>{{ services }}</pre> -->
 </template>
 

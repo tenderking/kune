@@ -9,7 +9,7 @@ defineProps<{ service: Service }>()
         class="service-item-image"
         :alt="`${service.name}-img`"
         src="@/assets/images/placeholder-image.png"
-      />
+      >
     </div>
     <div class="card__text">
       <h3 class="card__text-title">

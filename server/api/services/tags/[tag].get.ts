@@ -30,15 +30,14 @@ export default defineEventHandler(async (event) => {
       },
     },
   })
-  if (!services) {
+  if (!services)
     throw new Error(`No services found for tag: ${query}`)
-  }
-  const flattenedServices = services.map((service) => ({
+
+  const flattenedServices = services.map(service => ({
     name: service.name,
     description: service.description,
     category: service.category.name,
-    tags: service.service_tags.map((tag) => tag.tags.name),
+    tags: service.service_tags.map(tag => tag.tags.name),
   }))
   return flattenedServices
-  
 })

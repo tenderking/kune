@@ -3,11 +3,12 @@
 
 const nuxtApp = useNuxtApp()
 
-const { data: services } = await useFetch<Service>("/api/services", {
-  headers: { Accept: "application/json" },
+const { data: services } = await useFetch<Service>('/api/services', {
+  headers: { Accept: 'application/json' },
   getCachedData(key) {
     const cachedData = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
-    if (!cachedData) return
+    if (!cachedData)
+      return
     return cachedData
   },
 })
@@ -19,7 +20,7 @@ const { data: services } = await useFetch<Service>("/api/services", {
 
     <div class="home-text">
       <h1 class="subtitle">
-        <span class="kune"> Kune </span>, Digital discovery<br />
+        <span class="kune"> Kune </span>, Digital discovery<br>
         made easy
       </h1>
       <p>
@@ -27,7 +28,9 @@ const { data: services } = await useFetch<Service>("/api/services", {
         <span class="kune"> Kune </span> makes it a pleasant journey. You will find
         innovation and convience. We provide an overwiew of Zimbabwean digital services
       </p>
-      <NuxtLink to="/auth/signup" external class="cta__link"> Sign up </NuxtLink>
+      <NuxtLink to="/auth/signup" external class="cta__link">
+        Sign up
+      </NuxtLink>
     </div>
   </header>
 

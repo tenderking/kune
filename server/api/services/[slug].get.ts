@@ -1,5 +1,5 @@
 function replaceSpaceSymbol(str: string) {
-  return str.replace(/%20/g, " ")
+  return str.replace(/%20/g, ' ')
 }
 
 export default defineEventHandler(async (event) => {
@@ -30,14 +30,14 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  if (!service) {
+  if (!service)
     throw new Error(`No service found for slug: ${query}`)
-  }
+
   const flattenedService = {
     name: service.name,
     description: service.description,
     category: service.category.name,
-    tags: service.service_tags.map((tag) => tag.tags.name),
+    tags: service.service_tags.map(tag => tag.tags.name),
   }
   return flattenedService
 })

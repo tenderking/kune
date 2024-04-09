@@ -1,7 +1,7 @@
 // create interface for services
 export interface Service {
-  name: string;
-  description: string;
-  category: string;
-  tags: string[];
+  name: string
+  description: string
+  category: string
+  tags: string[]
 }

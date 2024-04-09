@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   const query = replaceSpaceSymbol(event.context.params?.slug as string)
- //  get service by category
+  //  get service by category
   const services = await prisma.services.findMany({
     where: {
       category: {
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
         select: {
           name: true,
         },
-      },    
+      },
       service_tags: {
         select: {
           tags: {
@@ -26,15 +26,15 @@ export default defineEventHandler(async (event) => {
       },
     },
   })
-  const flattenedServices = services.map((service) => ({
+  const flattenedServices = services.map(service => ({
     name: service.name,
     description: service.description,
     category: service.category.name,
-    tags: service.service_tags.map((tag) => tag.tags.name),
+    tags: service.service_tags.map(tag => tag.tags.name),
   }))
   return flattenedServices
 })
 
 function replaceSpaceSymbol(str: string) {
-  return str.replace(/%20/g, " ")
+  return str.replace(/%20/g, ' ')
 }

@@ -1,42 +1,27 @@
 <script setup lang="ts">
-import { z } from "zod"
-// import type { FormSubmitEvent } from "#ui/types"
-
 definePageMeta({
-  layout: "dashboard",
+  layout: 'dashboard',
 })
 
 const isOpen = ref(false)
-const schema = z.object({
-  email: z.string().email("Invalid email"),
-  password: z.string().min(8, "Must be at least 8 characters"),
-})
-
-type Schema = z.output<typeof schema>
-
-const services = await $fetch("/api/users/services")
-
+const services = await $fetch('/api/users/services')
 const columns = [
   {
-    key: "name",
-    label: "Service",
+    key: 'name',
+    label: 'Service',
   },
   {
-    key: "category",
-    label: "Category",
+    key: 'category',
+    label: 'Category',
   },
 
   {
-    key: "actions",
-    label: "Actions",
+    key: 'actions',
+    label: 'Actions',
   },
 ]
-
-// async function onSubmit(event: FormSubmitEvent<Schema>) {
-//   // Do something with data
-//   console.log(event.data)
-// }
 </script>
+
 <template>
   <UContainer class="rounded-md">
     <h2>Services</h2>
@@ -56,7 +41,7 @@ const columns = [
       </UTable>
     </template>
 
-    <UButton label="Add service" @click.prevent="isOpen = true" class="mt-4" />
+    <UButton label="Add service" class="mt-4" @click.prevent="isOpen = true" />
 
     <UModal v-model="isOpen">
       <div class="p-4 flex-1">
@@ -65,6 +50,7 @@ const columns = [
     </UModal>
   </UContainer>
 </template>
+
 <style scoped>
 .card {
   background-color: var(--color--bg);

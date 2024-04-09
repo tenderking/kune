@@ -1,25 +1,23 @@
 <script setup lang="ts">
 const links = [
   {
-    label: "Profile",
-    icon: "i-heroicons-face-smile",
-    to: "/profile",
+    label: 'Profile',
+    icon: 'i-heroicons-face-smile',
+    to: '/profile',
     badge: 100,
   },
 
   {
-    label: "Service",
-    icon: "i-heroicons-chart-bar",
-    to: "/profile/services",
+    label: 'Service',
+    icon: 'i-heroicons-chart-bar',
+    to: '/profile/services',
   },
   {
-    label: "Settings",
-    icon: "i-heroicons-cog",
+    label: 'Settings',
+    icon: 'i-heroicons-cog',
     // to: "/navigation/command-palette",
   },
 ]
-const user = "user"
-
 </script>
 
 <template>
@@ -29,7 +27,7 @@ const user = "user"
   >
     <!-- line -->
 
-    <divider></divider>
+    <divider />
     <UVerticalNavigation
       :links="links"
       :ui="{

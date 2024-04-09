@@ -16,7 +16,9 @@ defineProps<{
 
 <template>
   <div class="category-picker">
-    <h3 class="subtitle">Discover the best local businesses and services in your area</h3>
+    <h3 class="subtitle">
+      Discover the best local businesses and services in your area
+    </h3>
 
     <div v-if="services" class="category-container">
       <template v-for="service in services.slice(0, 3)" :key="service.name">
@@ -27,7 +29,9 @@ defineProps<{
         </NuxtLink>
       </template>
     </div>
-    <div v-else>No services</div>
+    <div v-else>
+      No services
+    </div>
   </div>
 </template>
 

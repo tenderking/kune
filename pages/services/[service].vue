@@ -3,18 +3,17 @@ const route = useRoute()
 const router = useRouter()
 let serviceTags: string[] = []
 // my_path is after the /services/ part of the route using fullpath
-const my_path = ref(route.fullPath.split("/services/")[1])
+const my_path = ref(route.fullPath.split('/services/')[1])
 
 const { data: service } = await useFetch<Service>(`/api/services/${my_path.value}`, {
   onResponseError({ response }) {
     // Handle the response errors
-    console.error("Error fetching data:", response)
+    console.error('Error fetching data:', response)
   },
 })
 if (service.value) {
-  if (typeof service.value === "object" && "tags" in service.value) {
+  if (typeof service.value === 'object' && 'tags' in service.value)
     serviceTags = (await service.value.tags) as string[]
-  }
 }
 // async function deleteItem() {
 //   await fetch(
@@ -26,7 +25,7 @@ if (service.value) {
 // }
 async function getServicesByTags(tag: string) {
   router.push({
-    path: "/services",
+    path: '/services',
     query: { tags: tag },
   })
 }
@@ -45,27 +44,28 @@ async function getServicesByTags(tag: string) {
         padding: 'p-8',
       }"
     >
-      <ServicesGridItem :service="service" v-if="service" />
+      <ServicesGridItem v-if="service" :service="service" />
       <UContainer
+        v-if="service"
         :ui="{
           padding: 'p-8 gap-4',
           constrained: 'max-w-7xl',
         }"
         class="Ucontainer"
-        v-if="service"
       >
         <!-- <UBadge size="lg">{{
           typeof service === "object" && "category" in service ? service.category : ""
         }}</UBadge> -->
         <template v-if="serviceTags">
-          <UBadge v-for="tag in serviceTags" @click="getServicesByTags(tag)">{{
-            tag
-          }}</UBadge>
+          <UBadge v-for="tag in serviceTags" :key="tag" @click="getServicesByTags(tag)">
+            {{ tag }}
+          </UBadge>
         </template>
       </UContainer>
     </UContainer>
   </main>
 </template>
+
 <style scoped>
 .Ucontainer {
   margin: 0 auto;

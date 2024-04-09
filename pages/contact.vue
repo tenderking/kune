@@ -22,12 +22,15 @@
       <UInput type="text" name="subject" />
     </UFormGroup>
     <UFormGroup label="Message" required class="mt-5">
-      <UTextarea name="message"></UTextarea>
+      <UTextarea name="message" />
     </UFormGroup>
 
-    <UButton type="submit" class="mt-10">Send Message</UButton>
+    <UButton type="submit" class="mt-10">
+      Send Message
+    </UButton>
   </UForm>
 </template>
+
 <style scoped>
 main {
   padding: 20px;

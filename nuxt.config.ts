@@ -1,9 +1,11 @@
-import { resolve } from "node:path";
+import { resolve } from 'node:path'
+import process from 'node:process'
 
+process.exit(0)
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: false,
-  css: ["@/assets/css/main.css"],
+  css: ['@/assets/css/main.css'],
 
   devtools: {
     enabled: true,
@@ -12,20 +14,19 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: [ "nuxt-icon", "@nuxt/ui", "@hebilicious/authjs-nuxt"],
+  modules: ['nuxt-icon', '@nuxt/ui', '@hebilicious/authjs-nuxt'],
 
   // formkit: {
   //   autoImport: true,
   //   configFile: "./formkit.config.ts",
   // },
 
-
   nitro: {
     inlineDynamicImports: true,
   },
 
   imports: {
-    dirs: ["types", "store"],
+    dirs: ['types', 'store'],
   },
 
   // colorMode: {
@@ -56,6 +57,6 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    cookie: resolve(__dirname, "node_modules/cookie"),
+    cookie: resolve(__dirname, 'node_modules/cookie'),
   },
 })

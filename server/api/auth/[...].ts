@@ -1,12 +1,12 @@
-import EmailProvider from "@auth/core/providers/email"
+import EmailProvider from '@auth/core/providers/email'
 // import Google from "@auth/core/providers/google"
-import type { AuthConfig, Theme } from "@auth/core/types"
-import { NuxtAuthHandler } from "#auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import Credentials from "@auth/core/providers/credentials"
-import type { Adapter } from "@auth/core/adapters"
+import type { AuthConfig/* , Theme */ } from '@auth/core/types'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import Credentials from '@auth/core/providers/credentials'
+import type { Adapter } from '@auth/core/adapters'
 // import * as nodemailer from "nodemailer"
-import bcrypt from "bcrypt"
+import bcrypt from 'bcrypt'
+import { NuxtAuthHandler } from '#auth'
 // import { createTransport } from "nodemailer"
 
 const runtimeConfig = useRuntimeConfig()
@@ -20,10 +20,10 @@ export const authOptions: AuthConfig = {
   providers: [
     Credentials({
       // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        password: { label: 'Password', type: 'password' },
       },
 
       async authorize(credentials) {
@@ -31,8 +31,8 @@ export const authOptions: AuthConfig = {
         // Check credentials
         user = await getUserFromDb(credentials.username as string)
         if (
-          user &&
-          bcrypt.compareSync(credentials.password as string, user.password)
+          user
+          && bcrypt.compareSync(credentials.password as string, user.password)
         ) {
           // Password is correct, return the user object
           return {
@@ -41,9 +41,10 @@ export const authOptions: AuthConfig = {
             email: user.email,
             role: user.role,
           }
-        } else {
+        }
+        else {
           // User not found or password is incorrect
-          throw new Error("Invalid credentials")
+          throw new Error('Invalid credentials')
         }
       },
     }),
@@ -63,13 +64,12 @@ export const authOptions: AuthConfig = {
   callbacks: {
     async jwt({ token, user, session }) {
       // eslint-disable-next-line no-console
-
-      console.log("jwt callback", { token, user, session })
+      console.log('jwt callback', { token, user, session })
 
       return token
     },
   },
-   adapter: adapter,
+  adapter,
 }
 
 export default NuxtAuthHandler(authOptions, runtimeConfig)
@@ -94,55 +94,55 @@ async function getUserFromDb(username: string): Promise<any> {
 
   return user
 }
-function html(params: { url: string; host: string; theme: Theme }) {
-  const { url, host, theme } = params
+// function html(params: { url: string, host: string, theme: Theme }) {
+//   const { url, host, theme } = params
 
-  const escapedHost = host.replace(/\./g, "&#8203;.")
+//   const escapedHost = host.replace(/\./g, '&#8203;.')
 
-  const brandColor = theme.brandColor || "#346df1"
-  const color = {
-    background: "#f9f9f9",
-    text: "#444",
-    mainBackground: "#fff",
-    buttonBackground: brandColor,
-    buttonBorder: brandColor,
-    buttonText: theme.buttonText || "#fff",
-  }
+//   const brandColor = theme.brandColor || '#346df1'
+//   const color = {
+//     background: '#f9f9f9',
+//     text: '#444',
+//     mainBackground: '#fff',
+//     buttonBackground: brandColor,
+//     buttonBorder: brandColor,
+//     buttonText: theme.buttonText || '#fff',
+//   }
 
-  return `
-<body style="background: ${color.background};">
-  <table width="100%" border="0" cellspacing="20" cellpadding="0"
-    style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
-    <tr>
-      <td align="center"
-        style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        Sign in to <strong>${escapedHost}</strong>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" style="padding: 20px 0;">
-        <table border="0" cellspacing="0" cellpadding="0">
-          <tr>
-            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
-                target="_blank"
-                style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">Sign
-                in</a></td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td align="center"
-        style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        If you did not request this email you can safely ignore it.
-      </td>
-    </tr>
-  </table>
-</body>
-`
-}
+//   return `
+// <body style="background: ${color.background};">
+//   <table width="100%" border="0" cellspacing="20" cellpadding="0"
+//     style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
+//     <tr>
+//       <td align="center"
+//         style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+//         Sign in to <strong>${escapedHost}</strong>
+//       </td>
+//     </tr>
+//     <tr>
+//       <td align="center" style="padding: 20px 0;">
+//         <table border="0" cellspacing="0" cellpadding="0">
+//           <tr>
+//             <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
+//                 target="_blank"
+//                 style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">Sign
+//                 in</a></td>
+//           </tr>
+//         </table>
+//       </td>
+//     </tr>
+//     <tr>
+//       <td align="center"
+//         style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+//         If you did not request this email you can safely ignore it.
+//       </td>
+//     </tr>
+//   </table>
+// </body>
+// `
+// }
 
-// Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
-function text({ url, host }: { url: string; host: string }) {
-  return `Sign in to ${host}\n${url}\n\n`
-}
+// // Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
+// function text({ url, host }: { url: string, host: string }) {
+//   return `Sign in to ${host}\n${url}\n\n`
+// }

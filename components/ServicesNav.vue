@@ -1,20 +1,21 @@
 <script lang="ts" setup>
 const router = useRouter()
-const sortOrder = ref("Ascending")
+const sortOrder = ref('Ascending')
 function sortBy() {
-  sortOrder.value === "Ascending"
-    ? (sortOrder.value = "Descending")
-    : (sortOrder.value = "Ascending")
+  sortOrder.value === 'Ascending'
+    ? (sortOrder.value = 'Descending')
+    : (sortOrder.value = 'Ascending')
 }
 
-const categorySlug = ref("")
+const categorySlug = ref('')
 const nuxtApp = useNuxtApp()
 
-const { data: categories } = await useFetch("/api/services/categories", {
-  headers: { Accept: "application/json" },
+const { data: categories } = await useFetch('/api/services/categories', {
+  headers: { Accept: 'application/json' },
   getCachedData(key) {
     const cachedData = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
-    if (!cachedData) return
+    if (!cachedData)
+      return
     return cachedData
   },
 })
@@ -22,12 +23,12 @@ const { data: categories } = await useFetch("/api/services/categories", {
 // Function to emit category slug when an option is selected
 function getCategorySlug(slug: string) {
   categorySlug.value = slug
-  if (slug === "") {
-    router.push({ path: "/services", query: {} })
+  if (slug === '') {
+    router.push({ path: '/services', query: {} })
     return
   }
 
-  router.push({ path: "/services", query: { category: slug } })
+  router.push({ path: '/services', query: { category: slug } })
 }
 </script>
 
@@ -41,7 +42,9 @@ function getCategorySlug(slug: string) {
           name="categories"
           @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)"
         >
-          <option value="">Select By Category</option>
+          <option value="">
+            Select By Category
+          </option>
 
           <option v-for="(category, index) in categories" :key="index" :value="category">
             {{ category }}

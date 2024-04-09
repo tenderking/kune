@@ -12,19 +12,13 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@pinia/nuxt", "nuxt-icon", "@nuxt/ui", "@hebilicious/authjs-nuxt"],
+  modules: [ "nuxt-icon", "@nuxt/ui", "@hebilicious/authjs-nuxt"],
 
-  formkit: {
-    autoImport: true,
-    configFile: "./formkit.config.ts",
-  },
+  // formkit: {
+  //   autoImport: true,
+  //   configFile: "./formkit.config.ts",
+  // },
 
-  pinia: {
-    autoImports: [
-      "defineStore", // import { defineStore } from 'pinia'
-      ["definePiniaStore", "acceptHMRUpdate"], // import { defineStore as definePiniaStore } from 'pinia'
-    ],
-  },
 
   nitro: {
     inlineDynamicImports: true,
@@ -34,9 +28,9 @@ export default defineNuxtConfig({
     dirs: ["types", "store"],
   },
 
-  colorMode: {
-    preference: "light",
-  },
+  // colorMode: {
+  //   preference: "light",
+  // },
 
   runtimeConfig: {
     authJs: {
@@ -56,7 +50,7 @@ export default defineNuxtConfig({
     public: {
       authJs: {
         baseUrl: process.env.NUXT_NEXTAUTH_URL, // The URL of your deployed app (used for origin Check in production)
-        verifyClientOnEveryRequest: true, // whether to hit the /auth/session endpoint on every client request
+        verifyClientOnEveryRequest: false, // whether to hit the /auth/session endpoint on every client request
       },
     },
   },

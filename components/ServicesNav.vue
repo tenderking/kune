@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+const router = useRouter()
 const sortOrder = ref("Ascending")
 function sortBy() {
   sortOrder.value === "Ascending"
@@ -7,15 +8,26 @@ function sortBy() {
 }
 
 const categorySlug = ref("")
-const { data: categories } = await useFetch("/api/services/categories")
-const emit = defineEmits<{
-  (event: "categorySlug", value: string): void
-}>()
+const nuxtApp = useNuxtApp()
+
+const { data: categories } = await useFetch("/api/services/categories", {
+  headers: { Accept: "application/json" },
+  getCachedData(key) {
+    const cachedData = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    if (!cachedData) return
+    return cachedData
+  },
+})
 
 // Function to emit category slug when an option is selected
-function emitCategorySlug(slug: string) {
+function getCategorySlug(slug: string) {
   categorySlug.value = slug
-  emit("categorySlug", slug)
+  if (slug === "") {
+    router.push({ path: "/services", query: {} })
+    return
+  }
+
+  router.push({ path: "/services", query: { category: slug } })
 }
 </script>
 
@@ -27,7 +39,7 @@ function emitCategorySlug(slug: string) {
         <select
           id="category-select"
           name="categories"
-          @change="(event) => emitCategorySlug((event.target as HTMLSelectElement)?.value)"
+          @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)"
         >
           <option value="">Select By Category</option>
 

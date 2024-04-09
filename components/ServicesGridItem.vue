@@ -1,37 +1,5 @@
 <script lang="ts" setup>
-defineProps<{ service: any }>()
-// check if service is in favorites
-// if it is, show filled heart
-// if it isn't, show empty heart
-
-// function addToFavorites() {
-//   if (props.service.PK)
-//     store.addFavorite(props.service.PK)
-// }
-
-// function removeFromFavorites() {
-//   if (props.service.PK)
-//     store.removeFavorite(props.service.PK)
-// }
-
-// function isFavorite() {
-//   if (props.service.PK)
-//     return store.favorites.includes(props.service.PK)
-//   return false
-// }
-
-// function toggleFavorite() {
-//   if (isFavorite()) {
-//     removeFromFavorites()
-//     // eslint-disable-next-line no-console
-//     console.log('removed')
-//   }
-//   else {
-//     addToFavorites()
-//     // eslint-disable-next-line no-console
-//     console.log('added')
-//   }
-// }
+defineProps<{ service: Service }>()
 </script>
 
 <template>

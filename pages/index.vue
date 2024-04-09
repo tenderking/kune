@@ -1,5 +1,16 @@
 <script lang="ts" setup>
-const { data: services } = await useFetch("/api/services")
+// import type { Service } from '~/types/services';
+
+const nuxtApp = useNuxtApp()
+
+const { data: services } = await useFetch<Service>("/api/services", {
+  headers: { Accept: "application/json" },
+  getCachedData(key) {
+    const cachedData = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    if (!cachedData) return
+    return cachedData
+  },
+})
 </script>
 
 <template>
@@ -42,8 +53,9 @@ const { data: services } = await useFetch("/api/services")
       </p>
     </div>
   </main>
-
-  <HomeItemList :services />
+  <template v-if="services">
+    <HomeItemList :services />
+  </template>
 </template>
 
 <style scoped>

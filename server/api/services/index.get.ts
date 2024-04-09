@@ -1,45 +1,50 @@
 export default defineEventHandler(async (event) => {
-    const query = getQuery(event)
-    console.log("query:", query)
-    if (query.tags){
-        // call tags api 
-        console.log("tags query:", query.tags)
-      try{
-        const response = await $fetch(`/api/services/tags/${query.tags}`)
-        console.log("response:", response)
-       return response
-       
-      } catch (error){
-        console.error(error)
-          
-      }      
-    } else{
-          const services = await prisma.services.findMany({
-            select: {
-                name: true,
-                description: true,
-                category: true,                
-                service_tags: {
-                    select: {
-                        tags: {
-                            select: {
-                                id: true,
-                                name: true,
-                            },
-                        },
-                    },
-                },
-            },
-        })
+  const query = getQuery(event)
+  if (query.category) {
+    const response = await $fetch(`/api/services/categories/${query.category}`)
+    return response
+  }
+  if (query.tags) {
+    const response = await $fetch(`/api/services/tags/${query.tags}`)
 
-       const transformedServices = services.map((service) => ({
+    return response
+  }
+
+  const services = await getAllServices()
+  return services
+  // }
+})
+
+async function getAllServices() {
+  return prisma.services
+    .findMany({
+      select: {
+        name: true,
+        description: true,
+        category: true,
+        service_tags: {
+          select: {
+            tags: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    })
+    .then((services) =>
+      services.map((service) => ({
         name: service.name,
         description: service.description,
         category: service.category.name,
-         tags: service.service_tags.map(
-           (tagOnService) => tagOnService.tags.name
-         ),
-       }))
-
-       return transformedServices}
-})
+        tags: service.service_tags.map(
+          (tagOnService) => tagOnService.tags.name
+        ),
+      }))
+    )
+    .catch((error) => {
+      console.error(error)
+    })
+}

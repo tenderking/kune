@@ -1,47 +1,30 @@
 <script lang="ts" setup>
 const route = useRoute()
-interface Service {
-  id: number
-  name: string
-  description: string
-}
+const category = computed(() => route.query.category)
+const tags = computed(() => route.query.tags)
+const nuxtApp = useNuxtApp()
 
-const services = ref<Service[] | null>(null)
-
-async function onSlugChanged(slug: string) {
-  console.log("Slug changed to:", slug)
-  try {
-    const data = await fetchData(slug)
-    services.value = data
-  } catch (error) {
-    console.error("Error fetching data:", error)
-  }
-}
-
-async function fetchData(slug: string): Promise<Service[]> {
-  let url = `api/services/categories/${slug}`
-  if (!slug) {
-    url = `api/services`
-  }
-  if (route.query.tags) {
-    url = `api/services/tags/${route.query.tags}`
-  }
-  const response = await $fetch(url)
-  return response as Service[]
-}
-
-onMounted(() => {
-  onSlugChanged("")
+const { data: services, pending } = await useFetch<Service>("/api/services", {
+  headers: { Accept: "application/json" },
+  query: { category: category, tags: tags },
+  getCachedData(key) {
+    const cachedData = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    if (!cachedData) return
+    return cachedData
+  },
 })
 </script>
 
 <template>
   <header class="container">
-    <ServicesNav @category-slug="onSlugChanged" />
+    <ServicesNav />
   </header>
   <main class="container">
-    <template v-if="services">
-      <ServicesGrid :services />
+    <template v-if="pending">
+      <h2>Loading...</h2>
+    </template>
+    <template v-else-if="services">
+      <ServicesGrid :services="services" />
     </template>
     <h2 v-else>No services</h2>
   </main>

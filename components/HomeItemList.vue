@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Services from "~/pages/profile/services.vue"
-
 // const store = useApiStore()
 // trigger the fetch services
 // onMounted(() => {
@@ -12,7 +10,7 @@ import Services from "~/pages/profile/services.vue"
 //     store.fetchServices()
 // })
 defineProps<{
-  services: any
+  services: Service[]
 }>()
 </script>
 
@@ -22,7 +20,7 @@ defineProps<{
 
     <div v-if="services" class="category-container">
       <template v-for="service in services.slice(0, 3)" :key="service.name">
-        <NuxtLink :to="`/services/${service.serviceID}&${service.serviceName}`">
+        <NuxtLink :to="`/services/${service.name}`">
           <div class="rands">
             <ServicesGridItem :service="service" />
           </div>

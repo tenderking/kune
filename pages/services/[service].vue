@@ -5,8 +5,8 @@ let serviceTags: string[] = []
 // my_path is after the /services/ part of the route using fullpath
 const my_path = ref(route.fullPath.split("/services/")[1])
 
-const { data: service } = await useFetch(`/api/services/${my_path.value}`, {
-  onResponseError({ request, response, options }) {
+const { data: service } = await useFetch<Service>(`/api/services/${my_path.value}`, {
+  onResponseError({ response }) {
     // Handle the response errors
     console.error("Error fetching data:", response)
   },
@@ -33,9 +33,9 @@ async function getServicesByTags(tag: string) {
 </script>
 
 <template>
-  <header class="container">
+  <!-- <header class="container">
     <ServicesNav />
-  </header>
+  </header> -->
 
   <main class="container">
     <h2>Details</h2>
@@ -45,7 +45,7 @@ async function getServicesByTags(tag: string) {
         padding: 'p-8',
       }"
     >
-      <ServicesGridItem :service="service" />
+      <ServicesGridItem :service="service" v-if="service" />
       <UContainer
         :ui="{
           padding: 'p-8 gap-4',

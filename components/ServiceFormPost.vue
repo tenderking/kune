@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const router = useRouter()
 
-interface Service {
+interface PostService {
   Category: string
   Description: string
   Address: string

@@ -13,7 +13,7 @@ defineProps<{
 
 <template>
   <div v-if="services" class="grid-wrap">
-    <template v-for="service in services" :key="service.PK">
+    <template v-for="service in services" :key="service.name">
       <NuxtLink :to="`/services/${service.name}`">
         <div class="rands">
           <ServicesGridItem :service="service" />

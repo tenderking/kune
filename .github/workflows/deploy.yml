@@ -21,16 +21,16 @@ jobs:
       # Pick your own package manager and build script
       - run: npm install
       - run: npx nuxt build
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./.output/public
+          path: ./.output
 
       - name: Push build to branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: build
-          publish_dir: ./.output/public
+          publish_dir: ./.output
           force_orphan: true

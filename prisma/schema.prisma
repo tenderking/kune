@@ -12,7 +12,6 @@ model Services {
   name             String              @unique
   description      String              @default("")
   category_id      String
-  location         String
   website_url      String
   service_owner_id String?
   created_at       DateTime?           @default(now()) @db.Timestamp(6)
@@ -114,19 +113,23 @@ model Offers {
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String  @map("user_id")
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade) // One-to-One relationship with User model
+  id                       String  @id @default(cuid())
+  userId                   String  @map("user_id")
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade) // One-to-One relationship with User model
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
@@ -134,10 +137,13 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique @map("session_token")
+  sessionToken String   @unique 
   userId       String   @map("user_id")
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade) // One-to-One relationship with User model
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("sessions")
 }
@@ -160,11 +166,11 @@ model User {
   image                  String?
   password               String?
   role                   String              @default("USER")
-  accounts               Account[] // One-to-Many relationship with Account model
+  Account                Account[] // One-to-Many relationship with Account model
   favorite_creators      Favorite_Creators[] // One-to-Many relationship with Favorite_Creators model
   favorite_services      Favorite_Services[] // One-to-Many relationship with Favorite_Services model
   owned_services         Services[] // One-to-Many relationship with Services model
-  sessions               Session[] // One-to-Many relationship with Session model
+  Session                Session[] // One-to-Many relationship with Session model
   owned_content_creators ContentCreators[] // One-to-Many relationship with ContentCreators model
 
   @@map("users")

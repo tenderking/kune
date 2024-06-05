@@ -1,61 +1,35 @@
+import { createResolver } from 'nuxt/kit'
+
+// Resolve relative from the current file
+const resolver = createResolver(import.meta.url)
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
-  runtimeConfig: {
-    public: {
-      // eslint-disable-next-line n/prefer-global/process
-      apiEndpoint: process.env.API_ENDPOINT,
-    },
-    auth: {
-      name: "nuxt-session",
-      // eslint-disable-next-line n/prefer-global/process
-      password: process.env.NUXT_AUTH_PASSWORD || "",
-    },
-  },
-  // plugins: [
-  //   {
-  //     src: '~/plugins/amplify.ts',
-  //     mode: 'client',
-  //   },
-  // ],
-
-  css: [
-    // CSS file in the project
-    "@/assets/css/main.css",
-
-    // SCSS file in the project
-  ],
+  ssr: true,
+  css: ['@/assets/css/main.css'],
 
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
   },
 
-  modules: ["@pinia/nuxt", "nuxt-icon", "@nuxt/ui"],
+  modules: ['nuxt-icon', '@nuxt/ui'],
 
-  pinia: {
-    autoImports: [
-      "defineStore", // import { defineStore } from 'pinia'
-      ["definePiniaStore", "acceptHMRUpdate"], // import { defineStore as definePiniaStore } from 'pinia'
-    ],
-  },
-
-  vite: {
-    resolve: {
-      alias: { "./runtimeConfig": "./runtimeConfig.browser" },
-    },
-    define: {
-      "window.global": {},
-    },
-  },
   nitro: {
     inlineDynamicImports: true,
   },
 
-  import: {
-    dirs: ["types", "store"],
+  imports: {
+    dirs: ['types', 'store'],
+  },
+
+  // colorMode: {
+  //   preference: "light",
+  // },
+
+  alias: {
+    cookie: resolver.resolve(__dirname, 'node_modules/cookie'),
   },
 })

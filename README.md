@@ -1,24 +1,24 @@
-# Kune - A service for showing Zimbabwean digital services. 
+# Kune - A service for showing Zimbabwean digital services.
 
-This is a website I created for showing which services that are available is Zimbabwe, my home country. 
+This is a website I created for showing which services that are available is Zimbabwe, my home country.
 
-## Introduction 
+## Introduction
 
 ### Challenge
 
-My initial challenge is that I wanted to created apps to fill a need in Zimbabwe. My assumption was that there aren't many digital services available. This assumption turned out to be the wrong the more I researched this.  However with the research I did I discovered that it's a lot of work to find digital services, especially if you don't know what you're for. 
+My initial challenge is that I wanted to created apps to fill a need in Zimbabwe. My assumption was that there aren't many digital services available. This assumption turned out to be the wrong the more I researched this.  However with the research I did I discovered that it's a lot of work to find digital services, especially if you don't know what you're for.
 
 ### Solution
 
-My solution was to build a website the basically shows websites that  available in Zimbabwe. In addition I wanted to make core information easily available so that you wont have to look for it. 
+My solution was to build a website the basically shows websites that  available in Zimbabwe. In addition I wanted to make core information easily available so that you wont have to look for it.
 
 To sum up kune provides:
 
 - A list of services available
-- Core information about the services, like phone numbers and a link to the website. 
+- Core information about the services, like phone numbers and a link to the website.
 - Websites manually added and vetted for functionality
 - **Future Feature** Users can add services they know or own
-- **Future Feature** Users can save favourites as the list of services get bigger. 
+- **Future Feature** Users can save favourites as the list of services get bigger.
 
 ### Link
 - Live Site URL: [Live Site ](https://kune.co.zw)
@@ -47,8 +47,6 @@ cd <project-folder>
 npm install
 ```
 
-
-
 ### Step 3: Project Configuration
 
 Copy the `.env.example` file to `.env` and configure the environment variables as needed.
@@ -76,7 +74,6 @@ aws dynamodb describe-table --table-name Services-v0.0.2 --query "Table" > table
 
 to view all items in a table
 
-
 ```bash
 aws dynamodb scan --table-name Name_of_table --query 'Items[*]' --endpoint-url http://localhost:8000
 
@@ -89,8 +86,6 @@ aws dynamodb batch-write-item --table-name Services-v0.0.2 --request-items file:
 ```
 
 Visit `http://localhost:3000` in your browser to view the application.
-
-
 
 ### Step 6: Linting and Code Formatting
 

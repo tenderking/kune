@@ -1,14 +1,17 @@
 <script setup lang="ts">
-const store = useApiStore()
+// const store = useApiStore()
 // trigger the fetch services
-onMounted(() => {
-  store.category = ''
-  store.fetchServices()
-})
-watch(() => store.myservices, (newValue) => {
-  if (!newValue || newValue.length === 0)
-    store.fetchServices()
-})
+// onMounted(() => {
+//   // store.category = ''
+//   // store.fetchServices()
+// })
+// watch(() => store.myservices, (newValue) => {
+//   if (!newValue || newValue.length === 0)
+//     store.fetchServices()
+// })
+defineProps<{
+  services: Service[]
+}>()
 </script>
 
 <template>
@@ -17,9 +20,9 @@ watch(() => store.myservices, (newValue) => {
       Discover the best local businesses and services in your area
     </h3>
 
-    <div v-if="store.myservices" class="category-container">
-      <template v-for="service in store.myservices.slice(0, 3)" :key="service.ServiceID">
-        <NuxtLink :to="`/services/${service.serviceID}&${service.serviceName}`">
+    <div v-if="services" class="category-container">
+      <template v-for="service in services.slice(0, 3)" :key="service.name">
+        <NuxtLink :to="`/services/${service.name}`">
           <div class="rands">
             <ServicesGridItem :service="service" />
           </div>
@@ -33,24 +36,24 @@ watch(() => store.myservices, (newValue) => {
 </template>
 
 <style scoped>
- .category-container {
+.category-container {
   display: flex;
   flex-direction: column;
- align-items: center;
+  align-items: center;
   gap: 4em;
   margin-bottom: 2em;
 }
 @media (min-width: 768px) {
   .category-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  gap: 1em;
-  margin-bottom: 2em;
-}
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 1em;
+    margin-bottom: 2em;
+  }
 }
 .subtitle {
   text-align: center;
   margin-bottom: 2em;
-  }
+}
 </style>

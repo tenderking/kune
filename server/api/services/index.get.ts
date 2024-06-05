@@ -1,21 +1,50 @@
-import { ScanCommand } from "@aws-sdk/client-dynamodb"
-
-
-
-
-export async function listServices() {
-  const scanCommand = new ScanCommand({
-    TableName: servicesTableName,
-  })
-  if (!servicesTableName) throw new Error("SERVICES_TABLE_NAME is not defined.")
-  const response = await ddbDocClient.send(scanCommand)
-  if (!response.Items) throw new Error("No items found.")
-   const items =  response.Items
-  return {
-     services: transformData(items),
-    // response, // Assuming Service is the interface representing your desired output structure
+export default defineEventHandler(async (event) => {
+  const query = getQuery(event)
+  if (query.category) {
+    const response = await $fetch(`/api/services/categories/${query.category}`)
+    return response
   }
-}
-export default defineEventHandler(async () => {
-  return await listServices()
+  if (query.tags) {
+    const response = await $fetch(`/api/services/tags/${query.tags}`)
+
+    return response
+  }
+
+  const services = await getAllServices()
+  return services
+  // }
 })
+
+async function getAllServices() {
+  return prisma.services
+    .findMany({
+      select: {
+        name: true,
+        description: true,
+        category: true,
+        service_tags: {
+          select: {
+            tags: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    })
+    .then(services =>
+      services.map(service => ({
+        name: service.name,
+        description: service.description,
+        category: service.category.name,
+        tags: service.service_tags.map(
+          tagOnService => tagOnService.tags.name,
+        ),
+      })),
+    )
+    .catch((error) => {
+      console.error(error)
+    })
+}

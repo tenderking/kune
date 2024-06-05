@@ -1,39 +1,57 @@
 <script lang="ts" setup>
-const store = useApiStore()
+const router = useRouter()
 const sortOrder = ref('Ascending')
 function sortBy() {
   sortOrder.value === 'Ascending'
     ? (sortOrder.value = 'Descending')
     : (sortOrder.value = 'Ascending')
 }
-onMounted(() => {
-  store.fetchCategories()
+
+const categorySlug = ref('')
+const nuxtApp = useNuxtApp()
+
+const { data: categories } = await useFetch('/api/services/categories', {
+  headers: { Accept: 'application/json' },
+  getCachedData(key) {
+    const cachedData = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+    if (!cachedData)
+      return
+    return cachedData
+  },
 })
+
+// Function to emit category slug when an option is selected
+function getCategorySlug(slug: string) {
+  categorySlug.value = slug
+  if (slug === '') {
+    router.push({ path: '/services', query: {} })
+    return
+  }
+
+  router.push({ path: '/services', query: { category: slug } })
+}
 </script>
 
 <template>
   <nav>
     <div class="select-container">
       <label for="category-select">Choose a category:</label>
-      <template v-if="store.categoryList">
-        <select id="category-select" name="categories">
-          <option value="" @click="store.$patch({ category: '' })">
+      <template v-if="categories">
+        <select
+          id="category-select"
+          name="categories"
+          @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)"
+        >
+          <option value="">
             Select By Category
           </option>
 
-          <option
-            v-for="(category, index) in store.categoryList"
-            :key="index"
-            :value="category"
-            @click="store.$patch({ category })"
-          >
+          <option v-for="(category, index) in categories" :key="index" :value="category">
             {{ category }}
           </option>
         </select>
       </template>
     </div>
-    <pre>{{ store.category }}</pre>
-    <!-- <input id="search-bar" type="search" name="search" placeholder="search"> -->
     <div class="sort-services">
       <span class="sort-services-heading">sort</span>
       <span class="sort-services-type" @click="sortBy()">{{ sortOrder }}</span>

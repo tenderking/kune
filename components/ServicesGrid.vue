@@ -1,19 +1,20 @@
 <script setup lang="ts">
-const store = useApiStore()
-// trigger the fetch services action when store.category changes
-watch(() => store.category, () => store.fetchServices())
-watch(store.myservices, (newValue) => {
-  if (!newValue || newValue.length === 0)
-    store.fetchServices()
-})
+// const store = useApiStore()
+// // trigger the fetch services action when store.category changes
+// watch(() => store.category, () => store.fetchServices())
+// watch(services, (newValue) => {
+//   if (!newValue || newValue.length === 0)
+//     store.fetchServices()
+// })
+defineProps<{
+  services: any
+}>()
 </script>
 
 <template>
-  <div v-if="store.myservices" class="grid-wrap">
-    <template v-for="service in store.myservices" :key="service.PK">
-      <NuxtLink
-        :to="`/services/${service.serviceName}`"
-      >
+  <div v-if="services" class="grid-wrap">
+    <template v-for="service in services" :key="service.name">
+      <NuxtLink :to="`/services/${service.name}`">
         <div class="rands">
           <ServicesGridItem :service="service" />
         </div>
@@ -23,7 +24,7 @@ watch(store.myservices, (newValue) => {
   <div v-else>
     No services
   </div>
-  <!-- <pre>{{ store.myservices }}</pre> -->
+  <!-- <pre>{{ services }}</pre> -->
 </template>
 
 <style scoped>

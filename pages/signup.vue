@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { FormError, FormSubmitEvent } from '#ui/types'
 
-const { signIn } = useAuth()
 const state = reactive({
   name: undefined,
   email: undefined,

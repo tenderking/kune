@@ -41,7 +41,12 @@ const columns = [
       </UTable>
     </template>
 
-    <UButton label="Add service" class="mt-4" @click.prevent="isOpen = true" />
+    <UButton
+      label="Add service"
+      class="mt-4"
+      color="orange"
+      @click.prevent="isOpen = true"
+    />
 
     <UModal v-model="isOpen">
       <div class="p-4 flex-1">

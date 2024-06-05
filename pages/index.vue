@@ -28,9 +28,9 @@ const { data: services } = await useFetch<Service>('/api/services', {
         <span class="kune"> Kune </span> makes it a pleasant journey. You will find
         innovation and convience. We provide an overwiew of Zimbabwean digital services
       </p>
-      <NuxtLink to="/auth/signup" external class="cta__link">
+      <UButton to="/signup" external color="orange">
         Sign up
-      </NuxtLink>
+      </UButton>
     </div>
   </header>
 

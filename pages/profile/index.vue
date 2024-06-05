@@ -15,7 +15,6 @@ const columns = [
 const profile = {
   name: 'John Doe',
   email: 'example@x.com',
-  memberSince: '2021-10-10',
 }
 
 const services = [
@@ -33,45 +32,36 @@ const services = [
 
 <template>
   <div class="py-4 grid grid-cols-3 gap-16">
-    <div class="col-span-1 p-4 rounded-md">
-      <h2>Profile</h2>
-      <UCard class="card rounded-md my-4">
-        <ul>
-          <li>
-            <span>name:{{ profile.name }}</span>
-            <span>
-              <UButton
-                color="gray"
-                variant="ghost"
-                icon="i-heroicons-pencil-square-20-solid"
-              />
-            </span>
-          </li>
-          <li>
-            <span>email:{{ profile.email }}</span>
-            <span>
-              <UButton
-                color="gray"
-                variant="ghost"
-                icon="i-heroicons-pencil-square-20-solid"
-              />
-            </span>
-          </li>
-          <li>
-            <span>member since:{{ profile.memberSince }}</span>
-            <span>
-              <UButton
-                color="gray"
-                variant="ghost"
-                icon="i-heroicons-pencil-square-20-solid"
-              />
-            </span>
-          </li>
-        </ul>
-      </UCard>
-    </div>
-    <div class="col-span-2 p-4 rounded-md flex flex-col gap-4 min-w-[300px]">
-      <h2>Favorites</h2>
+    <h3>Profile</h3>
+    <UForm class="card p-4 col-span-3 row-gap-4 rounded-md">
+      <UFormGroup
+        label="Your Name"
+        description="We'll only use this for spam."
+        help="We will never share your email with anyone else."
+        required
+        class="grid grid-cols-2 gap-2 items-center"
+      >
+        <UInput v-model="profile.name" type="text" name="name" />
+      </UFormGroup>
+      <UDivider class="py-4" />
+
+      <UFormGroup
+        label="Your Email"
+        description="We'll only use this for spam."
+        help="We will never share your email with anyone else."
+        required
+        class="grid grid-cols-2 gap-2 items-centern"
+      >
+        <UInput v-model="profile.email" type="email" name="email" />
+      </UFormGroup>
+      <UDivider />
+
+      <UButton type="submit" color="orange" class="mt-10">
+        Save
+      </UButton>
+    </UForm>
+    <div class="col-span-3 p-4 rounded-md flex flex-col gap-4 min-w-[300px]">
+      <h3>Favorites</h3>
       <template v-if="services.length === 0" />
       <template v-else>
         <UTable

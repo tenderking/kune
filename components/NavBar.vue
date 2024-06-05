@@ -9,8 +9,8 @@ const props = defineProps({
     default: false,
   },
 })
+const session = ref(null)
 const colorMode = useColorMode()
-// const { signIn, signOut, session, status } = useAuth()
 
 const isDark = computed({
   get() {
@@ -85,9 +85,12 @@ function openModal() {
           </ClientOnly>
         </li>
         <li>
-          <NuxtLink to="/api/auth/signin" external class="cta__link">
+          <UButton v-if="!session" to="#" external color="orange">
             Sign in
-          </NuxtLink>
+          </UButton>
+          <UButton v-else to="#" external color="orange">
+            Sign out
+          </UButton>
         </li>
       </ul>
       <i v-if="isMobile" class="i-blue">
@@ -104,14 +107,6 @@ function openModal() {
 </template>
 
 <style scoped>
-/* header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em;
-  height: max-content;
-  position: relative;
-} */
 .bgDark {
   background-color: var(--color--bg);
 }

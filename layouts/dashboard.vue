@@ -8,14 +8,9 @@ const links = [
   },
 
   {
-    label: 'Service',
+    label: 'Services',
     icon: 'i-heroicons-chart-bar',
     to: '/profile/services',
-  },
-  {
-    label: 'Settings',
-    icon: 'i-heroicons-cog',
-    // to: "/navigation/command-palette",
   },
 ]
 </script>

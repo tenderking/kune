@@ -3,6 +3,10 @@
 
 const nuxtApp = useNuxtApp()
 const { session, status, cookies } = useAuth()
+definePageMeta({
+  middleware: 'guest-only',
+  auth: { authenticatedRedirectTo: '/profile' },
+})
 const { data: services } = await useFetch<Service>('/api/services', {
   headers: { Accept: 'application/json' },
   getCachedData(key) {

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'dashboard',
+  middleware: 'auth',
+  auth: { authenticatedRedirectTo: '/signin' },
 })
 const columns = [
   {

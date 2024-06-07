@@ -27,7 +27,12 @@ export default defineNuxtConfig({
     inlineDynamicImports: true,
     preset: 'node-server',
   },
+  authJs: {
+    baseUrl: import.meta.env.NUXT_NEXTAUTH_URL,
+    verifyClientOnEveryRequest: false,
+    authenticatedRedirectTo: '/profile',
 
+  },
   imports: {
     dirs: ['types', 'store'],
   },
@@ -42,6 +47,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     authJs: {
       secret: import.meta.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
+
     },
     nodemailer: {
       host: import.meta.env.SMTP_HOST,
@@ -53,7 +59,7 @@ export default defineNuxtConfig({
     public: {
       authJs: {
         baseUrl: import.meta.env.NUXT_NEXTAUTH_URL, // The URL of your deployed app (used for origin Check in production)
-        verifyClientOnEveryRequest: false, // whether to hit the /auth/session endpoint on every client request
+
       },
     },
   },

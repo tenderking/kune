@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  middleware: 'client-auth',
+})
+</script>
 
 <template>
   <UContainer class="my-5 py-8 flex flex-col items-center">

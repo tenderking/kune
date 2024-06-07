@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  middleware: 'client-auth',
+})
+</script>
 
 <template>
   <h1><span class="kune"> Kune </span> Your Gateway to Zimbabwean Digital Services</h1>

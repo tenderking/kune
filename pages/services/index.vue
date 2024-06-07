@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+definePageMeta({
+  middleware: 'client-auth',
+})
 const route = useRoute()
 const category = computed(() => route.query.category)
 const tags = computed(() => route.query.tags)

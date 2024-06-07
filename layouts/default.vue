@@ -6,6 +6,15 @@ useSeoMeta({
   ogDescription: 'Digital discovery made easy',
   // ogImage: "https://example.com/image.png",
 })
+useHead({
+  meta: [
+    {
+      name: 'viewport',
+      content:
+        'width=device-width, initial-scale=1, user-scalable=yes, maximum-scale=2.0',
+    },
+  ],
+})
 </script>
 
 <template>

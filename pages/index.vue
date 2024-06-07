@@ -2,7 +2,10 @@
 // import type { Service } from '~/types/services';
 
 const nuxtApp = useNuxtApp()
-
+definePageMeta({
+  middleware: 'guest-only',
+  auth: { authenticatedRedirectTo: '/profile' },
+})
 const { data: services } = await useFetch<Service>('/api/services', {
   headers: { Accept: 'application/json' },
   getCachedData(key) {
@@ -28,6 +31,7 @@ const { data: services } = await useFetch<Service>('/api/services', {
         <span class="kune"> Kune </span> makes it a pleasant journey. You will find
         innovation and convience. We provide an overwiew of Zimbabwean digital services
       </p>
+
       <UButton to="/signup" external color="orange">
         Sign up
       </UButton>

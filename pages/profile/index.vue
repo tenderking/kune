@@ -1,7 +1,10 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'dashboard',
+  middleware: 'auth',
+  auth: { authenticatedRedirectTo: '/signin' },
 })
+const { session } = useAuth()
 const columns = [
   {
     key: 'service',
@@ -12,10 +15,10 @@ const columns = [
   },
 ]
 
-const profile = {
-  name: 'John Doe',
-  email: 'example@x.com',
-}
+const profile = reactive({
+  name: session?.value?.user?.name || '',
+  email: session?.value?.user?.email || '',
+})
 
 const services = [
   {

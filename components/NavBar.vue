@@ -9,8 +9,11 @@ const props = defineProps({
     default: false,
   },
 })
-const session = ref(null)
+
+const { session } = useAuth()
 const colorMode = useColorMode()
+const isHidden = ref(true)
+const isMobile = useMediaQuery('(max-width: 550px)')
 
 const isDark = computed({
   get() {
@@ -20,12 +23,11 @@ const isDark = computed({
     colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
   },
 })
-const isHidden = ref(true)
-const isMobile = useMediaQuery('(max-width: 550px)')
-// const favCount = computed(() => useFavoritesStore().favoritesCount)
+
 function closeModal() {
   isHidden.value = true
 }
+
 function isFixed() {
   return props.fixed
     ? 'sticky  top-0 left-0 z-40 transition-transform -translate-x-full sm:translate-x-0'
@@ -44,7 +46,6 @@ function openModal() {
     </NuxtLink>
     <nav>
       <!-- Left-aligned links -->
-
       <ul
         v-on-click-outside="closeModal"
         class="nav-small-screen"
@@ -55,7 +56,6 @@ function openModal() {
             Browse Services
           </NuxtLink>
         </li>
-
         <li>
           <NuxtLink to="/about" @click="closeModal">
             About
@@ -66,29 +66,18 @@ function openModal() {
             Contact us
           </NuxtLink>
         </li>
-
         <li>
-          <ClientOnly>
-            <UButton
-              :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
-              color="red"
-              aria-label="Theme"
-              @click="isDark = !isDark"
-            >
-              color mode
-            </UButton>
-            <template #fallback>
-              <div>
-                <p>poo</p>
-              </div>
-            </template>
-          </ClientOnly>
+          <UButton
+            :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'"
+            color="orange"
+            @click="isDark = !isDark"
+          />
         </li>
         <li>
-          <UButton v-if="!session" to="#" external color="orange">
+          <UButton v-if="!session" to="/api/auth/signin" external color="orange">
             Sign in
           </UButton>
-          <UButton v-else to="#" external color="orange">
+          <UButton v-else to="/api/auth/signout" external color="orange">
             Sign out
           </UButton>
         </li>
@@ -160,10 +149,6 @@ nav ul {
     position: static;
     display: flex;
     background-color: var(--color--bg);
-  }
-
-  button {
-    display: none;
   }
 
   .hidden {

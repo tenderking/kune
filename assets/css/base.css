@@ -25,6 +25,7 @@
 }
 
 /* semantic color variables for this project */
+@media (prefers-color-scheme: light){
 :root {
 	--color--bg: var(--clr--bg);
 	--color--heading:  var(--clr--text);
@@ -33,6 +34,7 @@
 --color--secondary: var(--clr--secondary);
 --color-card-bg: var(--clr--secondary);
 }
+}
 
 @media (prefers-color-scheme: dark) {
 	:root {
@@ -40,9 +42,16 @@
 		--color--heading: var(--clr--text-dark);
 		--color--text: var(--clr--text-dark);
 		--color--secondary: var(--clr--secondary-dark);
-		--color-card-bg: var(--clr--accent);
-		
+		--color-card-bg: var(--clr--accent);		
 		}
+}
+.light{
+	--color--bg: var(--clr--bg);
+	--color--heading:  var(--clr--text);
+	--color--text: var(--clr--text);
+	--clr--gradient: linear-gradient(46deg, var(--clr--primary), var(--clr--secondary));
+	--color--secondary: var(--clr--secondary);
+--color-card-bg: var(--clr--secondary);
 }
 
 *,

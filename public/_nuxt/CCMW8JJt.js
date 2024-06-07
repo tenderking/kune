@@ -1,0 +1,1 @@
+import{_ as n,c as o,y as r,o as t}from"./TdVCrsJL.js";const a={};function c(e,s){return t(),o("main",null,[r(e.$slots,"default",{},void 0,!0)])}const _=n(a,[["render",c],["__scopeId","data-v-2b8f3999"]]);export{_ as default};

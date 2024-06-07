@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+definePageMeta({
+  middleware: 'client-auth',
+})
 const route = useRoute()
 const router = useRouter()
 let serviceTags: string[] = []

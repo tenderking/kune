@@ -1,4 +1,13 @@
-export default defineEventHandler(async (_event) => {
+import { authOptions } from '../auth/[...]'
+import { getServerSession } from '#auth'
+
+export default defineEventHandler(async (event) => {
+  const session = await getServerSession(event, authOptions)
+  const user = event.context.sessions ? event.context.sessions.user.id : event.context.params?.user
+  // eslint-disable-next-line no-console
+  console.log('session', session)
+  // eslint-disable-next-line no-console
+  console.log('user', user)
   // get services by user
   const services = await prisma.services.findMany({
     where: {

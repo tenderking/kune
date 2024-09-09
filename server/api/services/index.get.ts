@@ -32,6 +32,7 @@ async function getAllServices() {
             },
           },
         },
+        website_url: true,
       },
     })
     .then(services =>
@@ -42,6 +43,7 @@ async function getAllServices() {
         tags: service.service_tags.map(
           tagOnService => tagOnService.tags.name,
         ),
+        webUrl: service.website_url,
       })),
     )
     .catch((error) => {

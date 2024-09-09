@@ -1,15 +1,37 @@
 <script lang="ts" setup>
-defineProps<{ service: Service }>()
+import { defineProps } from 'vue'
+
+const props = defineProps<{ service: Service }>()
+
+function isFavorite() {
+  // Add your logic here to determine if the service is a favorite or not
+  return true
+}
+
+async function toggleFavorite() {
+  try {
+    const response = await $fetch('/api/users/favorites', {
+      method: 'POST',
+      body: {
+        service: props.service.name,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    // eslint-disable-next-line no-console
+    console.log('Toggling favorite status', response)
+  }
+  catch (error) {
+    console.error('Error:', error)
+  }
+}
 </script>
 
 <template>
   <div class="card">
     <div class="card__image">
-      <img
-        class="service-item-image"
-        :alt="`${service.name}-img`"
-        src="@/assets/images/placeholder-image.png"
-      >
+      <img class="service-item-image" :alt="`${service.name}-img`" src="@/assets/images/placeholder-image.png">
     </div>
     <div class="card__text">
       <h3 class="card__text-title">
@@ -22,7 +44,7 @@ defineProps<{ service: Service }>()
     <div class="flex">
       <Icon name="ic:baseline-whatsapp" width="16px" height="16px" />
       <span> 077-233-222-999 </span>
-      <!-- <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" @click.stop.prevent="toggleFavorite()" /> -->
+      <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" @click.stop.prevent="toggleFavorite()" />
 
       <!-- <Icon v-else name="material-symbols:favorite" @click.stop.prevent="toggleFavorite()" /> -->
     </div>
@@ -68,9 +90,17 @@ defineProps<{ service: Service }>()
 
 .card__text-description {
   display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-clamp: 4;
   -webkit-line-clamp: 4;
 }
 

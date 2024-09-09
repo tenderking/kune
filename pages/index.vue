@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // import type { Service } from '~/types/services';
-
+const { session, status, cookies } = useAuth()
 const nuxtApp = useNuxtApp()
 definePageMeta({
   middleware: 'guest-only',
@@ -19,6 +19,11 @@ const { data: services } = await useFetch<Service>('/api/services', {
 
 <template>
   <header>
+    <div>
+      <pre>{{ status }}</pre>
+      <pre>{{ session?.user }}</pre>
+      <pre>{{ cookies }}</pre>
+    </div>
     <HomeIllustration />
 
     <div class="home-text">
@@ -76,9 +81,11 @@ header {
   max-width: max-content;
   gap: 2em;
 }
+
 .mondrian {
   max-width: 100%;
 }
+
 header p {
   margin-bottom: 2em;
 }
@@ -118,10 +125,12 @@ img.illustration {
     justify-content: space-between;
   }
 }
+
 main {
   margin-bottom: 2em;
   padding: 1em;
 }
+
 footer {
   padding: 1em;
   margin-bottom: 2em;
@@ -131,6 +140,7 @@ div,
 section {
   margin-bottom: 1rem;
 }
+
 .motivation-card {
   background-color: var(--color-card-bg);
   padding: 2em;
@@ -144,7 +154,7 @@ section {
     gap: 1em;
   }
 
-  main.motivation-section > * {
+  main.motivation-section>* {
     max-width: 35ch;
   }
 }

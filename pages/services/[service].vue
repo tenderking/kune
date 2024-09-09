@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-definePageMeta({
-  middleware: 'client-auth',
-})
 const route = useRoute()
 const router = useRouter()
 let serviceTags: string[] = []
@@ -41,21 +38,15 @@ async function getServicesByTags(tag: string) {
 
   <main class="container">
     <h2>Details</h2>
-    <UContainer
-      :ui="{
-        base: 'flex',
-        padding: 'p-8',
-      }"
-    >
+    <UContainer :ui="{
+      base: 'flex',
+      padding: 'p-8',
+    }">
       <ServicesGridItem v-if="service" :service="service" />
-      <UContainer
-        v-if="service"
-        :ui="{
-          padding: 'p-8 gap-4',
-          constrained: 'max-w-7xl',
-        }"
-        class="Ucontainer"
-      >
+      <UContainer v-if="service" :ui="{
+        padding: 'p-8 gap-4',
+        constrained: 'max-w-7xl',
+      }" class="Ucontainer">
         <!-- <UBadge size="lg">{{
           typeof service === "object" && "category" in service ? service.category : ""
         }}</UBadge> -->

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-definePageMeta({
-  middleware: 'client-auth',
-})
+// definePageMeta({
+//   middleware: 'client-auth',
+// })
 const route = useRoute()
 const category = computed(() => route.query.category)
 const tags = computed(() => route.query.tags)
@@ -45,6 +45,5 @@ header.container {
   padding: 1em;
 }
 
-@media (min-width: 550px) {
-}
+@media (min-width: 550px) {}
 </style>

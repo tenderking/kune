@@ -46,11 +46,7 @@ function openModal() {
     </NuxtLink>
     <nav>
       <!-- Left-aligned links -->
-      <ul
-        v-on-click-outside="closeModal"
-        class="nav-small-screen"
-        :class="isHidden ? 'hidden' : 'show'"
-      >
+      <ul v-on-click-outside="closeModal" class="nav-small-screen" :class="isHidden ? 'hidden' : 'show'">
         <li>
           <NuxtLink to="/services" @click="closeModal">
             Browse Services
@@ -67,11 +63,8 @@ function openModal() {
           </NuxtLink>
         </li>
         <li>
-          <UButton
-            :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'"
-            color="orange"
-            @click="isDark = !isDark"
-          />
+          <UButton :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'" color="orange"
+            @click="isDark = !isDark" />
         </li>
         <li>
           <UButton v-if="!session" to="/api/auth/signin" external color="orange">
@@ -83,12 +76,7 @@ function openModal() {
         </li>
       </ul>
       <i v-if="isMobile" class="i-blue">
-        <Icon
-          v-if="isHidden"
-          name="material-symbols:menu"
-          class="i-green"
-          @click="openModal"
-        />
+        <Icon v-if="isHidden" name="material-symbols:menu" class="i-green" @click="openModal" />
         <Icon v-else name="material-symbols:close" @click="closeModal" />
       </i>
     </nav>

@@ -13,20 +13,19 @@ export default defineEventHandler(async (event) => {
     select: {
       name: true,
       description: true,
-      category: {
-        select: {
-          name: true,
-        },
-      },
+      category: true,
       service_tags: {
         select: {
           tags: {
             select: {
+              id: true,
               name: true,
             },
           },
         },
       },
+      website_url: true,
+      phone_number: true,
     },
   })
 
@@ -38,6 +37,8 @@ export default defineEventHandler(async (event) => {
     description: service.description,
     category: service.category.name,
     tags: service.service_tags.map(tag => tag.tags.name),
+    webUrl: service.website_url,
+    whatsapp: service.phone_number,
   }
   return flattenedService
 })

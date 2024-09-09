@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     // and more...
   },
 
-  modules: ['nuxt-icon', '@nuxt/ui', '@hebilicious/authjs-nuxt'],
+  modules: ['nuxt-icon', '@nuxt/ui', '@hebilicious/authjs-nuxt', '@nuxt/image'],
 
   nitro: {
     inlineDynamicImports: true,
@@ -61,6 +61,7 @@ export default defineNuxtConfig({
         baseUrl: import.meta.env.NUXT_NEXTAUTH_URL, // The URL of your deployed app (used for origin Check in production)
 
       },
+      uploadsDir: import.meta.env.UPLOADS_DIR,
     },
   },
 

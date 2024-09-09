@@ -33,6 +33,7 @@ async function getAllServices() {
           },
         },
         website_url: true,
+        phone_number: true,
       },
     })
     .then(services =>
@@ -44,6 +45,7 @@ async function getAllServices() {
           tagOnService => tagOnService.tags.name,
         ),
         webUrl: service.website_url,
+        whatsapp: service.phone_number,
       })),
     )
     .catch((error) => {

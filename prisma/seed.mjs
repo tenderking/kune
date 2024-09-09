@@ -61,8 +61,7 @@ const data = [
   {
     name: 'Startup Biz',
     category: 'Business',
-    description:
-			'StartupBiz Zimbabwe is a business research firm based in Zimbabwe. We are passionate about entrepreneurship. ',
+    description: 'StartupBiz Zimbabwe is a business research firm based in Zimbabwe. We are passionate about entrepreneurship. ',
     websiteUrl: 'https://www.startupbiz.co.zw/',
     address: 'Some address in Harare',
     tags: ['Business', 'Start-up'],
@@ -164,6 +163,9 @@ async function createService(data) {
     data: {
       name: data.name,
       // ... other data
+      phone_number: data.phone_number || '',
+      address: data.address,
+      image_url: data.imgUrl,
       website_url: data.websiteUrl,
       description: data.description,
       category: { connect: { id: category.id } },

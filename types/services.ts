@@ -4,4 +4,6 @@ export interface Service {
   description: string
   category: string
   tags: string[]
+  webUrl: string
+  whatsapp: string
 }

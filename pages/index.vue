@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 // import type { Service } from '~/types/services';
-const { session, status, cookies } = useAuth()
 const nuxtApp = useNuxtApp()
 definePageMeta({
   middleware: 'guest-only',
@@ -19,11 +18,7 @@ const { data: services } = await useFetch<Service>('/api/services', {
 
 <template>
   <header>
-    <div>
-      <pre>{{ status }}</pre>
-      <pre>{{ session?.user }}</pre>
-      <pre>{{ cookies }}</pre>
-    </div>
+
     <HomeIllustration />
 
     <div class="home-text">

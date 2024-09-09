@@ -42,7 +42,7 @@ async function getServicesByTags(tag: string) {
       base: 'flex',
       padding: 'p-8',
     }">
-      <ServicesGridItem v-if="service" :service="service" />
+      <ServicesDetails v-if="service" :service="service" />
       <UContainer v-if="service" :ui="{
         padding: 'p-8 gap-4',
         constrained: 'max-w-7xl',

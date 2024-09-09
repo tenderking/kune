@@ -13,6 +13,9 @@ model Services {
   description      String              @default("")
   category_id      String
   website_url      String
+  image_url        String
+  phone_number     String              @default("")
+  address          String              @default("")
   service_owner_id String?
   created_at       DateTime?           @default(now()) @db.Timestamp(6)
   updated_at       DateTime            @default(now()) @db.Timestamp(6)

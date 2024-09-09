@@ -30,31 +30,40 @@ async function toggleFavorite() {
 
 <template>
   <div class="card">
-    <div class="card__image">
-      <NuxtImg class="service-item-image" :alt="`${service.name}-img`" src="/assets/images/placeholder-image.png" />
-      <div class="card__overlay">
-        <h3 class="card__text-title">
+    <div class=" flex space-between">
+      <NuxtImg class="card__image" :alt="`${service.name}-img`" src="/assets/images/placeholder-image.png" />
+      <div class="card__text">
+        <h4 class="bold ">
           {{ service.name }}
-        </h3>
+        </h4>
+        <p class="card__text-description">
+          {{ service.description }}
+        </p>
       </div>
     </div>
-    <div class="card__text">
-      <h3 class="bold pb-1">
-        {{ service.name }}
-      </h3>
-      <p class="card__text-description">
-        {{ service.description }}
-      </p>
+
+    <div>
+      <div class="w-100 lr-0 flex col flex-start center pt-2">
+        <Icon name="ic:baseline-web" width="16px" height="16px" />
+        <NuxtLink :href="service.webUrl"> Visit {{ service.webUrl }} </NuxtLink>
+      </div>
 
       <div class="flex space-between">
         <Icon name="ic:baseline-whatsapp" width="16px" height="16px" />
         <span> {{ service.whatsapp || '123 456 789' }} </span>
       </div>
-      <div class="w-100 flex col ml-auto center" @click.stop.prevent="toggleFavorite()">
-        <span> Save </span>
-        <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" />
+
+      <div class="flex space-between">
+        <Icon name="ic:baseline-category" width="16px" height="16px" />
+        <span> {{ service.category || '123 456 789' }} </span>
       </div>
+
+      <UButton color="orange" class="w-100 flex col center bg-white" @click.stop.prevent="toggleFavorite()">
+        Save
+        <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" />
+      </UButton>
     </div>
+
   </div>
 </template>
 
@@ -66,36 +75,21 @@ async function toggleFavorite() {
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
-  width: 275px;
-  height: 375px;
+  align-items: flex-start;
   background-color: var(--color-card-bg);
   outline: solid var(--color--secondary);
   border-radius: 6px;
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem;
 }
 
 .card__image {
-  display: inline-block;
   justify-items: center;
-  width: 100%;
-  height: 40%;
-  margin-top: 0;
-  border-radius: 6px 6px 0 0;
+  width: 60%;
+  height: auto;
+  border-radius: 6px;
   overflow: hidden;
-  position: relative;
-}
-
-.card__overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .card__text-title {
@@ -109,7 +103,7 @@ async function toggleFavorite() {
   justify-content: flex-start;
   width: 100%;
   padding: 1em;
-  height: 60%;
+  height: max-content;
   background-color: var(--color-card-bg);
 }
 
@@ -125,12 +119,19 @@ async function toggleFavorite() {
   flex-direction: column;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-clamp: 4;
-  -webkit-line-clamp: 4;
+  line-clamp: 6;
+  -webkit-line-clamp: 6;
 }
 
 .card__icons:hover {
   background-color: floralwhite;
   cursor: pointer;
+}
+
+.flex {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  background-color: var(---color-card-bg);
 }
 </style>

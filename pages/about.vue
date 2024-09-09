@@ -1,7 +1,7 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'client-auth',
-})
+// definePageMeta({
+//   middleware: 'client-auth',
+// })
 </script>
 
 <template>
@@ -58,6 +58,7 @@ p {
   margin-bottom: 2em;
   max-width: 65ch;
 }
+
 h1,
 h2,
 h3,
@@ -73,6 +74,7 @@ h2 {
   color: var(--clr--primary);
   font-weight: 700;
 }
+
 .kune {
   color: var(--clr--primary);
   font-weight: 900;

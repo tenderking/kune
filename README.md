@@ -32,7 +32,7 @@ Certainly! Here's a more detailed set of instructions to help a new person get s
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (recommended version)
 - [Yarn](https://yarnpkg.com/) (optional, but recommended for this project)
-- [Docker](https://www.docker.com/) (for running DynamoDB)
+- [Docker](https://www.docker.com/) (for running mysql)
 
 ### Step 1: Clone the Repository
 
@@ -57,32 +57,6 @@ Run the following command to start the development server:
 
 ```bash
 npm run dev
-```
-### Step 5: Set Up DynamoDB
-
-Ensure that Docker is installed and running on your machine. Then run the following command to start a DynamoDB instance in Docker:
-Absolutely, if your project involves AWS services, it's crucial to set up AWS configurations. Here's an additional step to include AWS configuration:
-
-[setting up dynamodb in docker](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html)
-
-```bash
-aws dynamodb describe-table --table-name Name_of_table --query "Table" > table_schema.json --endpoint-url http://localhost:8000
-
-aws dynamodb describe-table --table-name Services-v0.0.2 --query "Table" > table_schema_v0.0.2.json --endpoint-url http://localhost:8000
-
-```
-
-to view all items in a table
-
-```bash
-aws dynamodb scan --table-name Name_of_table --query 'Items[*]' --endpoint-url http://localhost:8000
-
-aws dynamodb list-tables --endpoint-url http://localhost:8000
-
-aws dynamodb get-item --table-name Services --key '{"ServiceID": {"N": "213"}, "ServiceName": {"S": "Classifieds"}}' --endpoint-url http://localhost:8000
-
-aws dynamodb batch-write-item --table-name Services-v0.0.2 --request-items file://data/ddb_data.json --endpoint-url http://localhost:8000
-
 ```
 
 Visit `http://localhost:3000` in your browser to view the application.

@@ -20,7 +20,7 @@ jobs:
           node-version: "20.9.0"
       # Pick your own package manager and build script
       - run: npm install
-      - run: npm postinstall
+      - run: npm run postinstall
       - run: npx prisma generate
       - run: npx nuxt build
 

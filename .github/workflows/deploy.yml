@@ -17,9 +17,11 @@ jobs:
       - run: corepack enable
       - uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "20.9.0"
       # Pick your own package manager and build script
       - run: npm install
+      - run: npm postinstall
+      - run: npx prisma generate
       - run: npx nuxt build
 
       - name: Upload artifact

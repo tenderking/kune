@@ -15,13 +15,7 @@ export default defineNuxtConfig({
     },
   },
 
-  tailwindcss: {
-    exposeConfig: true,
-    viewer: true,
-    // and more...
-  },
-
-  modules: ['nuxt-icon', '@nuxt/ui', '@hebilicious/authjs-nuxt', '@nuxt/image'],
+  modules: ['@nuxt/icon', '@nuxt/ui', '@hebilicious/authjs-nuxt', '@nuxt/image'],
 
   nitro: {
     inlineDynamicImports: true,

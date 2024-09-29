@@ -25,7 +25,7 @@ const data = [
     name: 'TopUp',
     category: 'Fintech',
     description:
-			'This is website for topping up airtime, data, and other payments',
+      'This is website for topping up airtime, data, and other payments',
     websiteUrl: 'https://www.topup.co.zw/',
     address: 'Some address in Harare',
     tags: ['Money', 'Payments', 'Fintech'],
@@ -71,7 +71,7 @@ const data = [
     name: 'Tech Zim',
     category: 'Business',
     description:
-			'Techzim is an information technology and business publication that obsesses about the opportunity of tech.',
+      'Techzim is an information technology and business publication that obsesses about the opportunity of tech.',
     websiteUrl: 'https://www.techzim.co.zw/',
     address: 'Some address in Harare',
     tags: ['Business', 'Start-up', 'Tech'],
@@ -99,7 +99,7 @@ const data = [
     name: 'Trade Kings',
     category: 'Manufacturer',
     description:
-			'Trade Kings Zimbabwe are the manufacturers of the Boom and Xtra range of detergent products. ',
+      'Trade Kings Zimbabwe are the manufacturers of the Boom and Xtra range of detergent products. ',
     websiteUrl: 'http://www.tkzimbabwe.com/',
     address: ' 10 Douglas Road, Harare',
     tags: ['Industry', 'Manufacturing'],
@@ -109,7 +109,7 @@ const data = [
     name: 'Shift Engage',
     category: 'Media',
     description:
-			'Shift Engage is a multi-award winning Creative Advertising Agency specialising in integrated online and offline media. ',
+      'Shift Engage is a multi-award winning Creative Advertising Agency specialising in integrated online and offline media. ',
     websiteUrl: 'http://www.shiftengage.net/',
     address: '8 Howard Cl, Harare',
     tags: ['Advertising', 'Branding'],

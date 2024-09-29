@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { User } from 'lucia'
+
 definePageMeta({
   layout: 'dashboard',
-  middleware: 'auth',
+  middleware: 'protected',
   auth: { authenticatedRedirectTo: '/signin' },
 })
-const { session } = useAuth()
+const { data: user } = await useFetch<User>('/api/auth/user')
 const columns = [
   {
     key: 'service',
@@ -16,8 +18,8 @@ const columns = [
 ]
 
 const profile = reactive({
-  name: session?.value?.user?.name || '',
-  email: session?.value?.user?.email || '',
+  name: user.value?.name || '',
+  email: user.value?.email || '',
 })
 
 const { data: services, error } = await useFetch('/api/users/favorites')
@@ -56,14 +58,18 @@ if (error.value) {
     <h3>Profile</h3>
 
     <UForm :state="{}" class="card p-4 col-span-3 row-gap-4 rounded-md">
-      <UFormGroup label="Your Name" description="We'll only use this for spam."
-        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-center">
+      <UFormGroup
+        label="Your Name" description="We'll only use this for spam."
+        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-center"
+      >
         <UInput v-model="profile.name" type="text" name="name" />
       </UFormGroup>
       <UDivider class="py-4" />
 
-      <UFormGroup label="Your Email" description="We'll only use this for spam."
-        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-centern">
+      <UFormGroup
+        label="Your Email" description="We'll only use this for spam."
+        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-centern"
+      >
         <UInput v-model="profile.email" type="email" name="email" />
       </UFormGroup>
       <UDivider />
@@ -78,11 +84,12 @@ if (error.value) {
       <template v-else>
         <UTable :columns="columns" :rows="rows" :ui="{ tbody: 'divide-green-500' }" class="card rounded-md min-w-max">
           <template #actions-data="{ row }">
-            <UButton color="gray" variant="ghost" icon="i-heroicons-trash-20-solid"
-              @click="removeFavorite(row.actions)" />
+            <UButton
+              color="gray" variant="ghost" icon="i-heroicons-trash-20-solid"
+              @click="removeFavorite(row.actions)"
+            />
           </template>
         </UTable>
-
       </template>
     </div>
   </div>

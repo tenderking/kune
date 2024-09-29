@@ -43,7 +43,9 @@ async function toggleFavorite() {
     <div>
       <div class="w-100 lr-0 flex col flex-start center pt-2">
         <Icon name="ic:baseline-web" width="16px" height="16px" />
-        <NuxtLink :href="service.webUrl"> Visit {{ service.webUrl }} </NuxtLink>
+        <NuxtLink :href="service.webUrl">
+          Visit {{ service.webUrl }}
+        </NuxtLink>
       </div>
 
       <div class="flex space-between">
@@ -61,7 +63,6 @@ async function toggleFavorite() {
         <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" />
       </UButton>
     </div>
-
   </div>
 </template>
 

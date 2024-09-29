@@ -1,18 +1,10 @@
-import { authOptions } from '../../auth/[...]'
-import { getServerSession } from '#auth'
 import { handleError } from '~/server/utils/utils'
 
 export default defineEventHandler(async (event) => {
   try {
-    const session = await getServerSession(event, authOptions)
-    if (!session || !session.user || !session.user.email)
-      throw createError({ statusCode: 401, message: 'Unauthorized' })
-    const userId = await getUserFromDB(session.user.email)
-    if (!userId)
-      throw new Error('User not found')
-
+    const user = event.context.user
     const favoriteServices = await prisma.user.findUnique({
-      where: { id: userId.id },
+      where: { id: user?.id },
       include: {
         favorite_services: {
           include: {

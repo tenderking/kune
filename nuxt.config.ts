@@ -2,7 +2,6 @@ import { createResolver } from 'nuxt/kit'
 
 // Resolve relative from the current file
 const resolver = createResolver(import.meta.url)
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   ssr: true,
@@ -15,18 +14,13 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxt/icon', '@nuxt/ui', '@hebilicious/authjs-nuxt', '@nuxt/image'],
+  modules: ['@nuxt/icon', '@nuxt/ui', '@nuxt/image'],
 
   nitro: {
     inlineDynamicImports: true,
     preset: 'node-server',
   },
-  authJs: {
-    baseUrl: import.meta.env.NUXT_NEXTAUTH_URL,
-    verifyClientOnEveryRequest: false,
-    authenticatedRedirectTo: '/profile',
 
-  },
   imports: {
     dirs: ['types', 'store'],
   },
@@ -39,25 +33,18 @@ export default defineNuxtConfig({
     cookie: resolver.resolve(__dirname, 'node_modules/cookie'),
   },
   runtimeConfig: {
-    authJs: {
-      secret: import.meta.env.NUXT_NEXTAUTH_SECRET, // You can generate one with `openssl rand -base64 32`
-
-    },
     nodemailer: {
       host: import.meta.env.SMTP_HOST,
       port: import.meta.env.SMTP_PORT,
       user: import.meta.env.SMTP_USER,
       password: import.meta.env.SMTP_PASSWORD,
       from: import.meta.env.EMAIL_FROM,
+      secure: import.meta.env.SMTP_SECURE,
     },
     public: {
-      authJs: {
-        baseUrl: import.meta.env.NUXT_NEXTAUTH_URL, // The URL of your deployed app (used for origin Check in production)
-
-      },
       uploadsDir: import.meta.env.UPLOADS_DIR,
+      nodeEnv: import.meta.env.NODE_ENV,
     },
   },
-
   compatibilityDate: '2024-09-03',
 })

@@ -10,7 +10,7 @@ const props = defineProps({
   },
 })
 
-const { session } = useAuth()
+const user = useUser()
 const colorMode = useColorMode()
 const isHidden = ref(true)
 const isMobile = useMediaQuery('(max-width: 550px)')
@@ -23,6 +23,14 @@ const isDark = computed({
     colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
   },
 })
+
+async function logout() {
+  await $fetch('/api/auth/logout', {
+    method: 'POST',
+  })
+  await navigateTo('/login')
+  user.value = null
+}
 
 function closeModal() {
   isHidden.value = true
@@ -63,14 +71,16 @@ function openModal() {
           </NuxtLink>
         </li>
         <li>
-          <UButton :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'" color="orange"
-            @click="isDark = !isDark" />
+          <UButton
+            :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'" color="orange"
+            @click="isDark = !isDark"
+          />
         </li>
         <li>
-          <UButton v-if="!session" to="/api/auth/signin" external color="orange">
+          <UButton v-if="!user" to="/login" external color="orange">
             Sign in
           </UButton>
-          <UButton v-else to="/api/auth/signout" external color="orange">
+          <UButton v-else color="orange" @click="logout">
             Sign out
           </UButton>
         </li>

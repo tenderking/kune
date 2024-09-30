@@ -32,6 +32,7 @@ async function getAllServices() {
             },
           },
         },
+        image_url: true,
         website_url: true,
         phone_number: true,
       },
@@ -46,6 +47,7 @@ async function getAllServices() {
         ),
         webUrl: service.website_url,
         whatsapp: service.phone_number,
+        image_url: service.image_url,
       })),
     )
     .catch((error) => {

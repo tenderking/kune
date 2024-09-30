@@ -2,9 +2,12 @@
 const router = useRouter()
 const sortOrder = ref('Ascending')
 function sortBy() {
-  sortOrder.value === 'Ascending'
-    ? (sortOrder.value = 'Descending')
-    : (sortOrder.value = 'Ascending')
+  if (sortOrder.value === 'Ascending') {
+    sortOrder.value = 'Descending'
+  }
+  else {
+    sortOrder.value = 'Ascending'
+  }
 }
 
 const categorySlug = ref('')
@@ -38,8 +41,7 @@ function getCategorySlug(slug: string) {
       <label for="category-select">Choose a category:</label>
       <template v-if="categories">
         <select
-          id="category-select"
-          name="categories"
+          id="category-select" name="categories"
           @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)"
         >
           <option value="">

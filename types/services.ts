@@ -6,4 +6,5 @@ export interface Service {
   tags: string[]
   webUrl: string
   whatsapp: string
+  image_url: string
 }

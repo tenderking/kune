@@ -13,7 +13,7 @@
       questions, suggestions, or feedback.
     </p>
 
-    <UForm action="mailto:info@kune.com" method="post" enctype="text/plain">
+    <UForm :state="{}" action="mailto:info@kune.com" method="post" enctype="text/plain">
       <UFormGroup label="Your Name" required>
         <UInput type="text" name="name" />
       </UFormGroup>

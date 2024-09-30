@@ -141,10 +141,11 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique 
-  userId       String   @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade) // One-to-One relationship with User model
+  userId       String?   @map("user_id")
+  expiresAt      DateTime
+  fresh         Boolean @default(true)
+
+  user         User?     @relation(fields: [userId], references: [id], onDelete: Cascade) // One-to-One relationship with User model
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -168,7 +169,8 @@ model User {
   email                  String?             @unique
   emailVerified          DateTime?
   image                  String?
-  password               String?
+  password_hash               String?
+  username               String?             @unique
   role                   String              @default("USER")
   Account                Account[] // One-to-Many relationship with Account model
   favorite_creators      Favorite_Creators[] // One-to-Many relationship with Favorite_Creators model
@@ -178,14 +180,14 @@ model User {
   owned_content_creators ContentCreators[] // One-to-Many relationship with ContentCreators model
 
   @@map("users")
+  PasswordResetToken PasswordResetToken[]
 }
 
-// This model represents the verification tokens.
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+model PasswordResetToken {
+  token_hash String   @unique
+  userId    String  @map("user_id")
+  expiresAt DateTime @map("expires_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) // One-to-One relationship with User model
 
-  @@unique([identifier, token])
-  @@map("verificationtokens")
+  @@map("password_reset_tokens")
 }

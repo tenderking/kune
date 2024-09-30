@@ -15,13 +15,7 @@ if (service.value) {
   if (typeof service.value === 'object' && 'tags' in service.value)
     serviceTags = (await service.value.tags) as string[]
 }
-// async function deleteItem() {
-//   await fetch(
-//     `/api/services/${route.params.service}`,
-//     {
-//       method: 'DELETE',
-//     },
-//   ).then(() => router.push('/services'))
+
 // }
 async function getServicesByTags(tag: string) {
   router.push({
@@ -36,8 +30,17 @@ async function getServicesByTags(tag: string) {
     <ServicesNav />
   </header> -->
 
-  <main class="container">
-    <h2>Details</h2>
+  <main class="container ">
+    <h2 class="text-md px-4">
+      Details
+    </h2>
+    <UContainer class="flex px-2 gap-2 mt-2">
+      <template v-if="serviceTags">
+        <UBadge v-for="tag in serviceTags" :key="tag" color="orange" @click="getServicesByTags(tag)">
+          {{ tag }}
+        </UBadge>
+      </template>
+    </UContainer>
     <UContainer
       :ui="{
         base: 'flex',
@@ -54,11 +57,6 @@ async function getServicesByTags(tag: string) {
         <!-- <UBadge size="lg">{{
           typeof service === "object" && "category" in service ? service.category : ""
         }}</UBadge> -->
-        <template v-if="serviceTags">
-          <UBadge v-for="tag in serviceTags" :key="tag" @click="getServicesByTags(tag)">
-            {{ tag }}
-          </UBadge>
-        </template>
       </UContainer>
     </UContainer>
   </main>

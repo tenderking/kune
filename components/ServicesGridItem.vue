@@ -1,12 +1,19 @@
 <script lang="ts" setup>
 const props = defineProps<{ service: Service }>()
 
-function isFavorite() {
-  // Add your logic here to determine if the service is a favorite or not
-  return true
-}
+// function isFavorite() {
+//   // Add your logic here to determine if the service is a favorite or not
+//   return true
+// }
+const user = useUser()
 
 async function toggleFavorite() {
+  if (!user.value) {
+    // Redirect to login page if user is not authenticated
+    navigateTo('/login')
+    return
+  }
+
   try {
     const response = await $fetch('/api/users/favorites', {
       method: 'POST',
@@ -40,21 +47,20 @@ async function toggleFavorite() {
       </div>
     </div>
     <div class="card__text">
-      <h3 class="bold pb-1">
+      <h3 class=" text-left text-base pb-1">
         {{ service.name }}
       </h3>
       <p class="card__text-description">
         {{ service.description }}
       </p>
 
-      <div class="flex space-between">
+      <div class="flex space-between items-center gap-2 mt-2">
         <Icon name="ic:baseline-whatsapp" width="16px" height="16px" />
         <span> {{ service.whatsapp || '123 456 789' }} </span>
       </div>
-      <div class="w-100 flex col ml-auto center" @click.stop.prevent="toggleFavorite()">
-        <span> Save </span>
-        <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" />
-      </div>
+      <UButton icon="material-symbols:favorite-outline" color="orange" class="absolute bottom-4 right-4" @click.stop.prevent="toggleFavorite()">
+        Save
+      </UButton>
     </div>
   </div>
 </template>
@@ -102,6 +108,7 @@ async function toggleFavorite() {
 .card__text-title {
   color: white;
   text-align: center;
+  font-size: 1.2em;
 }
 
 .card__text {
@@ -112,6 +119,7 @@ async function toggleFavorite() {
   padding: 1em;
   height: 60%;
   background-color: var(--color-card-bg);
+  margin-top: 0;
 }
 
 .card__text-description {

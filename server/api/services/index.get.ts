@@ -9,15 +9,22 @@ export default defineEventHandler(async (event) => {
 
     return response
   }
-
+  if (query.sort) {
+    const order = query.sort === 'asc' || query.sort === 'desc' ? query.sort : 'asc'
+    const response = await getAllServices(order)
+    return response
+  }
   const services = await getAllServices()
   return services
   // }
 })
 
-async function getAllServices() {
+async function getAllServices(order: 'asc' | 'desc' = 'desc') {
   return prisma.services
     .findMany({
+      orderBy: {
+        description: order,
+      },
       select: {
         name: true,
         description: true,

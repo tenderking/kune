@@ -1,8 +1,16 @@
-export default defineEventHandler(async (_event) => {
+export default defineEventHandler(async (event) => {
+  const sessionId = getCookie(event, lucia.sessionCookieName) ?? null
+  if (!sessionId) {
+    event.context.session = null
+    event.context.user = null
+    return
+  }
+
+  const { user } = await lucia.validateSession(sessionId)
   const services = await prisma.services.findMany({
     where: {
       service_owner: {
-        id: 'cluen2o0d000011yn1tfbcozg',
+        id: user?.id,
       },
     },
     select: {

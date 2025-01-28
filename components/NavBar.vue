@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-unused-refs -->
 <script setup lang="ts">
 import { vOnClickOutside } from '@vueuse/components'
 import { useMediaQuery } from '@vueuse/core'
@@ -12,8 +11,9 @@ const props = defineProps({
 
 const user = useUser()
 const colorMode = useColorMode()
-const isHidden = ref(true)
 const isMobile = useMediaQuery('(max-width: 550px)')
+const isHidden = ref(true)
+const isDashboard = useRoute().path === '/profile'
 
 const isDark = computed({
   get() {
@@ -49,12 +49,12 @@ function openModal() {
 
 <template>
   <header class="flex justify-between p-4 h-max relative bgDark" :class="isFixed()">
-    <NuxtLink class="logo" to="/">
+    <NuxtLink class="logo" to="/" :class="isDashboard? 'hidden' : ''">
       <span> Kune </span>
     </NuxtLink>
     <nav>
       <!-- Left-aligned links -->
-      <ul v-on-click-outside="closeModal" class="nav-small-screen" :class="isHidden ? 'hidden' : 'show'">
+      <ul v-on-click-outside="closeModal" class="z-10 shadow-lg sm:shadow-none" :class="isHidden ? 'hidden' : 'show'">
         <li>
           <NuxtLink to="/services" @click="closeModal">
             Browse Services
@@ -74,14 +74,28 @@ function openModal() {
           <UButton
             :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'" color="orange"
             @click="isDark = !isDark"
+            class="outline outline-1 "
           />
         </li>
         <li>
-          <UButton v-if="!user" to="/login" external color="orange">
+          <UPopover v-if="user" mode="click">
+           
+            <UButton   class="outline outline-1" color="orange" icon="i-heroicons-user-circle-16-solid">
+              {{ user?.name }}
+            </UButton>
+            <template #panel>
+              <div class="flex flex-row items-center gap-4 p-4">
+                <UButton to="/profile" class="hover:underline">
+                  Profile
+                </UButton>
+                <UButton class="bg-orange-500 hover:underline" @click="logout">
+                  Logout
+                </UButton>
+              </div>
+            </template>
+          </UPopover>
+          <UButton v-else to="/login" external color="orange">
             Sign in
-          </UButton>
-          <UButton v-else color="orange" @click="logout">
-            Sign out
           </UButton>
         </li>
       </ul>

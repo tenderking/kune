@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 const router = useRouter()
-const sortOrder = ref('Ascending')
+const sortOrder = ref('ascending')
 function sortBy() {
-  if (sortOrder.value === 'Ascending') {
-    sortOrder.value = 'Descending'
+  if (sortOrder.value === 'ascending') {
+    sortOrder.value = 'descending'
+    router.push({ query: { sort: 'desc' } })
   }
   else {
-    sortOrder.value = 'Ascending'
+    sortOrder.value = 'ascending'
+    router.push({ query: { sort: 'asc' } })
   }
 }
 
@@ -36,16 +38,16 @@ function getCategorySlug(slug: string) {
 </script>
 
 <template>
-  <nav>
-    <div class="select-container">
-      <label for="category-select">Choose a category:</label>
+  <nav class="flex justify-between px-4 items-center">
+    <div class="flex flex-col justify-center  items-start">
+      <label for="category-select" class="font-bold">Choose a category:</label>
       <template v-if="categories">
-        <select
+        <select class="hover:font-bold"
           id="category-select" name="categories"
           @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)"
         >
           <option value="">
-            Select By Category
+           All
           </option>
 
           <option v-for="(category, index) in categories" :key="index" :value="category">
@@ -54,38 +56,19 @@ function getCategorySlug(slug: string) {
         </select>
       </template>
     </div>
-    <div class="sort-services">
-      <span class="sort-services-heading">sort</span>
-      <span class="sort-services-type" @click="sortBy()">{{ sortOrder }}</span>
+    <div class="flex flex-col justify-center items-end">
+      <span class="font-bold">sort</span>
+      <span class=" hover:font-bold" @click="sortBy()">{{ sortOrder }}</span>
     </div>
   </nav>
 </template>
 
 <style scoped>
-nav {
-  display: flex;
-  justify-content: space-between;
-}
-
-.select-container {
-  display: flex;
-  flex-direction: column;
-}
-
 select {
-  outline: none;
   background-color: var(--color--bg);
   color: var(--color--text);
-  padding: 0.25em 1em;
 
-  border-radius: 6px;
 }
 
-.sort-services {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0.25em 1em;
-  text-align: right;
-}
+
 </style>

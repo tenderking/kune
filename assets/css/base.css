@@ -80,17 +80,7 @@ body {
 	min-height: 100%;
 	/* position: relative; */
 }
-button,input,textarea,select, option		 {
-	font-family: inherit;
-	font-size: inherit;
-	line-height: 1;
-	border: none;
-	background-color: var(--clr--accent);
-	color: var(--clr--text-dark);
-	padding: 0.5rem 1rem;
-	margin: 0;	
-	width: max-content;
-}
+
 input
 #app {
 	min-height: 100%;
@@ -103,23 +93,5 @@ a, a:visited {
 	text-decoration: none;	
 }
 
-ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-h1,.h1{
-	font-size: var(--step-3);
-	/* letter-spacing: -1px; */
-	line-height: 1.1;
-font-weight: 700;
-margin: 0;
-}
-h2{
-	font-size: var(--step-2);	
-	
-}
-h3{
-	font-size: var(--step-1);
-	font-weight: 700;	
-}
+
+

@@ -25,7 +25,7 @@ const columns = [
 <template>
   <UContainer class="rounded-md">
     <h2>Services</h2>
-    <template v-if="services.length === 0">
+    <template v-if="!services?.length">
       <p>no Services</p>
     </template>
     <template v-else>

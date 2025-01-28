@@ -16,7 +16,7 @@ const links = [
 </script>
 
 <template>
-  <NavBar class="main" :fixed="true" />
+  <NavBar class="main"  />
   <aside
     class="fixed dashboard p-4 top-20 rounded-md left-0 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 z-10"
   >

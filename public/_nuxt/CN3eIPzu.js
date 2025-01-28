@@ -1,0 +1,1 @@
+import{_ as n,o,c as r,v as t}from"./BbCuPRBa.js";const a={};function c(e,s){return o(),r("main",null,[t(e.$slots,"default",{},void 0,!0)])}const _=n(a,[["render",c],["__scopeId","data-v-2b8f3999"]]);export{_ as default};

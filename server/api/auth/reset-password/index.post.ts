@@ -1,17 +1,21 @@
+import  nodemailer from 'nodemailer';
 // server/api/auth/reset-password.post.ts
 import { PrismaClient } from '@prisma/client'
 import { generateIdFromEntropySize } from 'lucia'
-import { createTransport } from 'nodemailer'
 import { createDate, TimeSpan } from 'oslo'
 import { sha256 } from 'oslo/crypto'
 import { encodeHex } from 'oslo/encoding'
 
 const prisma = new PrismaClient()
-const runtimeConfig = useRuntimeConfig()
+ const config = useRuntimeConfig()
+  const smtpHost = config.nodemailer.host
+  const smtpPort = config.nodemailer.port
+  const smtpUser = config.nodemailer.from
+  const smtpPass = config.nodemailer.password
 
 export default defineEventHandler(async (event) => {
-  const body = await readFormData(event)
-  const email = body.get('email')
+  const formData = await readFormData(event)
+  const email = formData.get('email')
   // eslint-disable-next-line no-console
   console.log(email)
   if (!email || typeof email !== 'string') {
@@ -33,8 +37,9 @@ export default defineEventHandler(async (event) => {
   }
 
   const verificationToken = await createPasswordResetToken(user.id)
-  const verificationLink = `http://localhost:3000/reset-password/${verificationToken}`
-
+  const origin = config.origin
+  const verificationLink = `${origin}/auth/reset-password/${verificationToken}`
+console.log("email and verificationLink", email, verificationLink)
   await sendPasswordResetToken(email, verificationLink)
 
   return new Response('Password reset email sent', {
@@ -64,18 +69,18 @@ export async function createPasswordResetToken(userId: string): Promise<string> 
 }
 export async function sendPasswordResetToken(email: string, verificationLink: string): Promise<void> {
   // Create a transporter object using SMTP transport
-  const transporter = createTransport({
-    host: runtimeConfig.nodemailer.host, // Use runtime config for SMTP host
-    port: Number.parseInt(runtimeConfig.nodemailer.port), // Use runtime config for SMTP port
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
     auth: {
-      user: runtimeConfig.nodemailer.user, // Use runtime config for SMTP username
-      pass: runtimeConfig.nodemailer.password, // Use runtime config for SMTP password
-    },
-  })
+      user: smtpUser,
+      pass: smtpPass
+    }
+  } as any) ;
 
   // Setup email data
   const mailOptions = {
-    from: `"Kune" <${runtimeConfig.nodemailer.from}>`, // Use runtime config for sender address
+    from: `<${smtpUser}>`, // Use runtime config for sender address
     to: email, // List of receivers
     subject: 'Password Reset', // Subject line
     text: `You requested a password reset. Click the link to reset your password: ${verificationLink}`, // Plain text body

@@ -1,23 +1,21 @@
 import type { Session, User } from 'lucia'
 import { verifyRequestOrigin } from 'lucia'
 
-
 export default defineEventHandler(async (event) => {
- if (event.node.req.method !== 'GET') {
-    const originHeader = getHeader(event, 'Origin') ?? null;
-    let hostHeader = getHeader(event, 'Host') ?? null;
+  if (event.node.req.method !== 'GET') {
+    const originHeader = getHeader(event, 'Origin') ?? null
+    let hostHeader = getHeader(event, 'Host') ?? null
 
     // Normalize `localhost` variations (remove port if present)
-    if (hostHeader?.startsWith("localhost")) {
-      hostHeader = "http://localhost:3000"; // Ensure it matches the expected format
+    if (hostHeader?.startsWith('localhost')) {
+      hostHeader = 'http://localhost:3000' // Ensure it matches the expected format
     }
 
     if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
-      console.error("Blocked request:", { originHeader, hostHeader });
-      return event.node.res.writeHead(403).end();
+      console.error('Blocked request:', { originHeader, hostHeader })
+      return event.node.res.writeHead(403).end()
     }
   }
-
 
   const sessionId = getCookie(event, lucia.sessionCookieName) ?? null
   if (!sessionId) {

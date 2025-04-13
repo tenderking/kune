@@ -67,38 +67,35 @@ export interface SendResetPasswordFormData {
   email: string
 }
 
-export const sendResetPasswordValidationSchema =   z.object({
-    email: z
-      .string({ message: 'The email field is required' })
-      .email({ message: 'Invalid email address' }),
-  })
-
+export const sendResetPasswordValidationSchema = z.object({
+  email: z
+    .string({ message: 'The email field is required' })
+    .email({ message: 'Invalid email address' }),
+})
 
 export interface ConfirmResetPasswordFormData {
   password: string
   confirmPassword: string
 }
 
-export const confirmResetPasswordValidationSchema =   z
-    .object({
-      password: z
-        .string({ message: 'The password field is required' })
-        .min(6, { message: 'Password must be at least 6 characters long' })
-        .max(16, { message: 'Password must not exceed 16 characters' })
-        .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{6,16}$/, {
-          message:
-            'Password must contain at least one uppercase letter, one lowercase letter, and one number',
-        }),
-      confirmPassword: z.string({
-        message: 'The confirm password field is required',
+export const confirmResetPasswordValidationSchema = z
+  .object({
+    password: z
+      .string({ message: 'The password field is required' })
+      .min(6, { message: 'Password must be at least 6 characters long' })
+      .max(16, { message: 'Password must not exceed 16 characters' })
+      .regex(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{6,16}$/, {
+        message:
+          'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
       }),
-    })
-    .refine(
-      (values) => {
-        return values.password === values.confirmPassword
-      },
-      {
-        message: 'Passwords do not match',
-      },
-    )
-
+    confirmPassword: z.string({
+      message: 'The confirm password field is required',
+    }),
+  })
+  .refine(
+    values => values.password === values.confirmPassword,
+    {
+      message: 'Passwords do not match',
+      path: ['confirmPassword'], // ✅ Associate error with confirmPassword field
+    },
+  )

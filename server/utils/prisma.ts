@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient({
-  log: ['warn', 'error',  'info'],
+  log: ['warn', 'error', 'info'],
 })
 
 export default prisma

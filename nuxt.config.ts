@@ -45,7 +45,7 @@ export default defineNuxtConfig({
       uploadsDir: import.meta.env.UPLOADS_DIR,
       nodeEnv: import.meta.env.NODE_ENV,
     },
-      origin: import.meta.env.ORIGIN,
+    origin: import.meta.env.ORIGIN,
 
   },
   compatibilityDate: '2024-09-03',

@@ -31,8 +31,8 @@ jobs:
 
       - name: Push build to branch
         uses: peaceiris/actions-gh-pages@v4
+
+      - name: Deploy to production
+        uses: sozo-design/curl@v1.0.2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: build
-          publish_dir: ./.output
-          force_orphan: true
+          args: -X POST "${{ secrets.DEPLOY_API_URL }}"

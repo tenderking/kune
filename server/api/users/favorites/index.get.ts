@@ -1,5 +1,3 @@
-import { handleError } from '~/server/utils/utils'
-
 export default defineEventHandler(async (event) => {
   try {
     const user = event.context.user
@@ -15,7 +13,6 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!favoriteServices || favoriteServices.favorite_services.length === 0) {
-      handleError('No favorite services found for this user')
       return null
     }
 

@@ -14,9 +14,13 @@ export default defineEventHandler(async (event) => {
       },
     },
     select: {
+      id: true,
       name: true,
       description: true,
       category: true,
+      website_url: true,
+      image_url: true,
+      phone_number: true,
       // service_tags: {
       //   select: {
       //     tags: {
@@ -31,9 +35,13 @@ export default defineEventHandler(async (event) => {
   })
 
   const transformedServices = services.map(service => ({
+    id: service.id,
     name: service.name,
     description: service.description,
     category: service.category.name,
+    website_url: service.website_url,
+    image_url: service.image_url,
+    phone_number: service.phone_number,
     //  tags: service.service_tags.map(
     //    (tagOnService) => tagOnService.tags.name
     //  ),

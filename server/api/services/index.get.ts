@@ -26,6 +26,7 @@ async function getAllServices(order: 'asc' | 'desc' = 'desc') {
         description: order,
       },
       select: {
+        id: true,
         name: true,
         description: true,
         category: true,
@@ -46,6 +47,7 @@ async function getAllServices(order: 'asc' | 'desc' = 'desc') {
     })
     .then(services =>
       services.map(service => ({
+        id: service.id,
         name: service.name,
         description: service.description,
         category: service.category.name,

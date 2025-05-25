@@ -38,7 +38,7 @@ async function toggleFavorite() {
     <div class="card__image">
       <NuxtImg
         class="service-item-image" :alt="`${service.name}-img`"
-        src="https://kune.co.zw/Images/placeholder-image.png"
+        :src="service.image_url || '/assets/images/placeholder-image.png'"
       />
       <div class="card__overlay">
         <h3 class="card__text-title">

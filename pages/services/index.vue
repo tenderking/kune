@@ -3,7 +3,7 @@
 //   middleware: 'client-auth',
 // })
 const route = useRoute()
-const category = computed(() => route.query.category)
+const category = computed(() => route.query.category || '')
 const tags = computed(() => route.query.tags)
 const sort = computed(() => route.query.sort)
 const nuxtApp = useNuxtApp()

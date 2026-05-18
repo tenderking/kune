@@ -1,10 +1,14 @@
-function replaceSpaceSymbol(str: string) {
-  return str.replace(/%20/g, ' ')
-}
-
 export default defineEventHandler(async (event) => {
-  const query = replaceSpaceSymbol(event.context.params?.slug as string)
-  //  get service by slug
+  const serviceParam = getRouterParam(event, 'id') // Changed 'slug' to 'id'
+
+  if (!serviceParam) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Missing id parameter (checked getRouterParam with id)', // Updated error message
+    })
+  }
+  const query = replaceSpaceSymbol(serviceParam as string)
+  //  get service by service name
 
   const service = await prisma.services.findUnique({
     where: {
@@ -29,8 +33,9 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  if (!service)
+  if (!service) {
     throw new Error(`No service found for slug: ${query}`)
+  }
 
   const flattenedService = {
     name: service.name,
@@ -42,3 +47,11 @@ export default defineEventHandler(async (event) => {
   }
   return flattenedService
 })
+
+function replaceSpaceSymbol(str: string) {
+  if (!str) {
+    // Or handle this case appropriately, e.g., by returning a default value or throwing a custom error
+    throw new Error('Input string to replaceSpaceSymbol is undefined')
+  }
+  return str.replace(/%20/g, ' ')
+}

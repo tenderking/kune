@@ -42,12 +42,10 @@ function getCategorySlug(slug: string) {
     <div class="flex flex-col justify-center  items-start">
       <label for="category-select" class="font-bold">Choose a category:</label>
       <template v-if="categories">
-        <select class="hover:font-bold"
-          id="category-select" name="categories"
-          @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)"
-        >
+        <select class="hover:font-bold" id="category-select" name="categories"
+                @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)">
           <option value="">
-           All
+            All
           </option>
 
           <option v-for="(category, index) in categories" :key="index" :value="category">
@@ -69,6 +67,4 @@ select {
   color: var(--color--text);
 
 }
-
-
 </style>

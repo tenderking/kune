@@ -1,2 +1,11 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@source "../../layouts/**/*.vue";
+@source "../../pages/**/*.vue";
+@source "../../components/**/*.vue";
+
 @import "./base.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
 

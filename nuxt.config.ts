@@ -17,8 +17,16 @@ export default defineNuxtConfig({
   modules: ['@nuxt/icon', '@nuxt/ui', '@nuxt/image'],
 
   nitro: {
-    inlineDynamicImports: true,
     preset: 'node-server',
+    externals: {
+      external: ['@node-rs/argon2'],
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['@node-rs/argon2'],
+    },
   },
 
   imports: {

@@ -22,13 +22,10 @@ const links = [
   >
     <!-- line -->
 
-    <UVerticalNavigation
-      :links="links"
-      :ui="{
-        inactive:
-          'border-transparent dashboard-cards flex justify-between hover:border-gray-400 dark:hover:border-gray-500 text-green-700 hover:text-gray-900 ',
-        active: 'active',
-      }"
+    <UNavigationMenu
+      orientation="vertical"
+      :items="links"
+      class="w-full"
     />
   </aside>
   <main class="pt-4 sm:ml-64">
@@ -40,15 +37,31 @@ const links = [
 </template>
 
 <style scoped>
-/* .main{
-margin: 0 1em;
+aside {
+  position: fixed;
+  top: 5rem;
+  left: 0;
+  width: 16rem;
+  height: 100vh;
+  z-index: 10;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
 }
 
-@media (min-width: 950px) {
-  .main{
+@media (min-width: 640px) {
+  aside {
+    transform: translateX(0);
+  }
+  main {
+    margin-left: 16rem;
+  }
+}
 
-  margin: 0 15%;
-} }*/
+main {
+  padding-top: 1rem;
+}
+
 .dashboard {
   background-color: var(--color-card-bg);
 }
@@ -60,4 +73,3 @@ margin: 0 1em;
   color: var(--clr--text);
 }
 </style>
-```

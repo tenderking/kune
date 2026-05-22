@@ -1,88 +1,20 @@
 <script setup lang="ts">
-// definePageMeta({
-//   middleware: 'client-auth',
-// })
+useSeoMeta({
+  title: 'Contact Us — Kune',
+  description: 'Reach out to Kune with any questions or feedback.',
+})
 </script>
 
 <template>
-  <UContainer class="my-5 py-8 flex flex-col items-center">
-    <h1>Contact Us</h1>
+  <div class="max-w-[600px] mx-auto py-12 px-4 flex flex-col gap-10">
+    <div class="text-center">
+      <h1 class="text-[var(--step-3)] font-extrabold text-[var(--color--heading)] mb-4 tracking-tight">Contact Us</h1>
+      <p class="text-[var(--step-0)] text-[var(--color--text)] opacity-80 leading-relaxed">
+        We're always happy to hear from you. Please feel free to reach out with any
+        questions, suggestions, or feedback.
+      </p>
+    </div>
 
-    <p class="max-w-lg">
-      We're always happy to hear from you. Please feel free to reach out with any
-      questions, suggestions, or feedback.
-    </p>
-
-    <UForm :state="{}" action="mailto:info@kune.com" method="post" enctype="text/plain">
-      <UFormGroup label="Your Name" required>
-        <UInput type="text" name="name" />
-      </UFormGroup>
-
-      <UFormGroup label="Your Email" required class="mt-5">
-        <UInput type="email" name="email" />
-      </UFormGroup>
-      <UFormGroup label="Subject" required class="mt-5">
-        <UInput type="text" name="subject" />
-      </UFormGroup>
-      <UFormGroup label="Message" required class="mt-5">
-        <UTextarea name="message" />
-      </UFormGroup>
-
-      <UButton type="submit" color="orange" class="mt-10">
-        Send Message
-      </UButton>
-    </UForm>
-  </UContainer>
+    <ContactForm />
+  </div>
 </template>
-
-<style scoped>
-main {
-  padding: 20px;
-}
-
-h1 {
-  margin-bottom: 20px;
-}
-
-p {
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  margin-top: 1em;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: var(--radius-sm);
-}
-
-textarea {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: var(--radius-sm);
-}
-
-input[type="submit"] {
-  background-color: var(--clr--primary);
-  color: var(--clr--text);
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  border-radius: var(--radius-sm);
-  margin-top: 1em;
-}
-</style>

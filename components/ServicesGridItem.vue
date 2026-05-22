@@ -37,7 +37,8 @@ async function toggleFavorite() {
   <div class="card">
     <div class="card__image">
       <NuxtImg
-        class="service-item-image" :alt="`${service.name}-img`"
+        class="service-item-image"
+        :title="service.name"
         :src="service.image_url || '/assets/images/placeholder-image.png'"
       />
       <div class="card__overlay">
@@ -47,18 +48,18 @@ async function toggleFavorite() {
       </div>
     </div>
     <div class="card__text">
-      <h3 class=" text-left text-base pb-1">
+      <h3 class="card__name">
         {{ service.name }}
       </h3>
       <p class="card__text-description">
         {{ service.description }}
       </p>
 
-      <div class="flex space-between items-center gap-2 mt-2">
-        <Icon name="ic:baseline-whatsapp" width="16px" height="16px" />
-        <span> {{ service.whatsapp || '123 456 789' }} </span>
+      <div class="card__whatsapp">
+        <Icon name="ic:baseline-whatsapp" width="16" height="16" color="#25D366" />
+        <span>{{ service.whatsapp || '123 456 789' }}</span>
       </div>
-      <UButton icon="material-symbols:favorite-outline" color="orange" class="absolute bottom-4 right-4" @click.stop.prevent="toggleFavorite()">
+      <UButton icon="material-symbols:favorite-outline" color="primary" class="card__save-btn" @click.stop.prevent="toggleFavorite()">
         Save
       </UButton>
     </div>
@@ -66,80 +67,99 @@ async function toggleFavorite() {
 </template>
 
 <style scoped>
-.card-container {
-  max-width: max-content;
-}
-
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
   position: relative;
-  width: 275px;
-  height: 375px;
+  width: 100%;
   background-color: var(--color-card-bg);
-  outline: solid var(--color--secondary);
-  border-radius: 6px;
+  border: 1px solid var(--color--card-border, transparent);
+  border-radius: var(--radius-md, 0.75em);
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
 }
 
 .card__image {
-  display: inline-block;
-  justify-items: center;
   width: 100%;
-  height: 40%;
-  margin-top: 0;
-  border-radius: 6px 6px 0 0;
-  overflow: hidden;
+  height: 160px;
   position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.service-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease;
+}
+
+.card:hover .service-item-image {
+  transform: scale(1.05);
 }
 
 .card__overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-end;
+  padding: 0.75rem;
 }
 
 .card__text-title {
   color: white;
-  text-align: center;
-  font-size: 1.2em;
+  font-size: var(--step-0);
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
 }
 
 .card__text {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
-  padding: 1em;
-  height: 60%;
-  background-color: var(--color-card-bg);
-  margin-top: 0;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  flex: 1;
+  position: relative;
+}
+
+.card__name {
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--color--heading);
 }
 
 .card__text-description {
+  font-size: var(--step--2);
+  color: var(--color--text);
+  opacity: 0.8;
   display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  -webkit-line-clamp: 3;
   overflow: hidden;
-  text-overflow: ellipsis;
-  line-clamp: 4;
-  -webkit-line-clamp: 4;
+  line-height: 1.5;
+  flex: 1;
 }
 
-.card__icons:hover {
-  background-color: floralwhite;
-  cursor: pointer;
+.card__whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: var(--step--2);
+  color: var(--color--text);
+  opacity: 0.75;
+}
+
+.card__save-btn {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
 }
 </style>

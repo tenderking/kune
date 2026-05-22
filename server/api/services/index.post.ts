@@ -22,7 +22,8 @@ export default defineEventHandler(async (event) => {
           email: body.serviceowner,
         },
       },
-      website_url: body.website,
+      website_url: body.website || '',
+      image_url: body.imgUrl || '',
       service_tags: {
         create: [
           {

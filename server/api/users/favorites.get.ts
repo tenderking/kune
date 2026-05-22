@@ -1,17 +1,15 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 export default defineEventHandler(async (event) => {
-  const sessionId = getCookie(event, lucia.sessionCookieName) ?? null
-  if (!sessionId) {
+  const token = getCookie(event, 'auth_session') ?? null
+  if (!token) {
     throw createError({
       statusCode: 401,
       statusMessage: 'Unauthorized: No session cookie found.',
     })
   }
 
-  const { user } = await lucia.validateSession(sessionId)
-  // If the session is invalid or there's no user, per requirements,
-  // return an empty array, implying no favorites for this state.
+  const user = event.context.user
   if (!user || !user.id) {
     setResponseStatus(event, 200) // Still a successful request, just no data for this user/session
     return []

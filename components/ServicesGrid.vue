@@ -30,14 +30,8 @@ defineProps<{
 <style scoped>
 .grid-wrap {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 275px);
-  gap: 1em;
-  row-gap: 2em;
-  align-items: stretch;
-  justify-content: center;
-}
-
-.rands {
-  outline: salmon;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5em;
+  align-items: start;
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { User } from 'lucia'
+import type { User } from '~/composables/auth'
 
 definePageMeta({
   layout: 'dashboard',
@@ -9,11 +9,12 @@ definePageMeta({
 const { data: user } = await useFetch<User>('/api/auth/user')
 const columns = [
   {
-    key: 'service',
-    label: 'Service',
+    accessorKey: 'service',
+    header: 'Service',
   },
   {
-    key: 'actions',
+    accessorKey: 'actions',
+    header: 'Actions',
   },
 ]
 
@@ -58,23 +59,23 @@ if (error.value) {
     <h3>Profile</h3>
 
     <UForm :state="{}" class="card p-4 col-span-3 row-gap-4 rounded-md">
-      <UFormGroup
+      <UFormField
         label="Your Name" description="We'll only use this for spam."
         help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-center"
       >
         <UInput v-model="profile.name" type="text" name="name" />
-      </UFormGroup>
-      <UDivider class="py-4" />
+      </UFormField>
+      <USeparator class="py-4" />
 
-      <UFormGroup
+      <UFormField
         label="Your Email" description="We'll only use this for spam."
         help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-centern"
       >
         <UInput v-model="profile.email" type="email" name="email" />
-      </UFormGroup>
-      <UDivider />
+      </UFormField>
+      <USeparator />
 
-      <UButton type="submit" color="orange" class="mt-10">
+      <UButton type="submit" color="primary" class="mt-10">
         Save
       </UButton>
     </UForm>
@@ -82,11 +83,11 @@ if (error.value) {
       <h3>Favorites</h3>
       <template v-if="!rows" />
       <template v-else>
-        <UTable :columns="columns" :rows="rows" :ui="{ tbody: 'divide-green-500' }" class="card rounded-md min-w-max">
-          <template #actions-data="{ row }">
+        <UTable :columns="columns" :data="rows" :ui="{ tbody: 'divide-green-500' }" class="card rounded-md min-w-max">
+          <template #actions-cell="{ row }">
             <UButton
               color="gray" variant="ghost" icon="i-heroicons-trash-20-solid"
-              @click="removeFavorite(row.actions)"
+              @click="removeFavorite(row.original.actions)"
             />
           </template>
         </UTable>

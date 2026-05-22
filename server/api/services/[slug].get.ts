@@ -1,10 +1,10 @@
 export default defineEventHandler(async (event) => {
-  const serviceParam = getRouterParam(event, 'id') // Changed 'slug' to 'id'
+  const serviceParam = getRouterParam(event, 'slug') || getRouterParam(event, 'id')
 
   if (!serviceParam) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing id parameter (checked getRouterParam with id)', // Updated error message
+      statusMessage: 'Missing slug parameter',
     })
   }
   const query = replaceSpaceSymbol(serviceParam as string)

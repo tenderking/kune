@@ -10,15 +10,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const sessionId = getCookie(event, lucia.sessionCookieName) ?? null
-  if (!sessionId) {
-    throw createError({
-      statusCode: 401,
-      statusMessage: 'Unauthorized: No session found.',
-    })
-  }
-
-  const { user } = await lucia.validateSession(sessionId)
+  const user = event.context.user
   if (!user || !user.id) {
     throw createError({
       statusCode: 401,

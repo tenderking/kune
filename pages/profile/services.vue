@@ -4,6 +4,7 @@ import { useToast } from '#imports' // Or your specific import path for useToast
 
 definePageMeta({
   layout: 'dashboard',
+  middleware: 'protected',
 })
 
 const toast = useToast()
@@ -12,22 +13,20 @@ const services = ref(await $fetch('/api/users/services')) // Make services a ref
 
 const columns = [
   {
-    key: 'id', // Assuming 'id' is a column you might want to display or have available
-    label: 'ID',
-    sortable: true,
+    accessorKey: 'id',
+    header: 'ID',
   },
   {
-    key: 'name',
-    label: 'Service',
+    accessorKey: 'name',
+    header: 'Service',
   },
   {
-    key: 'category',
-    label: 'Category',
+    accessorKey: 'category',
+    header: 'Category',
   },
-
   {
-    key: 'actions',
-    label: 'Actions',
+    accessorKey: 'actions',
+    header: 'Actions',
   },
 ]
 
@@ -56,50 +55,87 @@ async function deleteService(serviceId: string) {
 function editService(serviceId: string) {
   navigateTo(`/profile/services/edit/${serviceId}`)
 }
+
+async function handleSuccess() {
+  isOpen.value = false
+  services.value = await $fetch('/api/users/services')
+}
 </script>
 
 <template>
-  <UContainer class="rounded-md">
-    <h2>My Listed Services</h2>
-    <template v-if="!services?.length">
-      <p>no Services</p>
-    </template>
-    <template v-else>
-      <UTable :columns="columns" :rows="services" class="card rounded-md lg:w-1/2">
-        <template #actions-data="{ row }">
-          <UButton
-            color="gray"
-            variant="ghost"
-            icon="i-heroicons-trash-20-solid"
-            @click="deleteService(row.id)"
-          />
-          <UButton
-            color="gray"
-            variant="ghost"
-            icon="i-heroicons-pencil-square-20-solid"
-            @click="editService(row.id)"
-          />
-        </template>
-      </UTable>
-    </template>
-
-    <UButton
-      label="Add service"
-      class="mt-4"
-      color="orange"
-      @click.prevent="isOpen = true"
-    />
-
-    <UModal v-model="isOpen">
-      <div class="p-4 flex-1">
-        <ServiceFormPost />
+  <div class="space-y-6">
+    <!-- Header Block -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[var(--color--card-border)]">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight text-[var(--color--heading)]">
+          My Listed Services
+        </h1>
+        <p class="text-sm text-[var(--color--text)] opacity-80 mt-1">
+          Manage, update, or remove the services you have listed on the platform.
+        </p>
       </div>
+      <div>
+        <UButton
+          label="Add New Service"
+          icon="i-heroicons-plus"
+          color="primary"
+          class="font-semibold shadow-sm cursor-pointer"
+          @click.prevent="isOpen = true"
+        />
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <template v-if="!services?.length">
+      <div class="flex flex-col items-center justify-center p-12 text-center rounded-lg border-2 border-dashed border-[var(--color--card-border)] bg-[var(--color--bg)]">
+        <UIcon name="i-heroicons-document-text" class="w-12 h-12 text-[var(--color--text)] opacity-40 mb-3" />
+        <p class="text-lg font-medium text-[var(--color--heading)]">No services listed yet</p>
+        <p class="text-sm text-[var(--color--text)] opacity-70 mt-1 mb-6">
+          Get started by adding your first service to the platform.
+        </p>
+        <UButton
+          label="Add New Service"
+          icon="i-heroicons-plus"
+          color="primary"
+          @click.prevent="isOpen = true"
+        />
+      </div>
+    </template>
+
+    <!-- Data Table -->
+    <template v-else>
+      <div class="overflow-x-auto rounded-lg border border-[var(--color--card-border)] shadow-sm bg-[var(--color--bg)]">
+        <UTable :columns="columns" :data="services" class="w-full">
+          <template #actions-cell="{ row }">
+            <div class="flex items-center gap-1">
+              <UButton
+                color="gray"
+                variant="ghost"
+                icon="i-heroicons-pencil-square-20-solid"
+                title="Edit Service"
+                class="hover:text-[var(--clr--primary)] hover:bg-[var(--clr--primary)]/10 transition-colors cursor-pointer"
+                @click="editService(row.original.id)"
+              />
+              <UButton
+                color="gray"
+                variant="ghost"
+                icon="i-heroicons-trash-20-solid"
+                title="Delete Service"
+                class="hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
+                @click="deleteService(row.original.id)"
+              />
+            </div>
+          </template>
+        </UTable>
+      </div>
+    </template>
+
+    <!-- Modal Form -->
+    <UModal v-model:open="isOpen" title="Add New Service" scrollable>
+      <template #body>
+        <ServiceFormPost @success="handleSuccess" @close="isOpen = false" />
+      </template>
     </UModal>
-  </UContainer>
+  </div>
 </template>
 
-<style scoped>
-.card {
-  background-color: var(--color--bg);
-}
-</style>

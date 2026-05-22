@@ -58,7 +58,7 @@ async function toggleFavorite() {
         <span> {{ service.category || '123 456 789' }} </span>
       </div>
 
-      <UButton color="orange" class="w-100 flex col center bg-white" @click.stop.prevent="toggleFavorite()">
+      <UButton color="primary" class="w-100 flex col center bg-white" @click.stop.prevent="toggleFavorite()">
         Save
         <Icon v-if="isFavorite()" name="material-symbols:favorite-outline" />
       </UButton>

@@ -17,9 +17,7 @@ const links = [
 
 <template>
   <NavBar class="main" />
-  <aside
-    class="fixed dashboard p-4 top-20 rounded-md left-0 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 z-10"
-  >
+  <aside class="dashboard-sidebar dashboard rounded-md">
     <!-- line -->
 
     <UNavigationMenu
@@ -28,8 +26,8 @@ const links = [
       class="w-full"
     />
   </aside>
-  <main class="pt-4 sm:ml-64">
-    <UContainer class="p-4 mx-2 rounded-md dashboard max-w-none">
+  <main class="dashboard-main">
+    <UContainer class="dashboard-content p-4 mx-2 rounded-md max-w-none">
       <h2>Dashboard</h2>
       <slot />
     </UContainer>
@@ -37,29 +35,34 @@ const links = [
 </template>
 
 <style scoped>
-aside {
+.dashboard-sidebar {
   position: fixed;
-  top: 5rem;
+  top: 4rem;
   left: 0;
   width: 16rem;
-  height: 100vh;
+  height: calc(100vh - 4rem);
   z-index: 10;
   padding: 1rem;
   transition: transform 0.3s ease;
   transform: translateX(-100%);
+  overflow-y: auto;
 }
 
 @media (min-width: 640px) {
-  aside {
+  .dashboard-sidebar {
     transform: translateX(0);
   }
-  main {
+  .dashboard-main {
     margin-left: 16rem;
   }
 }
 
-main {
+.dashboard-main {
   padding-top: 1rem;
+}
+
+.dashboard-content {
+  min-height: calc(100vh - 6rem);
 }
 
 .dashboard {

@@ -1,10 +1,15 @@
 export default defineEventHandler(async (event) => {
   const user = event.context.user
+  if (!user || !user.id) {
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Unauthorized: Invalid session or user.',
+    })
+  }
+
   const services = await prisma.services.findMany({
     where: {
-      service_owner: {
-        id: user?.id,
-      },
+      service_owner_id: user.id,
     },
     select: {
       id: true,

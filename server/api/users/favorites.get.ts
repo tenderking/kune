@@ -21,15 +21,17 @@ export default defineEventHandler(async (event) => {
       where: {
         user_id: userId,
       },
-      select: {
-        service_id: true,
+      include: {
+        favorited_service: true,
       },
     })
 
-    const favoriteServiceIds = favoriteEntries.map(fav => fav.service_id)
+    const favoriteServices = favoriteEntries
+      .map(fav => fav.favorited_service)
+      .filter(Boolean)
 
     setResponseStatus(event, 200)
-    return favoriteServiceIds
+    return favoriteServices
   }
   catch (error: any) {
     if (error instanceof PrismaClientKnownRequestError) {

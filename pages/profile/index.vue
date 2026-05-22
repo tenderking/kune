@@ -42,12 +42,12 @@ async function removeFavorite(serviceId: string) {
     console.error('Error:', error)
   }
 }
-const rows = services?.value?.map((service) => {
-  return {
+const rows = computed(() => {
+  return (services.value || []).map((service: any) => ({
     service: service.name,
     actions: service.id,
-  }
-}) || []
+  }))
+})
 
 if (error.value) {
   console.error('Error fetching favorite services:', error.value)
@@ -69,7 +69,7 @@ if (error.value) {
 
       <UFormField
         label="Your Email" description="We'll only use this for spam."
-        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-centern"
+        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-center"
       >
         <UInput v-model="profile.email" type="email" name="email" />
       </UFormField>
@@ -79,9 +79,9 @@ if (error.value) {
         Save
       </UButton>
     </UForm>
-    <div class="col-span-3 p-4 rounded-md flex flex-col gap-4 min-w-[300px]">
+    <div class="col-span-3 p-4 rounded-md flex flex-col gap-4 min-w-75">
       <h3>Favorites</h3>
-      <template v-if="!rows" />
+      <template v-if="rows.length === 0" />
       <template v-else>
         <UTable :columns="columns" :data="rows" :ui="{ tbody: 'divide-green-500' }" class="card rounded-md min-w-max">
           <template #actions-cell="{ row }">

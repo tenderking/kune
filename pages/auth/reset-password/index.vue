@@ -39,7 +39,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     await $fetch('/api/auth/reset-password', {
       method: 'POST',
       body: formData,
-
     })
     isLoading.value = false
   }
@@ -53,48 +52,141 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UContainer v-if="!isResetPasswordSent" class="flex flex-col items-center justify-center bg-white outline outline-1 rounded-lg gap-4 p-4 my-8 mx-auto min-w-max max-w-min">
-    <h1 class="mb-2 text-center text-lg font-bold">
-      Reset Password
-    </h1>
-    <UForm :validate="validate" :schema="sendResetPasswordValidationSchema" :state="state" class="space-y-4" @submit="onSubmit">
-      <UFormGroup label="Email" name="email">
-        <UInput
-          v-model="state.email"
-          placeholder="example@example.com"
-          :disabled="isLoading"
-          icon="i-heroicons-envelope"
-        />
-      </UFormGroup>
+  <div class="auth-page flex items-center justify-center">
+    <!-- If not sent yet -->
+    <div v-if="!isResetPasswordSent" class="glass-card w-full max-w-md p-8 md:p-10 space-y-6">
+      <div class="text-center space-y-2">
+        <h1 class="auth-title">Reset Password</h1>
+        <p class="auth-subtitle">Enter your email and we'll send you instructions to reset your password</p>
+      </div>
 
-      <UButton
-        type="submit"
-      >
-        Continue
-      </UButton>
-    </UForm>
+      <UForm :validate="validate" :schema="sendResetPasswordValidationSchema" :state="state" class="space-y-4" @submit="onSubmit">
+        <UFormField label="Email" name="email" required>
+          <UInput
+            v-model="state.email"
+            placeholder="example@example.com"
+            :disabled="isLoading"
+            icon="i-heroicons-envelope"
+            size="md"
+            class="mt-1"
+          />
+        </UFormField>
 
-    <p class="text-muted-foreground text-center text-sm">
-      Have you remembered your password?
-      <NuxtLink href="/login" class="text-primary font-bold hover:underline">
-        Login now
-      </NuxtLink>
-    </p>
-  </UContainer>
+        <UButton
+          type="submit"
+          block
+          size="md"
+          color="primary"
+          :loading="isLoading"
+          class="auth-submit-btn mt-6"
+        >
+          Send Reset Link
+        </UButton>
+      </UForm>
 
-  <UContainer v-else class="flex max-w-sm flex-col gap-4 px-4 py-16">
-    <h1 class="mb-2 text-center text-3xl font-bold text-white">
-      Reset Password
-    </h1>
-    <p class="text-center text-white">
-      If the email exists in our system, we will send you an email with
-      instructions to reset your password.
-    </p>
-    <p class="text-muted-foreground text-center text-sm">
-      Have you remembered your password?
-      <NuxtLink href="/login" class="text-primary font-bold hover:underline">
-        Login now
-      </NuxtLink>
-    </p>
-  </UContainer>
+      <div class="text-center pt-2">
+        <p class="auth-footer-text">
+          Remembered your password?
+          <NuxtLink to="/login" class="auth-link">
+            Sign in
+          </NuxtLink>
+        </p>
+      </div>
+    </div>
+
+    <!-- If sent -->
+    <div v-else class="glass-card w-full max-w-md p-8 md:p-10 space-y-6 text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-500 mb-2">
+        <Icon name="i-heroicons-check-circle" size="36" />
+      </div>
+      <div class="space-y-2">
+        <h1 class="auth-title">Check Your Email</h1>
+        <p class="auth-subtitle">
+          If that email exists in our system, we've sent instructions to reset your password.
+        </p>
+      </div>
+
+      <div class="pt-4 space-y-2">
+        <p class="auth-footer-text">
+          Need to try another email?
+          <button class="auth-link font-semibold focus:outline-none bg-transparent border-none p-0 cursor-pointer" @click="isResetPasswordSent = false">
+            Go back
+          </button>
+        </p>
+        <p class="auth-footer-text">
+          Or
+          <NuxtLink to="/login" class="auth-link">
+            Sign in now
+          </NuxtLink>
+        </p>
+      </div>
+    </div>
+  </div>
 </template>
+
+<style scoped>
+.auth-page {
+  min-height: 70vh;
+  padding: 2rem 0;
+}
+
+.glass-card {
+  background: var(--color--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-base);
+}
+
+.auth-title {
+  font-size: var(--step-2);
+  font-weight: 700;
+  color: var(--color--heading);
+  letter-spacing: -0.02em;
+}
+
+.auth-subtitle {
+  font-size: var(--step--1);
+  color: var(--color--text);
+  opacity: 0.8;
+  line-height: 1.6;
+}
+
+.auth-link {
+  color: var(--clr--primary);
+  font-weight: 600;
+  transition: opacity var(--transition-fast);
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+.auth-footer-text {
+  font-size: var(--step--1);
+  color: var(--color--text);
+  opacity: 0.8;
+}
+
+.auth-submit-btn {
+  background-color: var(--clr--primary);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  transition: all var(--transition-base);
+}
+
+.auth-submit-btn:hover {
+  background-color: var(--clr--primary) !important;
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+}
+
+.auth-submit-btn:active {
+  transform: translateY(0);
+}
+</style>

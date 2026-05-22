@@ -1,4 +1,9 @@
-import type { User } from 'lucia'
+export interface User {
+  id: string
+  username: string | null
+  email: string | null
+  name: string | null
+}
 
 export function useUser() {
   const user = useState<User | null>('user', () => null)

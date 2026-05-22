@@ -1,7 +1,7 @@
 import { hash } from '@node-rs/argon2';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { generateId } from 'lucia';
-import isValidEmail from '~/server/utils/auth';
+import isValidEmail, { generateSessionToken, createSession, setSessionTokenCookie } from '~/server/utils/auth';
+import { generateRandomString } from '~/server/utils/utils';
 
 const prisma = new PrismaClient();
 
@@ -45,7 +45,7 @@ export default eventHandler(async (event) => {
     });
 
     // Generate user ID
-    const userId = generateId(15);
+    const userId = generateRandomString(15);
 
     // Create the user using Prisma
     const user = await prisma.user.create({
@@ -60,12 +60,18 @@ export default eventHandler(async (event) => {
 
     // Send verification email (ideally, refactor this into a separate function)
     try {
+      let requestOrigin = getHeader(event, 'Origin')
+      if (!requestOrigin) {
+        const host = getHeader(event, 'Host')
+        requestOrigin = host ? (host.startsWith('localhost') ? `http://${host}` : `https://${host}`) : 'http://localhost:3000'
+      }
+
       const emailVerificationResponse = await $fetch('/api/auth/email-verification', {
         method: 'POST',
         body: { email: user.email, userId: user.id, username: user.username },
         headers: new Headers({
           'Content-Type': 'application/json',
-          'Origin':'http://localhost:3000',
+          'Origin': requestOrigin,
         }),
       });
       console.log("response email verification", emailVerificationResponse)
@@ -88,8 +94,9 @@ export default eventHandler(async (event) => {
     }
 
     // Create a session (consider doing this only after email verification in a more robust flow)
-    const session = await lucia.createSession(user.id, {});
-    appendHeader(event, 'Set-Cookie', lucia.createSessionCookie(session.id).serialize());
+    const token = generateSessionToken();
+    const session = await createSession(token, user.id);
+    setSessionTokenCookie(event, token, session.expiresAt);
 
     return { message: 'User created successfully' };
   } catch (error) {

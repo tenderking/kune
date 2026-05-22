@@ -1,10 +1,9 @@
 import { PrismaClient } from '@prisma/client'
-import { isWithinExpirationDate } from 'oslo'
+import { invalidateUserSessions, generateSessionToken, createSession, setSessionTokenCookie } from '~/server/utils/auth'
 
 const prisma = new PrismaClient()
 
 export default defineEventHandler(async (event) => {
-  // Get the token from the params
   const verificationToken = event.context.params?.token
 
   const token = await prisma.emailVerificationToken.findFirst({
@@ -16,8 +15,7 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  // Check if the token is valid and not expired
-  if (!token || !isWithinExpirationDate(token.expiresAt)) {
+  if (!token || new Date() >= token.expiresAt) {
     throw createError({
       statusCode: 400,
       message: 'Token is invalid or expired',
@@ -27,10 +25,8 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Get the user ID from the token
   const userId = token.user.id
 
-  // Start a transaction to update the user.emailVerified and delete the token
   await prisma.$transaction([
     prisma.user.update({
       where: {
@@ -47,14 +43,10 @@ export default defineEventHandler(async (event) => {
     }),
   ])
 
-  // Invalidate the user's existing sessions and create a new session
-  await lucia.invalidateUserSessions(userId)
-  const session = await lucia.createSession(userId, {})
-  appendHeader(
-    event,
-    'Set-Cookie',
-    lucia.createSessionCookie(session.id).serialize(),
-  )
+  await invalidateUserSessions(userId)
+  const sessionToken = generateSessionToken()
+  const session = await createSession(sessionToken, userId)
+  setSessionTokenCookie(event, sessionToken, session.expiresAt)
 
   return {
     ok: true,

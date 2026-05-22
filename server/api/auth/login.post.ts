@@ -1,5 +1,6 @@
 import { verify } from '@node-rs/argon2'
 import { PrismaClient } from '@prisma/client'
+import { generateSessionToken, createSession, setSessionTokenCookie } from '~/server/utils/auth'
 
 const prisma = new PrismaClient()
 
@@ -66,6 +67,7 @@ export default eventHandler(async (event) => {
     })
   }
 
-  const session = await lucia.createSession(existingUser.id, {})
-  appendHeader(event, 'Set-Cookie', lucia.createSessionCookie(session.id).serialize())
+  const token = generateSessionToken()
+  const session = await createSession(token, existingUser.id)
+  setSessionTokenCookie(event, token, session.expiresAt)
 })

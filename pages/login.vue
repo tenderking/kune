@@ -4,13 +4,12 @@ definePageMeta({
 })
 
 const error = ref<string | null>(null)
-const state = ref({ username: '', password: '' })
 
-async function login() {
+async function login(data: any) {
   try {
     const formData = new FormData()
-    formData.append('username', state.value.username)
-    formData.append('password', state.value.password)
+    formData.append('username', data.username)
+    formData.append('password', data.password)
     await $fetch('/api/auth/login', {
       method: 'POST',
       body: formData,
@@ -25,33 +24,23 @@ async function login() {
 </script>
 
 <template>
-  <UContainer class="my-5 py-8 flex flex-col items-center">
-    <h1>Sign in</h1>
-
-    <p class="max-w-lg">
-      Please enter your credentials to sign in.
-    </p>
-
-    <UForm method="post" :state="state" @submit.prevent="login">
-      <UFormGroup label="Username" required>
-        <UInput v-model="state.username" type="text" name="username" />
-      </UFormGroup>
-
-      <UFormGroup label="Password" required class="mt-5">
-        <UInput v-model="state.password" type="password" name="password" />
-      </UFormGroup>
-
-      <UButton type="submit" color="orange" class="mt-10">
-        Continue
-      </UButton>
-
-      <p class="text-red-500 mt-5">
-        {{ error }}
+  <div class="max-w-[600px] mx-auto py-12 px-4 flex flex-col gap-10">
+    <div class="text-center">
+      <h1 class="text-[var(--step-3)] font-extrabold text-[var(--color--heading)] mb-4 tracking-tight">Sign In</h1>
+      <p class="text-[var(--step-0)] text-[var(--color--text)] opacity-80 leading-relaxed">
+        Please enter your credentials to sign in.
       </p>
-    </UForm>
+    </div>
 
-    <NuxtLink to="/signup" class="mt-5 text-blue-500">
-      Create an account
-    </NuxtLink>
-  </UContainer>
+    <AuthForm mode="signin" :error="error" @submit="login" />
+
+    <div class="text-center -mt-4">
+      <p class="text-[var(--step--1)] text-[var(--color--text)] opacity-80">
+        New here?
+        <NuxtLink to="/signup" class="text-[var(--clr--primary)] font-semibold no-underline hover:underline transition-opacity duration-200">
+          Create an account
+        </NuxtLink>
+      </p>
+    </div>
+  </div>
 </template>

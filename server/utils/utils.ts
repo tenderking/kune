@@ -1,11 +1,17 @@
-import { generateIdFromEntropySize } from 'lucia'
+import { randomBytes, createHash } from 'node:crypto'
 import nodemailer from 'nodemailer'
 import { hash } from 'ohash'
-import { createDate, TimeSpan } from 'oslo'
-import { sha256 } from 'oslo/crypto'
-
-import { encodeHex } from 'oslo/encoding'
 import { subtle } from 'uncrypto'
+
+export function generateRandomString(length: number): string {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
+  let result = ''
+  const bytes = randomBytes(length)
+  for (let i = 0; i < length; i++) {
+    result += alphabet[bytes[i] % alphabet.length]
+  }
+  return result
+}
 
 export default function replaceSpaceSymbol(str: string) {
   return str.replace(/%20/g, ' ')
@@ -68,8 +74,8 @@ export async function createEmailVerificationLink(
       },
     })
 
-    const token = generateIdFromEntropySize(25) // 40 characters long
-    const expiresAt = createDate(new TimeSpan(2, 'h')) // Expires in 2 hours
+    const token = generateRandomString(40) // 40 characters long
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 2) // Expires in 2 hours
 
     await prisma.emailVerificationToken.create({
       data: {
@@ -142,9 +148,9 @@ export async function createPasswordResetToken(userId: string): Promise<string> 
     where: { userId },
   })
 
-  const tokenId = generateIdFromEntropySize(25) // 40 characters
-  const tokenHash = encodeHex(await sha256(new TextEncoder().encode(tokenId)))
-  const expiresAt = createDate(new TimeSpan(2, 'h')) // Token expires in 2 hours
+  const tokenId = generateRandomString(40) // 40 characters
+  const tokenHash = createHash('sha256').update(tokenId).digest('hex')
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 2) // Token expires in 2 hours
 
   await prisma.passwordResetToken.create({
     data: {

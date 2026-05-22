@@ -4,11 +4,16 @@ definePageMeta({
 })
 const error = ref<string | null>(null)
 
-async function signup(e: Event) {
+async function signup(data: any) {
   try {
+    const formData = new FormData()
+    formData.append('name', data.name)
+    formData.append('username', data.username)
+    formData.append('email', data.email)
+    formData.append('password', data.password)
     await $fetch('/api/auth/signup', {
       method: 'POST',
-      body: new FormData(e.target as HTMLFormElement),
+      body: formData,
     })
     await navigateTo('/')
   }
@@ -20,41 +25,23 @@ async function signup(e: Event) {
 </script>
 
 <template>
-  <UContainer class="my-5 py-8 flex flex-col items-center">
-    <h1>Create an account</h1>
-
-    <p class="max-w-lg">
-      Please fill in the details to create your account.
-    </p>
-
-    <UForm method="post" action="/api/auth/login" :state="{}" @submit.prevent="signup">
-      <UFormGroup label="Name" required class="mt-5">
-        <UInput type="text" name="name" class="w-full" />
-      </UFormGroup>
-
-      <UFormGroup label="Username" required class="mt-5">
-        <UInput type="text" name="username" class="w-full" />
-      </UFormGroup>
-
-      <UFormGroup label="Password" required class="mt-5">
-        <UInput type="password" name="password" class="w-full" />
-      </UFormGroup>
-
-      <UFormGroup label="Email" required class="mt-5">
-        <UInput type="email" name="email" class="w-full" />
-      </UFormGroup>
-
-      <UButton type="submit" color="orange" class="mt-10">
-        Continue
-      </UButton>
-
-      <p class="text-red-500 mt-5">
-        {{ error }}
+  <div class="max-w-[600px] mx-auto py-12 px-4 flex flex-col gap-10">
+    <div class="text-center">
+      <h1 class="text-[var(--step-3)] font-extrabold text-[var(--color--heading)] mb-4 tracking-tight">Create Account</h1>
+      <p class="text-[var(--step-0)] text-[var(--color--text)] opacity-80 leading-relaxed">
+        Please fill in details to create your account.
       </p>
-    </UForm>
+    </div>
 
-    <NuxtLink to="/login" class="mt-5 text-blue-500">
-      Sign in
-    </NuxtLink>
-  </UContainer>
+    <AuthForm mode="register" :error="error" @submit="signup" />
+
+    <div class="text-center -mt-4">
+      <p class="text-[var(--step--1)] text-[var(--color--text)] opacity-80">
+        Already have an account?
+        <NuxtLink to="/login" class="text-[var(--clr--primary)] font-semibold no-underline hover:underline transition-opacity duration-200">
+          Sign in
+        </NuxtLink>
+      </p>
+    </div>
+  </div>
 </template>

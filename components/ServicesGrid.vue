@@ -12,32 +12,60 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="services" class="grid-wrap">
-    <template v-for="service in services" :key="service.name">
-      <NuxtLink :to="`/services/${service.name}`">
-        <div class="rands">
-          <ServicesGridItem :service="service" />
-        </div>
-      </NuxtLink>
-    </template>
+  <div v-if="services && services.length" class="grid-wrap">
+    <ServicesGridItem
+      v-for="service in services"
+      :key="service.name"
+      :service="service"
+    />
   </div>
-  <div v-else>
-    No services
+  <div v-else class="empty-state">
+    <Icon name="heroicons:magnifying-glass" class="empty-icon" />
+    <h3 class="empty-title">No services found</h3>
+    <p class="empty-desc">Try clearing your search query or selecting a different category.</p>
   </div>
-  <!-- <pre>{{ services }}</pre> -->
 </template>
 
 <style scoped>
 .grid-wrap {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 275px);
-  gap: 1em;
-  row-gap: 2em;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
   align-items: stretch;
-  justify-content: center;
 }
 
-.rands {
-  outline: salmon;
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  background-color: var(--color-card-bg);
+  border: 1px dashed var(--color--card-border, rgba(128, 128, 128, 0.3));
+  border-radius: var(--radius-lg);
+  margin: 1.5rem 0;
+}
+
+.empty-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--clr--primary);
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.empty-title {
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--color--heading);
+  margin-bottom: 0.5rem;
+}
+
+.empty-desc {
+  font-size: var(--step--1);
+  color: var(--color--text);
+  opacity: 0.75;
+  max-width: 40ch;
 }
 </style>

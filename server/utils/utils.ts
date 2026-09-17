@@ -1,5 +1,17 @@
+import { randomBytes, createHash } from 'node:crypto'
+import nodemailer from 'nodemailer'
 import { hash } from 'ohash'
 import { subtle } from 'uncrypto'
+
+export function generateRandomString(length: number): string {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789'
+  let result = ''
+  const bytes = randomBytes(length)
+  for (let i = 0; i < length; i++) {
+    result += alphabet[bytes[i] % alphabet.length]
+  }
+  return result
+}
 
 export default function replaceSpaceSymbol(str: string) {
   return str.replace(/%20/g, ' ')
@@ -18,7 +30,7 @@ export async function createUser(email: string, password: string) {
   const user = await prisma.user.create({
     data: {
       email: email as string,
-      password: hashedPassword,
+      password_hash: hashedPassword,
     },
   })
 
@@ -49,4 +61,159 @@ export function handleError(errorMessage: string): void {
     statusCode: 401,
     message: errorMessage,
   })
+}
+
+export async function createEmailVerificationLink(
+  userId: string,
+  email: string,
+): Promise<string> {
+  try {
+    await prisma.emailVerificationToken.deleteMany({
+      where: {
+        userId,
+      },
+    })
+
+    const token = generateRandomString(40) // 40 characters long
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 2) // Expires in 2 hours
+
+    await prisma.emailVerificationToken.create({
+      data: {
+        token,
+        userId,
+        email,
+        expiresAt, // Expires in 2 hours
+      },
+    })
+
+    const config = useRuntimeConfig()
+    const origin = config.origin
+    const verificationLink = `${origin}/auth/email-verification/${token}`
+
+    return verificationLink
+  }
+  catch (error) {
+    console.error('Error in createEmailVerificationLink:', error)
+    throw error
+  }
+}
+
+export async function sendVerificationEmail(
+  username: string,
+  email: string,
+  verificationLink: string,
+) {
+  const config = useRuntimeConfig()
+  const smtpHost = config.nodemailer?.host
+  const smtpPort = config.nodemailer?.port
+  const smtpUser = config.nodemailer?.user || config.nodemailer?.from
+  const smtpPass = config.nodemailer?.password
+  const fromEmail = config.nodemailer?.from || smtpUser
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    } as any)
+
+    const mailOptions = {
+      from: fromEmail,
+      to: email,
+      subject: 'Email Verification',
+      html: `
+        <p>Hi ${username},</p>
+        <p>Please verify your email by clicking on the link below:</p>
+        <a href="${verificationLink}">Verify Email</a>
+        <p>If you did not request this, please ignore this email.</p>
+        <p>Thanks,</p>
+        <p>Support: companySupportEmail </p>
+      `,
+    }
+
+    await transporter.sendMail(mailOptions)
+  }
+  catch (error: any) {
+    const env = process.env
+    const isDev = env.NODE_ENV !== 'production' || config.public?.nodeEnv === 'development' || smtpHost === 'localhost' || smtpHost === '127.0.0.1'
+    if (isDev) {
+      console.warn(`[DEV EMAIL] Failed to send email via SMTP (${error.message}).`)
+      console.warn(`\n==============================================`)
+      console.warn(`[DEV EMAIL] Verification Link for ${email}:`)
+      console.warn(verificationLink)
+      console.warn(`==============================================\n`)
+      return
+    }
+    throw error
+  }
+}
+
+export async function createPasswordResetToken(userId: string): Promise<string> {
+  // Invalidate all existing tokens
+  await prisma.passwordResetToken.deleteMany({
+    where: { userId },
+  })
+
+  const tokenId = generateRandomString(40) // 40 characters
+  const tokenHash = createHash('sha256').update(tokenId).digest('hex')
+  const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 2) // Token expires in 2 hours
+
+  await prisma.passwordResetToken.create({
+    data: {
+      token_hash: tokenHash,
+      userId,
+      expiresAt,
+    },
+  })
+
+  return tokenId
+}
+
+export async function sendPasswordResetToken(email: string, verificationLink: string): Promise<void> {
+  const config = useRuntimeConfig()
+  const smtpHost = config.nodemailer?.host
+  const smtpPort = config.nodemailer?.port
+  const smtpUser = config.nodemailer?.user || config.nodemailer?.from
+  const smtpPass = config.nodemailer?.password
+  const fromEmail = config.nodemailer?.from || smtpUser
+
+  try {
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    } as any)
+
+    const mailOptions = {
+      from: `<${fromEmail}>`,
+      to: email,
+      subject: 'Password Reset',
+      text: `You requested a password reset. Click the link to reset your password: ${verificationLink}`,
+      html: `<p>You requested a password reset. Click the link to reset your password: <a href="${verificationLink}">${verificationLink}</a></p>`,
+    }
+
+    await transporter.sendMail(mailOptions)
+  }
+  catch (error: any) {
+    const env = process.env
+    const isDev = env.NODE_ENV !== 'production' || config.public?.nodeEnv === 'development' || smtpHost === 'localhost' || smtpHost === '127.0.0.1'
+    if (isDev) {
+      console.warn(`[DEV EMAIL] Failed to send password reset via SMTP (${error.message}).`)
+      console.warn(`\n==============================================`)
+      console.warn(`[DEV EMAIL] Reset Link for ${email}:`)
+      console.warn(verificationLink)
+      console.warn(`==============================================\n`)
+      return
+    }
+    throw createError({
+      message: 'Failed to send email',
+      statusCode: 500,
+    })
+  }
 }

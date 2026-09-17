@@ -18,6 +18,8 @@ model Services {
   phone_number     String              @default("")
   address          String              @default("")
   service_owner_id String?
+  featured         Boolean             @default(false)
+  featured_until   DateTime?
   created_at       DateTime?           @default(now()) @db.Timestamp(6)
   updated_at       DateTime            @default(now()) @db.Timestamp(6)
   category         Categories          @relation(fields: [category_id], references: [id]) // Many-to-One relationship with Categories model
@@ -25,9 +27,12 @@ model Services {
   offers           Offers[] // One-to-Many relationship with Offers model
   favorited_by     Favorite_Services[] // One-to-Many relationship with Favorite_Services model
   service_tags     ServiceTags[] // Many-to-Many relationship with ServiceTags model
+  deals            Deal[]
+  featured_orders  FeaturedOrder[]
 
   @@index([category_id], map: "Services_category_id_fkey")
   @@index([service_owner_id], map: "Services_service_owner_id_fkey")
+  @@index([featured])
 }
 
 model Categories {
@@ -178,9 +183,128 @@ model User {
   owned_services         Services[] // One-to-Many relationship with Services model
   Session                Session[] // One-to-Many relationship with Session model
   owned_content_creators ContentCreators[] // One-to-Many relationship with ContentCreators model
+  owned_deals            Deal[]
+  payments               Payment[]
+  vouchers               Voucher[]
+  notifications          Notification[]
+  featured_orders        FeaturedOrder[]
 
   @@map("users")
   PasswordResetToken PasswordResetToken[]
+  emailVerificationToken EmailVerificationToken?
+}
+
+model Deal {
+  id                      String    @id @default(cuid())
+  slug                    String    @unique
+  service_id              String
+  owner_id                String
+  title                   String
+  description             String    @db.Text
+  original_price          Decimal   @db.Decimal(12, 2)
+  deal_price              Decimal   @db.Decimal(12, 2)
+  currency                String    @default("USD")
+  quantity_total          Int
+  quantity_sold           Int       @default(0)
+  min_buyers              Int       @default(1)
+  starts_at               DateTime
+  ends_at                 DateTime
+  status                  String    @default("active")
+  redemption_instructions String    @db.Text
+  terms                   String    @db.Text
+  created_at              DateTime  @default(now()) @db.Timestamp(6)
+  updated_at              DateTime  @updatedAt @db.Timestamp(6)
+  service                 Services  @relation(fields: [service_id], references: [id], onDelete: Cascade)
+  owner                   User      @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  payments                Payment[]
+  vouchers                Voucher[]
+
+  @@index([service_id])
+  @@index([owner_id])
+  @@index([status, ends_at])
+}
+
+model Payment {
+  id           String    @id @default(cuid())
+  provider     String    @default("paynow")
+  provider_ref String?   @unique
+  poll_url     String?   @db.Text
+  amount       Decimal   @db.Decimal(12, 2)
+  currency     String    @default("USD")
+  status       String    @default("pending")
+  method       String    @default("ecocash")
+  buyer_id     String
+  deal_id      String
+  phone        String    @default("")
+  paid_at      DateTime?
+  created_at   DateTime  @default(now()) @db.Timestamp(6)
+  updated_at   DateTime  @updatedAt @db.Timestamp(6)
+  buyer        User      @relation(fields: [buyer_id], references: [id], onDelete: Cascade)
+  deal         Deal      @relation(fields: [deal_id], references: [id], onDelete: Cascade)
+  vouchers     Voucher[]
+
+  @@index([buyer_id])
+  @@index([deal_id])
+  @@index([status])
+}
+
+model Voucher {
+  id           String    @id @default(cuid())
+  code         String    @unique
+  deal_id      String
+  buyer_id     String
+  payment_id   String
+  status       String    @default("pending")
+  purchased_at DateTime?
+  redeemed_at  DateTime?
+  created_at   DateTime  @default(now()) @db.Timestamp(6)
+  deal         Deal      @relation(fields: [deal_id], references: [id], onDelete: Cascade)
+  buyer        User      @relation(fields: [buyer_id], references: [id], onDelete: Cascade)
+  payment      Payment   @relation(fields: [payment_id], references: [id], onDelete: Cascade)
+
+  @@index([deal_id])
+  @@index([buyer_id])
+  @@index([payment_id])
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  user_id    String
+  type       String
+  title      String
+  body       String   @db.Text
+  link       String   @default("")
+  read       Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id, read])
+}
+
+model FeaturedOrder {
+  id            String    @id @default(cuid())
+  service_id    String
+  owner_id      String
+  provider      String    @default("paynow")
+  provider_ref  String?   @unique
+  poll_url      String?   @db.Text
+  amount        Decimal   @db.Decimal(12, 2)
+  currency      String    @default("USD")
+  status        String    @default("pending")
+  method        String    @default("ecocash")
+  phone         String    @default("")
+  duration_days Int       @default(30)
+  starts_at     DateTime?
+  ends_at       DateTime?
+  paid_at       DateTime?
+  created_at    DateTime  @default(now()) @db.Timestamp(6)
+  updated_at    DateTime  @updatedAt @db.Timestamp(6)
+  service       Services  @relation(fields: [service_id], references: [id], onDelete: Cascade)
+  owner         User      @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+
+  @@index([service_id])
+  @@index([owner_id])
+  @@index([status])
 }
 
 model PasswordResetToken {
@@ -190,4 +314,13 @@ model PasswordResetToken {
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) // One-to-One relationship with User model
 
   @@map("password_reset_tokens")
+}
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String   @unique
+  email     String
+  expiresAt DateTime
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
 }

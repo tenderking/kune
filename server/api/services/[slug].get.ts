@@ -1,44 +1,51 @@
-function replaceSpaceSymbol(str: string) {
-  return str.replace(/%20/g, ' ')
-}
+import { enrichMissingServiceImages } from '../../utils/serviceImage'
+import replaceSpaceSymbol from '../../utils/utils'
+import { mapPublicService, publicServiceSelect } from '../../utils/publicService'
+import { dealInclude, serializeDeal } from '../../utils/deals'
 
 export default defineEventHandler(async (event) => {
-  const query = replaceSpaceSymbol(event.context.params?.slug as string)
-  //  get service by slug
+  const serviceParam = getRouterParam(event, 'slug') || getRouterParam(event, 'id')
 
-  const service = await prisma.services.findUnique({
+  if (!serviceParam) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Missing slug parameter',
+    })
+  }
+
+  const query = replaceSpaceSymbol(serviceParam)
+
+  const service = await prisma.services.findFirst({
     where: {
-      name: query,
+      OR: [
+        { id: serviceParam },
+        { name: query },
+      ],
     },
-    select: {
-      name: true,
-      description: true,
-      category: true,
-      service_tags: {
-        select: {
-          tags: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
-        },
-      },
-      website_url: true,
-      phone_number: true,
-    },
+    select: publicServiceSelect,
   })
 
-  if (!service)
-    throw new Error(`No service found for slug: ${query}`)
-
-  const flattenedService = {
-    name: service.name,
-    description: service.description,
-    category: service.category.name,
-    tags: service.service_tags.map(tag => tag.tags.name),
-    webUrl: service.website_url,
-    whatsapp: service.phone_number,
+  if (!service) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: `No service found for: ${query}`,
+    })
   }
-  return flattenedService
+
+  const now = new Date()
+  const deals = await prisma.deal.findMany({
+    where: {
+      service_id: service.id,
+      status: { in: ['active', 'sold_out'] },
+      starts_at: { lte: now },
+    },
+    include: dealInclude(),
+    orderBy: { ends_at: 'asc' },
+  })
+
+  const [flattened] = await enrichMissingServiceImages([mapPublicService(service)])
+  return {
+    ...flattened,
+    deals: deals.map(serializeDeal).filter(deal => deal.live_status === 'active' || deal.live_status === 'sold_out'),
+  }
 })

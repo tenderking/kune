@@ -1,12 +1,9 @@
+import { createHash } from 'node:crypto'
 import { hash } from '@node-rs/argon2'
-import { isWithinExpirationDate } from 'oslo'
-import { sha256 } from 'oslo/crypto'
-import { encodeHex } from 'oslo/encoding'
+import { generateSessionToken, createSession, setSessionTokenCookie } from '~/server/utils/auth'
 
 export default defineEventHandler(async (event) => {
   try {
-    // eslint-disable-next-line no-console
-    console.log('Start of password reset handler')
     const body = await readBody(event)
     const newPassword = body.password
 
@@ -25,72 +22,58 @@ export default defineEventHandler(async (event) => {
     }
 
     const verificationToken = event.context.params.token
+    const tokenHash = createHash('sha256').update(verificationToken).digest('hex')
 
-    const token_hash = encodeHex(await sha256(new TextEncoder().encode(verificationToken)))
-    // eslint-disable-next-line no-console
-    console.log('Finding token with hash:', token_hash)
     const token = await prisma.passwordResetToken.findUnique({
       where: {
-        token_hash,
+        token_hash: tokenHash,
       },
     })
-    if (!token || !isWithinExpirationDate(token.expiresAt)) {
+
+    if (!token || new Date() >= token.expiresAt) {
       throw createError({
         statusCode: 400,
         message: 'Invalid or expired token.',
       })
     }
 
-    if (token) {
-      // eslint-disable-next-line no-console
-      console.log('Token found:', token)
+    await prisma.passwordResetToken.delete({
+      where: {
+        token_hash: tokenHash,
+      },
+    })
 
-      await prisma.passwordResetToken.delete({
-        where: {
-          token_hash,
-        },
+    try {
+      const passwordHash = await hash(newPassword, {
+        memoryCost: 19456,
+        timeCost: 2,
+        outputLen: 32,
+        parallelism: 1,
       })
 
-      try {
-        const passwordHash = await hash(newPassword, {
-          // recommended minimum parameters
-          memoryCost: 19456,
-          timeCost: 2,
-          outputLen: 32,
-          parallelism: 1,
-        })
-
-        await prisma.user.update({
-          where: {
-            id: token.userId,
-          },
-          data: {
-            password_hash: passwordHash,
-          },
-        })
-
-        // eslint-disable-next-line no-console
-        console.log('Password updated successfully!')
-      }
-      catch (error) {
-        console.error('Error generating password hash or updating user:', error)
-        throw createError({
-          statusCode: 500,
-          message: 'Failed to update password. Please try again later.',
-        })
-      }
-
-      const session = await lucia.createSession(token.userId, {})
-      const sessionCookie = lucia.createSessionCookie(session.id)
-      return new Response(null, {
-        status: 302,
-        headers: {
-          'Location': '/',
-          'Set-Cookie': sessionCookie.serialize(),
-          'Referrer-Policy': 'strict-origin',
+      await prisma.user.update({
+        where: {
+          id: token.userId,
+        },
+        data: {
+          password_hash: passwordHash,
         },
       })
     }
+    catch (error) {
+      console.error('Error generating password hash or updating user:', error)
+      throw createError({
+        statusCode: 500,
+        message: 'Failed to update password. Please try again later.',
+      })
+    }
+
+    const sessionToken = generateSessionToken()
+    const session = await createSession(sessionToken, token.userId)
+    setSessionTokenCookie(event, sessionToken, session.expiresAt)
+
+    setHeader(event, 'Referrer-Policy', 'strict-origin')
+    return sendRedirect(event, '/', 302)
   }
   catch (error) {
     if (error instanceof Error) {

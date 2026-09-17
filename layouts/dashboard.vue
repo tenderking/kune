@@ -4,36 +4,48 @@ const links = [
     label: 'Profile',
     icon: 'i-heroicons-face-smile',
     to: '/profile',
-    badge: 100,
   },
-
   {
     label: 'Services',
     icon: 'i-heroicons-chart-bar',
     to: '/profile/services',
   },
+  {
+    label: 'Deals',
+    icon: 'i-heroicons-ticket',
+    to: '/profile/deals',
+  },
+  {
+    label: 'Vouchers',
+    icon: 'i-heroicons-qr-code',
+    to: '/profile/vouchers',
+  },
+  {
+    label: 'Receipts',
+    icon: 'i-heroicons-envelope',
+    to: '/profile/receipts',
+  },
+  {
+    label: 'Redeem',
+    icon: 'i-heroicons-check-badge',
+    to: '/profile/redeem',
+  },
 ]
 </script>
 
 <template>
-  <NavBar class="main" :fixed="true" />
-  <aside
-    class="fixed dashboard p-4 top-20 rounded-md left-0 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 z-10"
-  >
+  <NavBar class="main" />
+  <aside class="dashboard-sidebar dashboard rounded-md">
     <!-- line -->
 
-    <divider />
-    <UVerticalNavigation
-      :links="links"
-      :ui="{
-        inactive:
-          'border-transparent dashboard-cards flex justify-between hover:border-gray-400 dark:hover:border-gray-500 text-green-700 hover:text-gray-900 ',
-        active: 'active',
-      }"
+    <UNavigationMenu
+      orientation="vertical"
+      :items="links"
+      class="w-full"
     />
   </aside>
-  <main class="pt-4 sm:ml-64">
-    <UContainer class="p-4 mx-2 rounded-md dashboard max-w-none">
+  <main class="dashboard-main">
+    <UContainer class="dashboard-content p-4 mx-2 rounded-md max-w-none">
       <h2>Dashboard</h2>
       <slot />
     </UContainer>
@@ -41,15 +53,36 @@ const links = [
 </template>
 
 <style scoped>
-/* .main{
-margin: 0 1em;
+.dashboard-sidebar {
+  position: fixed;
+  top: 4rem;
+  left: 0;
+  width: 16rem;
+  height: calc(100vh - 4rem);
+  z-index: 10;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  overflow-y: auto;
 }
 
-@media (min-width: 950px) {
-  .main{
+@media (min-width: 640px) {
+  .dashboard-sidebar {
+    transform: translateX(0);
+  }
+  .dashboard-main {
+    margin-left: 16rem;
+  }
+}
 
-  margin: 0 15%;
-} }*/
+.dashboard-main {
+  padding-top: 1rem;
+}
+
+.dashboard-content {
+  min-height: calc(100vh - 6rem);
+}
+
 .dashboard {
   background-color: var(--color-card-bg);
 }
@@ -61,4 +94,3 @@ margin: 0 1em;
   color: var(--clr--text);
 }
 </style>
-```

@@ -1,19 +1,23 @@
 <script setup lang="ts">
-import type { User } from 'lucia'
+import type { User } from '~/composables/auth'
 
 definePageMeta({
   layout: 'dashboard',
   middleware: 'protected',
   auth: { authenticatedRedirectTo: '/signin' },
 })
-const { data: user } = await useFetch<User>('/api/auth/user')
+const toast = useToast()
+const saving = ref(false)
+const sessionUser = useUser()
+const { data: user, refresh: refreshUser } = await useFetch<User>('/api/auth/user')
 const columns = [
   {
-    key: 'service',
-    label: 'Service',
+    accessorKey: 'service',
+    header: 'Service',
   },
   {
-    key: 'actions',
+    accessorKey: 'actions',
+    header: 'Actions',
   },
 ]
 
@@ -22,10 +26,11 @@ const profile = reactive({
   email: user.value?.email || '',
 })
 
-const { data: services, error } = await useFetch('/api/users/favorites')
+const { data: services, error, refresh } = await useFetch<any[]>('/api/users/favorites')
+
 async function removeFavorite(serviceId: string) {
   try {
-    const response = await $fetch('/api/users/favorites', {
+    await $fetch('/api/users/favorites', {
       method: 'DELETE',
       body: {
         service: serviceId,
@@ -34,66 +39,130 @@ async function removeFavorite(serviceId: string) {
         'Content-Type': 'application/json',
       },
     })
-    // eslint-disable-next-line no-console
-    console.log('deleting', response)
+    if (services.value) {
+      services.value = services.value.filter((s: any) => s.id !== serviceId && s.name !== serviceId)
+    }
   }
   catch (error) {
     console.error('Error:', error)
   }
 }
-const rows = services?.value?.map((service) => {
-  return {
+
+const rows = computed(() => {
+  return (services.value || []).map((service: any) => ({
     service: service.name,
     actions: service.id,
-  }
-}) || []
+  }))
+})
 
 if (error.value) {
   console.error('Error fetching favorite services:', error.value)
 }
+
+async function saveProfile() {
+  saving.value = true
+  try {
+    const updated = await $fetch('/api/users/profile', {
+      method: 'PUT',
+      body: {
+        name: profile.name,
+        email: profile.email,
+      },
+    })
+    profile.name = updated.name || ''
+    profile.email = updated.email || ''
+    if (sessionUser.value) {
+      sessionUser.value = { ...sessionUser.value, name: updated.name, email: updated.email }
+    }
+    await refreshUser()
+    toast.add({ title: 'Profile saved', color: 'success' })
+  }
+  catch (err: any) {
+    toast.add({
+      title: 'Could not save profile',
+      description: err.data?.statusMessage || err.data?.message || err.message,
+      color: 'error',
+    })
+  }
+  finally {
+    saving.value = false
+  }
+}
 </script>
 
 <template>
-  <div class="py-4 grid grid-cols-3 gap-16">
-    <h3>Profile</h3>
+  <div class="py-4 flex flex-col gap-8 max-w-3xl">
+    <div>
+      <h3 class="text-xl font-bold mb-4">
+        Account Profile
+      </h3>
 
-    <UForm :state="{}" class="card p-4 col-span-3 row-gap-4 rounded-md">
-      <UFormGroup
-        label="Your Name" description="We'll only use this for spam."
-        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-center"
-      >
-        <UInput v-model="profile.name" type="text" name="name" />
-      </UFormGroup>
-      <UDivider class="py-4" />
+      <UForm :state="profile" class="card p-6 rounded-lg border border-[var(--color--card-border)] flex flex-col gap-4" @submit.prevent="saveProfile">
+        <UFormField
+          label="Your Name"
+          description="Your public display name on Kune."
+          required
+        >
+          <UInput v-model="profile.name" type="text" name="name" size="md" class="w-full" />
+        </UFormField>
 
-      <UFormGroup
-        label="Your Email" description="We'll only use this for spam."
-        help="We will never share your email with anyone else." required class="grid grid-cols-2 gap-2 items-centern"
-      >
-        <UInput v-model="profile.email" type="email" name="email" />
-      </UFormGroup>
-      <UDivider />
+        <USeparator class="my-2" />
 
-      <UButton type="submit" color="orange" class="mt-10">
-        Save
-      </UButton>
-    </UForm>
-    <div class="col-span-3 p-4 rounded-md flex flex-col gap-4 min-w-[300px]">
-      <h3>Favorites</h3>
-      <template v-if="!rows" />
-      <template v-else>
-        <UTable :columns="columns" :rows="rows" :ui="{ tbody: 'divide-green-500' }" class="card rounded-md min-w-max">
-          <template #actions-data="{ row }">
+        <UFormField
+          label="Your Email"
+          description="Used for notifications and account security."
+          required
+        >
+          <UInput v-model="profile.email" type="email" name="email" size="md" class="w-full" />
+        </UFormField>
+
+        <div class="pt-2">
+          <UButton type="submit" color="primary" :loading="saving">
+            Save Changes
+          </UButton>
+        </div>
+      </UForm>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-bold mb-4">
+        Saved Favorites
+      </h3>
+
+      <div v-if="rows.length === 0" class="card p-8 rounded-lg border border-[var(--color--card-border)] text-center">
+        <Icon name="heroicons:bookmark" class="w-10 h-10 opacity-40 mx-auto mb-2" />
+        <p class="font-medium text-[var(--color--heading)]">
+          No saved favorites yet
+        </p>
+        <p class="text-sm opacity-70 mt-1 mb-4">
+          Save services you use frequently for quick access.
+        </p>
+        <UButton to="/services" color="primary" variant="subtle" size="sm">
+          Browse Services
+        </UButton>
+      </div>
+
+      <div v-else class="card rounded-lg border border-[var(--color--card-border)] overflow-hidden">
+        <UTable :columns="columns" :data="rows">
+          <template #service-cell="{ row }">
+            <NuxtLink :to="`/services/${row.original.service}`" class="font-semibold text-[var(--clr--primary)] hover:underline">
+              {{ row.original.service }}
+            </NuxtLink>
+          </template>
+          <template #actions-cell="{ row }">
             <UButton
-              color="gray" variant="ghost" icon="i-heroicons-trash-20-solid"
-              @click="removeFavorite(row.actions)"
+              color="error"
+              variant="ghost"
+              icon="i-heroicons-trash-20-solid"
+              size="sm"
+              aria-label="Remove favorite"
+              @click="removeFavorite(row.original.actions)"
             />
           </template>
         </UTable>
-      </template>
+      </div>
     </div>
   </div>
-  <!-- <ServiceFormPost /> -->
 </template>
 
 <style scoped>

@@ -1,40 +1,15 @@
+import { enrichMissingServiceImages } from '../../../utils/serviceImage'
+import replaceSpaceSymbol from '../../../utils/utils'
+import { mapPublicService, publicServiceSelect } from '../../../utils/publicService'
+
 export default defineEventHandler(async (event) => {
   const query = replaceSpaceSymbol(event.context.params?.slug as string)
-  //  get service by category
   const services = await prisma.services.findMany({
     where: {
-      category: {
-        name: query,
-      },
+      category: { name: query },
     },
-    select: {
-      name: true,
-      description: true,
-      category: {
-        select: {
-          name: true,
-        },
-      },
-      service_tags: {
-        select: {
-          tags: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
-    },
+    orderBy: [{ featured: 'desc' }, { name: 'asc' }],
+    select: publicServiceSelect,
   })
-  const flattenedServices = services.map(service => ({
-    name: service.name,
-    description: service.description,
-    category: service.category.name,
-    tags: service.service_tags.map(tag => tag.tags.name),
-  }))
-  return flattenedServices
+  return enrichMissingServiceImages(services.map(mapPublicService))
 })
-
-function replaceSpaceSymbol(str: string) {
-  return str.replace(/%20/g, ' ')
-}

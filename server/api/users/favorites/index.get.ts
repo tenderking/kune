@@ -1,10 +1,14 @@
-import { handleError } from '~/server/utils/utils'
-
 export default defineEventHandler(async (event) => {
   try {
     const user = event.context.user
+    if (!user || !user.id) {
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Unauthorized: Invalid session or user.',
+      })
+    }
     const favoriteServices = await prisma.user.findUnique({
-      where: { id: user?.id },
+      where: { id: user.id },
       include: {
         favorite_services: {
           include: {
@@ -15,7 +19,6 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!favoriteServices || favoriteServices.favorite_services.length === 0) {
-      handleError('No favorite services found for this user')
       return null
     }
 

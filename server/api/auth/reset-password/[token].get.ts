@@ -1,11 +1,8 @@
-import { sha256 } from 'oslo/crypto'
-import { encodeHex } from 'oslo/encoding'
+import { createHash } from 'node:crypto'
 
 export default defineEventHandler(async (event) => {
-  // You might want to validate the token format here
   const token = event.context.params?.token ?? ''
 
-  // Validate token with the database
   const isValidToken = await validateTokenWithDatabase(token)
 
   if (!isValidToken) {
@@ -26,9 +23,10 @@ export default defineEventHandler(async (event) => {
 })
 
 async function validateTokenWithDatabase(token: string): Promise<boolean> {
+  const tokenHash = createHash('sha256').update(token).digest('hex')
   const verificationToken = await prisma.passwordResetToken.findUnique({
     where: {
-      token_hash: encodeHex(await sha256(new TextEncoder().encode(token))),
+      token_hash: tokenHash,
     },
   })
 
@@ -36,5 +34,5 @@ async function validateTokenWithDatabase(token: string): Promise<boolean> {
     return false
   }
 
-  return token === 'valid-token'
+  return new Date() < verificationToken.expiresAt
 }

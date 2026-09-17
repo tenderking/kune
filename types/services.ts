@@ -1,5 +1,5 @@
-// create interface for services
 export interface Service {
+  id?: string
   name: string
   description: string
   category: string
@@ -7,4 +7,7 @@ export interface Service {
   webUrl: string
   whatsapp: string
   image_url: string
+  address?: string
+  featured?: boolean
+  claimed?: boolean
 }

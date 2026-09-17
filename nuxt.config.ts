@@ -17,8 +17,23 @@ export default defineNuxtConfig({
   modules: ['@nuxt/icon', '@nuxt/ui', '@nuxt/image'],
 
   nitro: {
-    inlineDynamicImports: true,
     preset: 'node-server',
+    noExternals: false,
+    externals: {
+      external: ['@node-rs/argon2'],
+    },
+  },
+
+  hooks: {
+    'nitro:config'(nitroConfig) {
+      nitroConfig.noExternals = false
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['@node-rs/argon2'],
+    },
   },
 
   imports: {
@@ -44,6 +59,18 @@ export default defineNuxtConfig({
     public: {
       uploadsDir: import.meta.env.UPLOADS_DIR,
       nodeEnv: import.meta.env.NODE_ENV,
+      featuredPrice: import.meta.env.FEATURED_PRICE || '15',
+      featuredDays: import.meta.env.FEATURED_DAYS || '30',
+    },
+    origin: import.meta.env.ORIGIN,
+    paynow: {
+      id: import.meta.env.PAYNOW_ID,
+      key: import.meta.env.PAYNOW_KEY,
+    },
+    featured: {
+      amount: import.meta.env.FEATURED_PRICE || '15',
+      days: import.meta.env.FEATURED_DAYS || '30',
+      currency: 'USD',
     },
   },
   compatibilityDate: '2024-09-03',

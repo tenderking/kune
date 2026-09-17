@@ -1,4 +1,9 @@
+import { enrichMissingServiceImages } from '../../utils/serviceImage'
+import { mapPublicService, publicServiceSelect } from '../../utils/publicService'
+import { expireFeaturedListings } from '../../utils/featured'
+
 export default defineEventHandler(async (event) => {
+  await expireFeaturedListings()
   const query = getQuery(event)
   if (query.category) {
     const response = await $fetch(`/api/services/categories/${query.category}`)
@@ -6,51 +11,25 @@ export default defineEventHandler(async (event) => {
   }
   if (query.tags) {
     const response = await $fetch(`/api/services/tags/${query.tags}`)
-
     return response
   }
-
-  const services = await getAllServices()
-  return services
-  // }
+  const order = query.sort === 'asc' || query.sort === 'desc' ? query.sort : 'desc'
+  return getAllServices(order)
 })
 
-async function getAllServices() {
-  return prisma.services
-    .findMany({
-      select: {
-        name: true,
-        description: true,
-        category: true,
-        service_tags: {
-          select: {
-            tags: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-          },
-        },
-        image_url: true,
-        website_url: true,
-        phone_number: true,
-      },
+async function getAllServices(order: 'asc' | 'desc' = 'desc') {
+  try {
+    const services = await prisma.services.findMany({
+      orderBy: [
+        { featured: 'desc' },
+        { description: order },
+      ],
+      select: publicServiceSelect,
     })
-    .then(services =>
-      services.map(service => ({
-        name: service.name,
-        description: service.description,
-        category: service.category.name,
-        tags: service.service_tags.map(
-          tagOnService => tagOnService.tags.name,
-        ),
-        webUrl: service.website_url,
-        whatsapp: service.phone_number,
-        image_url: service.image_url,
-      })),
-    )
-    .catch((error) => {
-      console.error(error)
-    })
+    return enrichMissingServiceImages(services.map(mapPublicService))
+  }
+  catch (error) {
+    console.error(error)
+    return []
+  }
 }

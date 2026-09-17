@@ -3,6 +3,7 @@ definePageMeta({
   middleware: ['guest'],
 })
 
+const route = useRoute()
 const error = ref<string | null>(null)
 
 async function login(data: any) {
@@ -14,7 +15,7 @@ async function login(data: any) {
       method: 'POST',
       body: formData,
     })
-    await navigateTo('/')
+    await navigateTo(typeof route.query.redirect === 'string' ? route.query.redirect : '/')
   }
   catch (err) {
     const errorMessage = (err as any).data?.message ?? (err as Error).message ?? null

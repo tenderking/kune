@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+definePageMeta({
+  layout: 'dashboard',
+  middleware: 'protected',
+})
+
 const route = useRoute()
 const router = useRouter()
 let serviceTags: string[] = []

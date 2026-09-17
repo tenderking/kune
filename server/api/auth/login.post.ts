@@ -7,28 +7,28 @@ const prisma = new PrismaClient()
 export default eventHandler(async (event) => {
   const formData = await readFormData(event)
 
-  const username = formData.get('username')
+  const identifier = (formData.get('username') || formData.get('email')) as string | null
   const password = formData.get('password')
 
-  if (typeof username !== 'string' || typeof password !== 'string') {
+  if (typeof identifier !== 'string' || typeof password !== 'string') {
     throw createError({
-      message: 'Invalid username or password',
+      message: 'Invalid email or password',
       statusCode: 400,
     })
   }
 
-  // eslint-disable-next-line no-console
-  console.log('username', username)
-  // eslint-disable-next-line no-console
-  console.log('password', password)
-
-  const existingUser = await prisma.user.findUnique({
-    where: { username },
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      OR: [
+        { username: identifier },
+        { email: identifier },
+      ],
+    },
   })
 
   if (!existingUser) {
     throw createError({
-      message: 'Incorrect username or password',
+      message: 'Incorrect email or password',
       statusCode: 400,
     })
   }

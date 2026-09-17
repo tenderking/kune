@@ -15,28 +15,28 @@
     "seed": "node ./prisma/seed.mjs"
   },
   "dependencies": {
-    "@node-rs/argon2": "^2.0.2",
-    "@nuxt/ui": "^4.7.1",
+    "@node-rs/argon2": "^2.2.1",
+    "@nuxt/ui": "^4.11.1",
     "@vee-validate/zod": "^4.15.1",
-    "@vueuse/components": "^14.3.0",
-    "@vueuse/core": "^14.3.0",
-    "nodemailer": "^8.0.7",
-    "tailwindcss": "^4.3.0",
-    "zod": "^4.4.3"
+    "@vueuse/components": "^14.4.0",
+    "@vueuse/core": "^14.4.0",
+    "nodemailer": "^8.0.11",
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@iconify-json/ic": "^1.2.4",
-    "@iconify-json/material-symbols": "^1.2.73",
+    "@iconify-json/material-symbols": "^1.2.92",
     "@nuxt/devtools": "latest",
-    "@nuxt/icon": "^2.2.2",
-    "@nuxt/image": "^2.0.0",
-    "@nuxt/test-utils": "^4.0.3",
-    "@prisma/client": "^6.4.0",
-    "@types/node": "^25.8.0",
-    "@types/nodemailer": "^8.0.0",
-    "nuxt": "^4.4.5",
-    "oxlint": "^1.65.0",
-    "prisma": "^6.4.0",
-    "vitest": "^4.1.6"
+    "@nuxt/icon": "^2.5.1",
+    "@nuxt/image": "^2.1.0",
+    "@nuxt/test-utils": "^4.3.2",
+    "@prisma/client": "^6.19.3",
+    "@types/node": "^25.9.6",
+    "@types/nodemailer": "^8.0.1",
+    "nuxt": "^4.5.2",
+    "oxlint": "^1.83.0",
+    "prisma": "^6.19.3",
+    "vitest": "^4.1.11"
   }
 }

@@ -1,19 +1,36 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
-import { useUser, useToast } from '#imports'
+import { useToast } from '#imports'
+
+const props = defineProps<{
+  serviceId?: string
+  initial?: {
+    name?: string
+    description?: string
+    category?: string
+    address?: string
+    website?: string
+    website_url?: string
+    webUrl?: string
+    imgUrl?: string
+    image_url?: string
+    tags?: string[]
+  }
+}>()
 
 const toast = useToast()
-const user = useUser()
 const emit = defineEmits(['success', 'close'])
+const isEdit = computed(() => Boolean(props.serviceId))
 
 const state = reactive({
-  name: '',
-  description: '',
-  category: '',
-  address: '',
-  website: '',
-  imgUrl: '',
-  tags: [] as string[]
+  name: props.initial?.name || '',
+  description: props.initial?.description || '',
+  category: props.initial?.category || '',
+  address: props.initial?.address || '',
+  website: props.initial?.website || props.initial?.website_url || props.initial?.webUrl || '',
+  imgUrl: props.initial?.imgUrl || props.initial?.image_url || '',
+  phone_number: (props.initial as any)?.phone_number || (props.initial as any)?.whatsapp || '',
+  tags: [...(props.initial?.tags || [])] as string[],
 })
 
 const taginput = ref('')
@@ -39,26 +56,44 @@ async function onSubmit() {
 
   isSubmitting.value = true
   try {
-    await $fetch('/api/services', {
-      method: 'POST',
-      body: {
-        name: state.name,
-        description: state.description,
-        category: state.category,
-        address: state.address,
-        website: state.website,
-        imgUrl: state.imgUrl,
-        tags: state.tags.length > 0 ? state.tags : ['General'],
-        serviceowner: user.value?.email || 'admin@kune.co.zw'
-      }
-    })
-    toast.add({ title: 'Service listed successfully', color: 'green' })
+    if (isEdit.value) {
+      await $fetch(`/api/services/${props.serviceId}`, {
+        method: 'PUT',
+        body: {
+          name: state.name,
+          description: state.description,
+          category: state.category,
+          address: state.address,
+          website: state.website,
+          imgUrl: state.imgUrl,
+          phone_number: state.phone_number,
+          tags: state.tags.length > 0 ? state.tags : ['General'],
+        },
+      })
+      toast.add({ title: 'Service updated successfully', color: 'green' })
+    }
+    else {
+      await $fetch('/api/services', {
+        method: 'POST',
+        body: {
+          name: state.name,
+          description: state.description,
+          category: state.category,
+          address: state.address,
+          website: state.website,
+          imgUrl: state.imgUrl,
+          phone_number: state.phone_number,
+          tags: state.tags.length > 0 ? state.tags : ['General'],
+        },
+      })
+      toast.add({ title: 'Service listed successfully', color: 'green' })
+    }
     emit('success')
   }
   catch (error: any) {
     console.error('Submit error:', error)
     toast.add({
-      title: 'Failed to create service',
+      title: isEdit.value ? 'Failed to update service' : 'Failed to create service',
       description: error.data?.message || error.message || 'Unknown error occurred.',
       color: 'red'
     })
@@ -81,6 +116,10 @@ async function onSubmit() {
 
     <UFormField label="Website URL" class="col-span-1">
       <UInput v-model="state.website" placeholder="https://example.com" class="w-full" />
+    </UFormField>
+
+    <UFormField label="Phone / WhatsApp" class="col-span-1">
+      <UInput v-model="state.phone_number" placeholder="0772 000 000" class="w-full" />
     </UFormField>
 
     <UFormField label="Image URL" class="col-span-1">
@@ -152,7 +191,7 @@ async function onSubmit() {
         :loading="isSubmitting"
         class="font-semibold px-6 justify-center cursor-pointer"
       >
-        Submit
+        {{ isEdit ? 'Save changes' : 'Submit' }}
       </UButton>
     </div>
   </UForm>

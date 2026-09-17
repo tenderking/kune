@@ -1,21 +1,13 @@
 <script lang="ts" setup>
+const route = useRoute()
 const router = useRouter()
-const sortOrder = ref('ascending')
-function sortBy() {
-  if (sortOrder.value === 'ascending') {
-    sortOrder.value = 'descending'
-    router.push({ query: { sort: 'desc' } })
-  }
-  else {
-    sortOrder.value = 'ascending'
-    router.push({ query: { sort: 'asc' } })
-  }
-}
-
-const categorySlug = ref('')
 const nuxtApp = useNuxtApp()
 
-const { data: categories } = await useFetch('/api/services/categories', {
+const searchQuery = ref((route.query.q as string) || '')
+const selectedCategory = computed(() => (route.query.category as string) || '')
+const currentSort = computed(() => (route.query.sort as string) || 'desc')
+
+const { data: categories } = await useFetch<string[]>('/api/services/categories', {
   headers: { Accept: 'application/json' },
   getCachedData(key) {
     const cachedData = nuxtApp.payload.data[key] || nuxtApp.static.data[key]
@@ -25,25 +17,70 @@ const { data: categories } = await useFetch('/api/services/categories', {
   },
 })
 
-// Function to emit category slug when an option is selected
-function getCategorySlug(slug: string) {
-  categorySlug.value = slug
-  if (slug === '') {
-    router.push({ path: '/services', query: {} })
-    return
-  }
-
-  router.push({ path: '/services', query: { category: slug } })
+// Debounce search update to URL
+let searchTimeout: any = null
+function onSearchInput(val: string) {
+  clearTimeout(searchTimeout)
+  searchTimeout = setTimeout(() => {
+    const query = { ...route.query }
+    if (val.trim()) {
+      query.q = val.trim()
+    } else {
+      delete query.q
+    }
+    router.push({ path: '/services', query })
+  }, 250)
 }
+
+function onCategoryChange(event: Event) {
+  const slug = (event.target as HTMLSelectElement)?.value || ''
+  const query = { ...route.query }
+  if (slug) {
+    query.category = slug
+  } else {
+    delete query.category
+  }
+  router.push({ path: '/services', query })
+}
+
+function toggleSort() {
+  const nextSort = currentSort.value === 'asc' ? 'desc' : 'asc'
+  router.push({ path: '/services', query: { ...route.query, sort: nextSort } })
+}
+
+function clearAllFilters() {
+  searchQuery.value = ''
+  router.push({ path: '/services', query: {} })
+}
+
+const hasActiveFilters = computed(() => Boolean(route.query.category || route.query.q || route.query.tags))
 </script>
 
 <template>
   <nav class="services-nav">
-    <div class="filter-group">
-      <label for="category-select" class="filter-label">Category</label>
-      <template v-if="categories">
-        <select class="filter-select" id="category-select" name="categories"
-                @change="(event) => getCategorySlug((event.target as HTMLSelectElement)?.value)">
+    <div class="nav-controls">
+      <!-- Search Input -->
+      <div class="search-wrap">
+        <UInput
+          v-model="searchQuery"
+          icon="i-heroicons-magnifying-glass-20-solid"
+          placeholder="Search services, keywords..."
+          size="md"
+          class="w-full"
+          @update:model-value="onSearchInput"
+        />
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <label for="category-select" class="sr-only">Category</label>
+        <select
+          id="category-select"
+          class="filter-select"
+          name="categories"
+          :value="selectedCategory"
+          @change="onCategoryChange"
+        >
           <option value="">
             All Categories
           </option>
@@ -51,15 +88,35 @@ function getCategorySlug(slug: string) {
             {{ category }}
           </option>
         </select>
-      </template>
+      </div>
+
+      <!-- Sort Toggle -->
+      <button class="sort-btn" :title="`Sort order: ${currentSort === 'asc' ? 'Ascending' : 'Descending'}`" @click="toggleSort">
+        <Icon :name="currentSort === 'asc' ? 'heroicons:bars-arrow-up-20-solid' : 'heroicons:bars-arrow-down-20-solid'" class="sort-icon" />
+        <span class="hidden sm:inline">{{ currentSort === 'asc' ? 'Asc' : 'Desc' }}</span>
+      </button>
+
+      <!-- Clear Filters -->
+      <UButton
+        v-if="hasActiveFilters"
+        variant="ghost"
+        color="neutral"
+        size="sm"
+        icon="i-heroicons-x-mark"
+        class="text-xs"
+        @click="clearAllFilters"
+      >
+        Clear
+      </UButton>
     </div>
 
-    <div class="filter-group sort-group">
-      <span class="filter-label">Sort By</span>
-      <button class="sort-btn" @click="sortBy()">
-        <span>{{ sortOrder === 'ascending' ? 'Ascending' : 'Descending' }}</span>
-        <Icon :name="sortOrder === 'ascending' ? 'heroicons:arrow-up' : 'heroicons:arrow-down'" class="sort-icon" />
-      </button>
+    <!-- Active Filter Indicator -->
+    <div v-if="route.query.tags" class="active-tag-row">
+      <span class="text-xs opacity-75">Active tag:</span>
+      <UBadge color="primary" variant="subtle" size="sm">
+        #{{ route.query.tags }}
+        <button class="ml-1 hover:text-red-500" @click="clearAllFilters">×</button>
+      </UBadge>
     </div>
   </nav>
 </template>
@@ -67,9 +124,9 @@ function getCategorySlug(slug: string) {
 <style scoped>
 .services-nav {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
   background-color: var(--color-card-bg);
   border: 1px solid var(--color--card-border, transparent);
   border-radius: var(--radius-lg, 1.25em);
@@ -77,18 +134,31 @@ function getCategorySlug(slug: string) {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
+.nav-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.search-wrap {
+  flex: 1 1 240px;
+  min-width: 200px;
+}
+
 .filter-group {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  flex: 0 1 auto;
 }
 
-.filter-label {
-  font-size: var(--step--1);
-  font-weight: 600;
-  color: var(--color--heading);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.active-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color--card-border, rgba(0, 0, 0, 0.06));
 }
 
 .filter-select {
@@ -96,7 +166,7 @@ function getCategorySlug(slug: string) {
   background-color: var(--color--bg);
   color: var(--color--text);
   border: 1px solid var(--color--card-border, rgba(128,128,128,0.2));
-  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  padding: 0.5rem 2.25rem 0.5rem 0.85rem;
   border-radius: var(--radius-sm, 0.5em);
   font-size: var(--step--1);
   font-family: inherit;
@@ -116,37 +186,24 @@ function getCategorySlug(slug: string) {
 .sort-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background: transparent;
-  border: none;
+  gap: 0.4rem;
+  background: var(--color--bg);
+  border: 1px solid var(--color--card-border, rgba(128,128,128,0.2));
   color: var(--color--text);
   font-size: var(--step--1);
   font-family: inherit;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.85rem;
   border-radius: var(--radius-sm, 0.5em);
-  transition: background-color var(--transition-fast), color var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .sort-btn:hover {
-  background-color: var(--color--card-border, rgba(0,0,0,0.06));
-  color: var(--clr--primary);
+  border-color: var(--clr--primary);
 }
 
 .sort-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-@media (max-width: 550px) {
-  .services-nav {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
-  }
-  
-  .filter-group {
-    justify-content: space-between;
-  }
+  width: 1.15rem;
+  height: 1.15rem;
 }
 </style>

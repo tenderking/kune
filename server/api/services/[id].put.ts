@@ -1,7 +1,8 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+import { fetchServiceImage, isUsableImageUrl } from '../../utils/serviceImage'
 
 export default defineEventHandler(async (event) => {
-  const serviceId = event.context.params?.id
+  const serviceId = getRouterParam(event, 'id') || getRouterParam(event, 'slug')
 
   if (!serviceId) {
     throw createError({
@@ -19,10 +20,15 @@ export default defineEventHandler(async (event) => {
   }
   const userId = user.id
 
+  const body = await readBody(event)
+  const tags: string[] = Array.isArray(body?.tags) && body.tags.length
+    ? body.tags.map((tag: string) => String(tag).trim()).filter(Boolean)
+    : ['General']
+
   try {
     const service = await prisma.services.findUniqueOrThrow({
       where: { id: serviceId },
-      select: { service_owner_id: true }, // Only select necessary field for ownership check
+      select: { service_owner_id: true, website_url: true, image_url: true },
     })
 
     if (service.service_owner_id !== userId) {
@@ -32,19 +38,60 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // Placeholder for actual update logic
+    const categoryName = String(body?.category || '').trim()
+    if (!body?.name || !categoryName) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Service name and category are required.',
+      })
+    }
+
+    const category = await prisma.categories.upsert({
+      where: { name: categoryName },
+      update: {},
+      create: { name: categoryName },
+    })
+
+    let imageUrl = typeof body.imgUrl === 'string' ? body.imgUrl.trim() : ''
+    const websiteUrl = typeof body.website === 'string' ? body.website.trim() : service.website_url
+    if (!isUsableImageUrl(imageUrl))
+      imageUrl = await fetchServiceImage(websiteUrl)
+
+    const updated = await prisma.services.update({
+      where: { id: serviceId },
+      data: {
+        name: body.name,
+        description: body.description || '',
+        address: body.address || '',
+        website_url: websiteUrl || '',
+        image_url: imageUrl || '',
+        phone_number: body.phone_number || undefined,
+        category: {
+          connect: { id: category.id },
+        },
+        service_tags: {
+          deleteMany: {},
+          create: tags.map(tagName => ({
+            tags: {
+              connectOrCreate: {
+                where: { name: tagName },
+                create: { name: tagName },
+              },
+            },
+          })),
+        },
+      },
+    })
+
     setResponseStatus(event, 200)
-    return { message: 'Edit endpoint reached. Full implementation pending.' }
+    return updated
   }
   catch (error: any) {
-    if (error.statusCode === 400 || error.statusCode === 401 || error.statusCode === 403) {
-      // Re-throw specific, already-created errors
+    if (error.statusCode)
       throw error
-    }
-    // Prisma's P2025 is 'Record to update not found.' - findUniqueOrThrow handles this.
+
     if (error instanceof PrismaClientKnownRequestError) {
       console.error('Prisma error in PUT [id].put.ts:', error.message)
-      // Provide a generic message for DB errors unless it's a specific one we want to expose
       throw createError({
         statusCode: 500,
         statusMessage: `Database error: ${error.code}`,

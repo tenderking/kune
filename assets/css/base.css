@@ -1,3 +1,4 @@
+@layer base {
 
 :root {
   /* Breakpoints */
@@ -134,3 +135,5 @@ a:visited {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--clr--primary);
 }
+
+} /* end @layer base */

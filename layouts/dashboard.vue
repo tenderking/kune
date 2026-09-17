@@ -4,13 +4,31 @@ const links = [
     label: 'Profile',
     icon: 'i-heroicons-face-smile',
     to: '/profile',
-    badge: 100,
   },
-
   {
     label: 'Services',
     icon: 'i-heroicons-chart-bar',
     to: '/profile/services',
+  },
+  {
+    label: 'Deals',
+    icon: 'i-heroicons-ticket',
+    to: '/profile/deals',
+  },
+  {
+    label: 'Vouchers',
+    icon: 'i-heroicons-qr-code',
+    to: '/profile/vouchers',
+  },
+  {
+    label: 'Receipts',
+    icon: 'i-heroicons-envelope',
+    to: '/profile/receipts',
+  },
+  {
+    label: 'Redeem',
+    icon: 'i-heroicons-check-badge',
+    to: '/profile/redeem',
   },
 ]
 </script>

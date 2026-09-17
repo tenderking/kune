@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client'
+import { hash } from '@node-rs/argon2'
+import { randomBytes } from 'node:crypto'
 
 const prisma = new PrismaClient()
 
@@ -121,48 +123,37 @@ const data = [
 
 // Function to create a category record
 async function createCategory(name) {
-  const category = await prisma.categories.findUnique({
+  return await prisma.categories.upsert({
     where: { name },
+    update: {},
+    create: { name },
   })
-
-  if (!category) {
-    await prisma.categories.create({
-      data: {
-        name,
-      },
-    })
-  }
-  return category
 }
 
 // Function to create a tag record
 async function createTag(name) {
-  const tag = await prisma.tags.findUnique({
+  return await prisma.tags.upsert({
     where: { name },
+    update: {},
+    create: { name },
   })
-
-  if (!tag) {
-    await prisma.tags.create({
-      data: {
-        name,
-      },
-    })
-  }
-  return tag
 }
 
 // Function to create a service record
 async function createService(data) {
   const category = await createCategory(data.category)
-  const tags = await Promise.all(data.tags.map(createTag))
+  const tags = []
+  for (const tagName of data.tags) {
+    tags.push(await createTag(tagName))
+  }
 
-  // Filter out any null tags (tags that weren't created)
   const existingTags = tags.filter(tag => tag)
 
-  const service = await prisma.services.create({
-    data: {
+  const service = await prisma.services.upsert({
+    where: { name: data.name },
+    update: {},
+    create: {
       name: data.name,
-      // ... other data
       phone_number: data.phone_number || '',
       address: data.address,
       image_url: data.imgUrl,
@@ -179,14 +170,121 @@ async function createService(data) {
   return service
 }
 
-// Loop through your data and create services
-await Promise.all(data.map(createService))
+// Loop sequentially through data
+const created = []
+for (const item of data) {
+  created.push(await createService(item))
+}
 
-// seed()
-//   .then(async () => {
-//     console.log('Database seeding completed!')
-//   })
-//   .catch(async (e) => {
-//     console.error('Seeding failed:', e.message)
-//     await prisma.$disconnect()
-//   })
+const passwordHash = await hash('KuneOwner123!', {
+  memoryCost: 19456,
+  timeCost: 2,
+  outputLen: 32,
+  parallelism: 1,
+})
+const buyerHash = await hash('KuneBuyer123!', {
+  memoryCost: 19456,
+  timeCost: 2,
+  outputLen: 32,
+  parallelism: 1,
+})
+const adminHash = await hash('KuneAdmin123!', {
+  memoryCost: 19456,
+  timeCost: 2,
+  outputLen: 32,
+  parallelism: 1,
+})
+
+await prisma.user.upsert({
+  where: { email: 'admin@kune.co.zw' },
+  update: { password_hash: adminHash, role: 'ADMIN', emailVerified: new Date() },
+  create: {
+    email: 'admin@kune.co.zw',
+    username: 'kune_admin',
+    name: 'Kune Global Admin',
+    password_hash: adminHash,
+    role: 'ADMIN',
+    emailVerified: new Date(),
+  },
+})
+
+const owner = await prisma.user.upsert({
+  where: { email: 'owner@kune.co.zw' },
+  update: { password_hash: passwordHash, role: 'SERVICE_OWNER' },
+  create: {
+    email: 'owner@kune.co.zw',
+    username: 'kune_owner',
+    name: 'Kune Demo Owner',
+    password_hash: passwordHash,
+    role: 'SERVICE_OWNER',
+  },
+})
+
+await prisma.user.upsert({
+  where: { email: 'buyer@kune.co.zw' },
+  update: { password_hash: buyerHash, role: 'USER' },
+  create: {
+    email: 'buyer@kune.co.zw',
+    username: 'kune_buyer',
+    name: 'Kune Demo Buyer',
+    password_hash: buyerHash,
+    role: 'USER',
+  },
+})
+
+const featuredNames = ['Classifieds', 'TopUp', 'Fresh in a Box']
+for (const service of created) {
+  const featured = featuredNames.includes(service.name)
+  await prisma.services.update({
+    where: { id: service.id },
+    data: {
+      service_owner_id: featured || service.name === 'Enbee' ? owner.id : service.service_owner_id,
+      featured,
+    },
+  })
+}
+
+const owned = await prisma.services.findMany({
+  where: { service_owner_id: owner.id },
+})
+
+async function upsertDeal(title, service, original, price) {
+  const existing = await prisma.deal.findFirst({ where: { title, service_id: service.id } })
+  if (existing)
+    return existing
+  const slug = `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 40)}-${randomBytes(3).toString('hex')}`
+  const starts = new Date()
+  const ends = new Date()
+  ends.setDate(ends.getDate() + 21)
+  return prisma.deal.create({
+    data: {
+      slug,
+      service_id: service.id,
+      owner_id: owner.id,
+      title,
+      description: `Limited-time coupon from ${service.name}. Buy a voucher on Kune and redeem it with the business.`,
+      original_price: original,
+      deal_price: price,
+      quantity_total: 40,
+      min_buyers: 3,
+      starts_at: starts,
+      ends_at: ends,
+      status: 'active',
+      redemption_instructions: `Show your Kune voucher code at ${service.name} to redeem this deal.`,
+      terms: 'One voucher per customer. Valid during the deal window.',
+    },
+  })
+}
+
+const classifieds = owned.find(s => s.name === 'Classifieds')
+const topup = owned.find(s => s.name === 'TopUp')
+if (classifieds)
+  await upsertDeal('Half-price featured listing boost', classifieds, 40, 20)
+if (topup)
+  await upsertDeal('$5 airtime top-up for $3', topup, 5, 3)
+
+console.log('Database seeding completed!')
+console.log('Demo admin: admin@kune.co.zw / KuneAdmin123!')
+console.log('Demo owner: owner@kune.co.zw / KuneOwner123!')
+console.log('Demo buyer: buyer@kune.co.zw / KuneBuyer123!')
+await prisma.$disconnect()

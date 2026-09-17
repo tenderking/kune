@@ -15,25 +15,35 @@ export default eventHandler(async (event) => {
       throw createError({ message: 'Invalid name', statusCode: 400 });
     }
 
-    const username = formData.get('username');
-    if (
-      typeof username !== 'string' ||
-      username.length < 3 ||
-      username.length > 31 ||
-      !/^[a-z0-9_-]+$/.test(username)
-    ) {
-      throw createError({ message: 'Invalid username', statusCode: 400 });
+    const email = formData.get('email');
+    if (!email || typeof email !== 'string' || !isValidEmail(email)) {
+      throw createError({ message: 'Invalid email', statusCode: 400 });
+    }
+
+    let username = formData.get('username');
+    if (typeof username !== 'string' || username.trim().length === 0) {
+      let baseUsername = email.split('@')[0].toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+      if (baseUsername.length < 3) {
+        baseUsername = `${baseUsername}_${generateRandomString(4).toLowerCase()}`;
+      }
+      username = baseUsername;
+      const existing = await prisma.user.findUnique({ where: { username } });
+      if (existing) {
+        username = `${baseUsername}_${generateRandomString(4).toLowerCase()}`;
+      }
+    } else {
+      if (
+        username.length < 3 ||
+        username.length > 31 ||
+        !/^[a-z0-9_-]+$/.test(username)
+      ) {
+        throw createError({ message: 'Invalid username', statusCode: 400 });
+      }
     }
 
     const password = formData.get('password');
     if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
       throw createError({ message: 'Invalid password', statusCode: 400 });
-    }
-    // Consider adding more robust password strength checks here (e.g., using zxcvbn)
-
-    const email = formData.get('email');
-    if (!email || typeof email !== 'string' || !isValidEmail(email)) {
-      throw createError({ message: 'Invalid email', statusCode: 400 });
     }
 
     // Hash the password

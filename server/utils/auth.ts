@@ -6,6 +6,7 @@ export interface User {
   username: string | null
   email: string | null
   name: string | null
+  role?: string | null
 }
 
 export interface Session {
@@ -82,6 +83,7 @@ export async function validateSessionToken(token: string): Promise<SessionValida
     username: user.username,
     email: user.email,
     name: user.name,
+    role: user.role,
   }
 
   return { session, user: userAttributes }

@@ -16,13 +16,12 @@ const showPassword = ref(false)
 const schema = computed(() => {
   if (props.mode === 'signin') {
     return z.object({
-      username: z.string().min(3, 'Username must be at least 3 characters long'),
+      username: z.string().min(1, 'Email or username is required'),
       password: z.string().min(6, 'Password must be at least 6 characters long'),
     })
   } else {
     return z.object({
       name: z.string().min(1, 'Name is required'),
-      username: z.string().min(3, 'Username must be at least 3 characters long'),
       email: z.string().email('Invalid email address'),
       password: z.string().min(6, 'Password must be at least 6 characters long'),
     })
@@ -53,20 +52,20 @@ function onSubmit(event: FormSubmitEvent<any>) {
         />
       </UFormField>
 
-      <!-- Username (Both modes) -->
-      <UFormField label="Username" name="username" required>
-        <UInput
-          v-model="state.username"
-          placeholder="johndoe"
-          class="w-full"
-        />
-      </UFormField>
-
       <!-- Email (Register mode only) -->
       <UFormField v-if="mode === 'register'" label="Email" name="email" required>
         <UInput
           v-model="state.email"
           type="email"
+          placeholder="john@example.com"
+          class="w-full"
+        />
+      </UFormField>
+
+      <!-- Email or Username (Signin mode) -->
+      <UFormField v-if="mode === 'signin'" label="Email or Username" name="username" required>
+        <UInput
+          v-model="state.username"
           placeholder="john@example.com"
           class="w-full"
         />

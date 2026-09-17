@@ -49,68 +49,91 @@ function openModal() {
 
 <template>
   <header class="navbar" :class="isFixed()">
-    <NuxtLink class="logo" to="/" :class="isDashboard ? 'hidden-logo' : ''">
-      <span class="logo__text">Kune</span>
-    </NuxtLink>
-    <nav>
-      <ul v-on-click-outside="closeModal" :class="isHidden ? 'nav-hidden' : 'nav-show'">
-        <li>
-          <NuxtLink to="/services" class="nav-link" :class="{ active: $route.path.startsWith('/services') }" @click="closeModal">
-            Browse Services
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/about" class="nav-link" :class="{ active: $route.path === '/about' }" @click="closeModal">
-            About
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/contact" class="nav-link" :class="{ active: $route.path === '/contact' }" @click="closeModal">
-            Contact us
-          </NuxtLink>
-        </li>
-        <li>
-          <ClientOnly>
-            <UButton
-              :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'"
-              color="primary"
-              variant="ghost"
-              @click="isDark = !isDark"
-            />
-            <template #fallback>
+    <div class="navbar-container">
+      <NuxtLink class="logo" to="/" :class="isDashboard ? 'hidden-logo' : ''">
+        <span class="logo__text">Kune</span>
+      </NuxtLink>
+      <nav>
+        <ul v-on-click-outside="closeModal" :class="isHidden ? 'nav-hidden' : 'nav-show'">
+          <li>
+            <NuxtLink to="/deals" class="nav-link" :class="{ active: $route.path.startsWith('/deals') }" @click="closeModal">
+              Deals
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/services" class="nav-link" :class="{ active: $route.path.startsWith('/services') }" @click="closeModal">
+              Browse Services
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/about" class="nav-link" :class="{ active: $route.path === '/about' }" @click="closeModal">
+              About
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/contact" class="nav-link" :class="{ active: $route.path === '/contact' }" @click="closeModal">
+              Contact us
+            </NuxtLink>
+          </li>
+          <li>
+            <ClientOnly>
               <UButton
-                icon="i-heroicons-moon-20-solid"
+                :icon="isDark ? 'i-heroicons-sun-20-solid' : 'i-heroicons-moon-20-solid'"
                 color="primary"
                 variant="ghost"
+                aria-label="Toggle color mode"
+                @click="isDark = !isDark"
               />
-            </template>
-          </ClientOnly>
-        </li>
-        <li>
-          <UPopover v-if="user" mode="click">
-            <UButton color="primary" icon="i-heroicons-user-circle-16-solid">
-              {{ user?.name }}
+              <template #fallback>
+                <UButton
+                  icon="i-heroicons-moon-20-solid"
+                  color="primary"
+                  variant="ghost"
+                  aria-label="Toggle color mode"
+                />
+              </template>
+            </ClientOnly>
+          </li>
+          <li>
+            <UPopover v-if="user" mode="click">
+              <UButton color="primary" variant="soft" icon="i-heroicons-user-circle-16-solid">
+                {{ user?.name || user?.username || 'Account' }}
+              </UButton>
+              <template #content>
+                <div class="flex flex-col gap-2 p-3 min-w-[180px] bg-[var(--color-card-bg)] rounded-lg shadow-lg border border-[var(--color--card-border)]">
+                  <div class="px-2 py-1 border-b border-[var(--color--card-border)] text-xs opacity-75 truncate">
+                    {{ user?.email || user?.name }}
+                  </div>
+                  <UButton
+                    v-if="user?.role === 'ADMIN'"
+                    to="/admin"
+                    variant="soft"
+                    color="primary"
+                    icon="i-heroicons-shield-check"
+                    class="justify-start font-semibold"
+                    @click="closeModal"
+                  >
+                    Admin Panel
+                  </UButton>
+                  <UButton to="/profile" variant="ghost" color="primary" class="justify-start" @click="closeModal">
+                    My Profile
+                  </UButton>
+                  <UButton variant="ghost" color="error" class="justify-start" @click="logout">
+                    Log out
+                  </UButton>
+                </div>
+              </template>
+            </UPopover>
+            <UButton v-else to="/login" external color="primary">
+              Sign in
             </UButton>
-            <template #content>
-              <div class="flex flex-row items-center gap-4 p-4">
-                <UButton to="/profile" class="hover:underline">
-                  Profile
-                </UButton>
-                <UButton class="bg-orange-500 hover:underline" @click="logout">
-                  Logout
-                </UButton>
-              </div>
-            </template>
-          </UPopover>
-          <UButton v-else to="/login" external color="primary">
-            Sign in
-          </UButton>
-        </li>
-      </ul>
-      <button v-if="isMobile" class="menu-toggle" :aria-label="isHidden ? 'Open menu' : 'Close menu'" @click="isHidden ? openModal() : closeModal()">
-        <Icon :name="isHidden ? 'material-symbols:menu' : 'material-symbols:close'" size="24" />
-      </button>
-    </nav>
+          </li>
+        </ul>
+        <button v-if="isMobile" class="menu-toggle" :aria-label="isHidden ? 'Open menu' : 'Close menu'" @click="isHidden ? openModal() : closeModal()">
+          <Icon :name="isHidden ? 'material-symbols:menu' : 'material-symbols:close'" size="24" />
+        </button>
+      </nav>
+    </div>
   </header>
 </template>
 
@@ -119,15 +142,29 @@ function openModal() {
   position: sticky;
   top: 0;
   z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.875rem 1.5rem;
+  width: 100%;
   background-color: var(--color--nav-bg, var(--color--bg));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color--card-border, transparent);
   transition: background-color 0.3s, border-color 0.3s;
+}
+
+.navbar-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .navbar-container {
+    padding: 0.875rem 1.5rem;
+  }
 }
 
 .logo__text {

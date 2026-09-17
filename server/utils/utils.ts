@@ -104,43 +104,52 @@ export async function sendVerificationEmail(
   verificationLink: string,
 ) {
   const config = useRuntimeConfig()
-  const smtpHost = config.nodemailer.host
-  const smtpPort = config.nodemailer.port
-  const smtpUser = config.nodemailer.from
-  const smtpPass = config.nodemailer.password
+  const smtpHost = config.nodemailer?.host
+  const smtpPort = config.nodemailer?.port
+  const smtpUser = config.nodemailer?.user || config.nodemailer?.from
+  const smtpPass = config.nodemailer?.password
+  const fromEmail = config.nodemailer?.from || smtpUser
 
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass,
-    },
-  } as any)
+  try {
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    } as any)
 
-  const mailOptions = {
-    // from: `"${companyName}" <${smtpUser}>`,
-    from: smtpUser,
-    to: email,
-    subject: 'Email Verification',
-    html: `
-      <p>Hi ${username},</p>
-      <p>Please verify your email by clicking on the link below:</p>
-      <a href="${verificationLink}">Verify Email</a>
-      <p>If you did not request this, please ignore this email.</p>
-      <p>Thanks,</p>
-      <p>Support: companySupportEmail </p>
-    `,
+    const mailOptions = {
+      from: fromEmail,
+      to: email,
+      subject: 'Email Verification',
+      html: `
+        <p>Hi ${username},</p>
+        <p>Please verify your email by clicking on the link below:</p>
+        <a href="${verificationLink}">Verify Email</a>
+        <p>If you did not request this, please ignore this email.</p>
+        <p>Thanks,</p>
+        <p>Support: companySupportEmail </p>
+      `,
+    }
+
+    await transporter.sendMail(mailOptions)
   }
-
-  await transporter.sendMail(mailOptions)
+  catch (error: any) {
+    const env = process.env
+    const isDev = env.NODE_ENV !== 'production' || config.public?.nodeEnv === 'development' || smtpHost === 'localhost' || smtpHost === '127.0.0.1'
+    if (isDev) {
+      console.warn(`[DEV EMAIL] Failed to send email via SMTP (${error.message}).`)
+      console.warn(`\n==============================================`)
+      console.warn(`[DEV EMAIL] Verification Link for ${email}:`)
+      console.warn(verificationLink)
+      console.warn(`==============================================\n`)
+      return
+    }
+    throw error
+  }
 }
-
-const config = useRuntimeConfig()
-const smtpHost = config.nodemailer.host
-const smtpPort = config.nodemailer.port
-const smtpUser = config.nodemailer.from
-const smtpPass = config.nodemailer.password
 
 export async function createPasswordResetToken(userId: string): Promise<string> {
   // Invalidate all existing tokens
@@ -162,36 +171,49 @@ export async function createPasswordResetToken(userId: string): Promise<string> 
 
   return tokenId
 }
+
 export async function sendPasswordResetToken(email: string, verificationLink: string): Promise<void> {
-  // Create a transporter object using SMTP transport
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass,
-    },
-  } as any)
+  const config = useRuntimeConfig()
+  const smtpHost = config.nodemailer?.host
+  const smtpPort = config.nodemailer?.port
+  const smtpUser = config.nodemailer?.user || config.nodemailer?.from
+  const smtpPass = config.nodemailer?.password
+  const fromEmail = config.nodemailer?.from || smtpUser
 
-  // Setup email data
-  const mailOptions = {
-    from: `<${smtpUser}>`, // Use runtime config for sender address
-    to: email, // List of receivers
-    subject: 'Password Reset', // Subject line
-    text: `You requested a password reset. Click the link to reset your password: ${verificationLink}`, // Plain text body
-    html: `<p>You requested a password reset. Click the link to reset your password: <a href="${verificationLink}">${verificationLink}</a></p>`, // HTML body
-  }
+  try {
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    } as any)
 
-  // Send mail with defined transport object
-  await transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error(error)
-      throw createError({
-        message: 'Failed to send email',
-        statusCode: 500,
-      })
+    const mailOptions = {
+      from: `<${fromEmail}>`,
+      to: email,
+      subject: 'Password Reset',
+      text: `You requested a password reset. Click the link to reset your password: ${verificationLink}`,
+      html: `<p>You requested a password reset. Click the link to reset your password: <a href="${verificationLink}">${verificationLink}</a></p>`,
     }
-    // eslint-disable-next-line no-console
-    console.log(`Email sent: ${info.response}`)
-  })
+
+    await transporter.sendMail(mailOptions)
+  }
+  catch (error: any) {
+    const env = process.env
+    const isDev = env.NODE_ENV !== 'production' || config.public?.nodeEnv === 'development' || smtpHost === 'localhost' || smtpHost === '127.0.0.1'
+    if (isDev) {
+      console.warn(`[DEV EMAIL] Failed to send password reset via SMTP (${error.message}).`)
+      console.warn(`\n==============================================`)
+      console.warn(`[DEV EMAIL] Reset Link for ${email}:`)
+      console.warn(verificationLink)
+      console.warn(`==============================================\n`)
+      return
+    }
+    throw createError({
+      message: 'Failed to send email',
+      statusCode: 500,
+    })
+  }
 }

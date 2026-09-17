@@ -18,7 +18,7 @@ function verifyRequestOrigin(origin: string, allowedDomains: string[]): boolean 
 }
 
 export default defineEventHandler(async (event) => {
-  if (event.node.req.method !== 'GET') {
+  if (event.node.req.method !== 'GET' && event.node.req.method !== 'HEAD') {
     const originHeader = getHeader(event, 'Origin') ?? null
     let hostHeader = getHeader(event, 'Host') ?? null
 

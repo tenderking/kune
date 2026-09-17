@@ -8,8 +8,10 @@ async function signup(data: any) {
   try {
     const formData = new FormData()
     formData.append('name', data.name)
-    formData.append('username', data.username)
     formData.append('email', data.email)
+    if (data.username) {
+      formData.append('username', data.username)
+    }
     formData.append('password', data.password)
     await $fetch('/api/auth/signup', {
       method: 'POST',

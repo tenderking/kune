@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -22,17 +24,24 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run postinstall
       - run: npx prisma generate
-      - run: pnpm run build
+      - run: pnpm run lint
+      - run: npx vitest run
+      - run: npx nuxt build
 
       - name: Upload artifact
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./.output
 
       - name: Push build to branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: sozo-design/curl@v1.0.2
         with:
           args: -X POST "${{ secrets.DEPLOY_API_URL }}"
